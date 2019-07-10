@@ -27,4 +27,5 @@ public class FlightsController {
         return ResponseEntity.ok(flightsRepository.findAll()); //da raspuns status 200 si pune un continut in raspunsul respectiv
     }
 
+
 }

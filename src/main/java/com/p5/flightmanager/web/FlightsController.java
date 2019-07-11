@@ -1,15 +1,17 @@
-package com.p5.flightmanager;
+package com.p5.flightmanager.web;
 
+import com.p5.flightmanager.repository.models.Flight;
+import com.p5.flightmanager.service.FlightServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,12 +21,16 @@ import java.util.List;
 @Transactional
 public class FlightsController {
 
-    @Resource
-    private FlightsRepository flightsRepository;
+    @Autowired
+    private FlightServiceImpl flightService;
 
     @GetMapping
-    ResponseEntity<Iterable<Flight>> getAll(){
-        return ResponseEntity.ok(flightsRepository.findAll());
+    ResponseEntity<List<Flight>> getAll(){
+        return ResponseEntity.ok(flightService.getAll());
     }
 
+    @PostMapping
+    ResponseEntity<Flight> createFlight(){
+        return ResponseEntity.ok(flightService.createFlight());
+    }
 }

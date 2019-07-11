@@ -3,6 +3,7 @@ package com.p5.flightmanager.web;
 
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.api.FlightService;
+import com.p5.flightmanager.service.dto.FlightDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,12 +34,14 @@ public class FlightsController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Flight> getById(@PathVariable String id) {
+    ResponseEntity<FlightDto> getById(@PathVariable String id) {
         return ResponseEntity.ok(flightService.getById(id));
     }
 
     @PostMapping
-    ResponseEntity<Flight> createFlight() {
+    ResponseEntity<FlightDto> createFlight() {
         return ResponseEntity.ok(flightService.createFlight());
     }
+
+
 }

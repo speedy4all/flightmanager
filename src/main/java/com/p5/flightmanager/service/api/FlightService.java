@@ -11,7 +11,7 @@ public interface FlightService {
 
     List<FlightDto> getAll();
 
-    FlightDto createFlight();
+    FlightDto createFlight(FlightDto flightDto);
 
     FlightDto getById(String id);
 }

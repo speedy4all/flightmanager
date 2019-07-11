@@ -27,7 +27,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public FlightDto createFlight() {
+    public FlightDto createFlight(FlightDto flightDto) {
         Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
         Flight flight = flightsRepository.save(newFlight);
 

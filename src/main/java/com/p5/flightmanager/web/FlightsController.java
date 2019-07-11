@@ -1,8 +1,9 @@
-package com.p5.flightmanager.web;
+package com.p5.flightmanager.Web;
 
 
-import com.p5.flightmanager.repository.models.Flight;
-import com.p5.flightmanager.service.api.FlightService;
+import com.p5.flightmanager.Repository.Models.Flight;
+import com.p5.flightmanager.Service.Dto.FlightDto;
+import com.p5.flightmanager.Service.api.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,18 +28,18 @@ public class FlightsController {
     private FlightService flightService;
 
     @GetMapping
-    ResponseEntity<List<Flight>> getAll() {
+    ResponseEntity<List<FlightDto>> getAll() {
 
         return ResponseEntity.ok(flightService.getAll());
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Flight> getById(@PathVariable String id) {
+    ResponseEntity<FlightDto> getById(@PathVariable String id) {
         return ResponseEntity.ok(flightService.getById(id));
     }
 
     @PostMapping
-    ResponseEntity<Flight> createFlight() {
+    ResponseEntity<FlightDto> createFlight() {
         return ResponseEntity.ok(flightService.createFlight());
     }
 }

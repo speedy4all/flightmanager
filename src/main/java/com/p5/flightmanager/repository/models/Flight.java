@@ -1,4 +1,4 @@
-package com.p5.flightmanager.repository.models;
+package com.p5.flightmanager.Repository.Models;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;

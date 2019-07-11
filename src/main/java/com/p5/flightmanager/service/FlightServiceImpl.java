@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -28,5 +29,14 @@ public class FlightServiceImpl implements FlightService {
     public Flight createFlight() {
         Flight newFlight = new Flight("First Flight", "BUC", "CH", 8d, new Date(), new Date());
         return flightsRepository.save(newFlight);
+    }
+
+    @Override
+    public Flight getById(String id) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(id);
+        if (optionalFlight.isPresent()){
+            return optionalFlight.get();
+        }
+        return null;
     }
 }

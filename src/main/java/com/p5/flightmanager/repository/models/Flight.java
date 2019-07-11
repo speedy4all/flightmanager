@@ -1,4 +1,4 @@
-package com.p5.flightmanager;
+package com.p5.flightmanager.repository.models;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -20,6 +20,7 @@ public class Flight<String extends Serializable> implements Serializable {
     public static final long serialVersionUID = 1L;
 
     public Flight() {
+        //default constructor
     }
 
     public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
@@ -35,6 +36,7 @@ public class Flight<String extends Serializable> implements Serializable {
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
     @Type(type = "pg-uuid")
+    @Column(name = "id", updatable = false, unique = true)
     private String id;
 
     @Column(name = "name")

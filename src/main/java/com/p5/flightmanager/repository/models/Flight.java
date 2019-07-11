@@ -3,18 +3,25 @@ package com.p5.flightmanager.repository.models;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
-@Table(name="T_FLIGHT")
-
-public class Flight<String extends Serializable> implements Serializable {
+@Table(name = "T_FLIGHT")
+public class Flight implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
     public Flight() {
+        //default constructor
     }
 
     public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
@@ -27,11 +34,11 @@ public class Flight<String extends Serializable> implements Serializable {
     }
 
     @Id
-    @GenericGenerator(name = "uuid-gen",strategy = "uuid2")
+    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
     @Type(type = "pg-uuid")
-    @Column(name = "id",updatable = false,unique = true)
-    private String id;
+    @Column(name = "id", updatable = false, unique = true)
+    private UUID id;
 
     @Column(name = "name")
     @Type(type = "string")
@@ -59,11 +66,11 @@ public class Flight<String extends Serializable> implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

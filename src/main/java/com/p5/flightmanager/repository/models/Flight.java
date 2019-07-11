@@ -17,6 +17,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "T_FLIGHT")
 public class Flight implements Serializable {
+//test
 
     public static final long serialVersionUID = 1L;
 

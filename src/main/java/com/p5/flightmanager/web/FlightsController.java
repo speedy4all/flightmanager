@@ -24,6 +24,7 @@ import java.util.List;
 @Produces("application/json")
 @Transactional
 public class FlightsController {
+//test
 
     @Autowired
     private FlightService flightService;

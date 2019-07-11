@@ -3,7 +3,7 @@ package com.p5.flightmanager.service.dto;
 import com.fasterxml.jackson.annotation.JsonAlias;
 
 public class FlightDto {
-
+//test
     private String id;
     private String name;
     private String departureLocation;

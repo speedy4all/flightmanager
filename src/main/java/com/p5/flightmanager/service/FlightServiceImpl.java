@@ -20,6 +20,7 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightsRepository flightsRepository;
 
+//test
 
     public List<FlightDto> getAll() {
 

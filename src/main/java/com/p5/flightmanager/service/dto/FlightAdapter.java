@@ -7,6 +7,7 @@ import java.util.List;
 
 public class FlightAdapter {
 
+//test
 
     public final static FlightDto toDto(Flight flight) {
         FlightDto flightDto = new FlightDto();

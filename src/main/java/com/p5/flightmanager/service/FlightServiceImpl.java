@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -35,7 +36,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public Flight getById(String id) {
-        Optional<Flight> optionalFlight = flightsRepository.findById(id);
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
         if(optionalFlight.isPresent()) {
             return optionalFlight.get();
         }

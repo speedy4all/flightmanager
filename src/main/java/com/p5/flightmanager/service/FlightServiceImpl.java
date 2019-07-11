@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -30,5 +31,14 @@ public class FlightServiceImpl implements FlightService {
         Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
 
         return flightsRepository.save(newFlight);
+    }
+
+    @Override
+    public Flight getById(String id) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(id);
+        if(optionalFlight.isPresent()) {
+            return optionalFlight.get();
+        }
+        return null;
     }
 }

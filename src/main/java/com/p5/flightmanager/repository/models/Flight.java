@@ -12,10 +12,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "T_FLIGHT")
-public class Flight<String extends Serializable> implements Serializable {
+public class Flight implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
@@ -37,7 +38,7 @@ public class Flight<String extends Serializable> implements Serializable {
     @GeneratedValue(generator = "uuid-gen")
     @Type(type = "pg-uuid")
     @Column(name = "id", updatable = false, unique = true)
-    private String id;
+    private UUID id;
 
     @Column(name = "name")
     @Type(type = "string")
@@ -65,11 +66,11 @@ public class Flight<String extends Serializable> implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

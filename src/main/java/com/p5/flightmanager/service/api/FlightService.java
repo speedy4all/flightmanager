@@ -11,4 +11,6 @@ public interface FlightService {
     List<Flight> getAll();
 
     Flight createFlight();
+
+    Flight getById(String id);
 }

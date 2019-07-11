@@ -2,16 +2,21 @@ package com.p5.flightmanager.repository.models;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "T_FLIGHT")
-public class Flight<String extends Serializable> implements Serializable {
+public class Flight implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
@@ -53,12 +58,12 @@ public class Flight<String extends Serializable> implements Serializable {
 
     @Column(name = "departure_date")
     @Type(type = "date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date departureDate;
 
     @Column(name = "destination_date")
     @Type(type = "date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
 
     public UUID getId() {
@@ -117,4 +122,3 @@ public class Flight<String extends Serializable> implements Serializable {
         this.destinationDate = destinationDate;
     }
 }
-

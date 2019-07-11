@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableTransactionManagement
 @EntityScan(basePackages = "com.p5.flightmanager")
-@EnableJpaRepositories(basePackages = "com.p5.flightmanager")
+@EnableJpaRepositories(basePackages = "com.p5.flightmanager.Repository")
 public class FlightmanagerApplication {
 
     public static void main(String[] args) {

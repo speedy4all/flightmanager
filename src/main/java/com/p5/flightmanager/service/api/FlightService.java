@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface FlightService {
 
-    public List<Flight> getAll();
+    List<Flight> getAll();
 
     Flight createFlight();
 

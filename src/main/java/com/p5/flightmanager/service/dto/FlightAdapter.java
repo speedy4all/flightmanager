@@ -33,6 +33,11 @@ public class FlightAdapter {
     public final static Flight fromDto(FlightDto flightDto){
         Flight flight = new Flight();
         //flight.setId(UUID.fromString(flightDto.getId().toString()));
+        FlightAdapter.fromDto(flightDto, flight);
+        return flight;
+    }
+
+    public final static Flight fromDto(FlightDto flightDto, Flight flight){
         flight.setDepartureLocation(flightDto.getDepartureLocation());
         flight.setDestinationLocation(flightDto.getDestinationLocation());
         flight.setName(flightDto.getName());

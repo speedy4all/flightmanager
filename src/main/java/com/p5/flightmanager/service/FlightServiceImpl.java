@@ -49,6 +49,19 @@ public class FlightServiceImpl implements FlightService {
         throw new NoFlightException();
     }
 
+    @Override
+    public FlightDto updateFlight(FlightDto flightDto) {
+         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
+         if(optionalFlight.isPresent()){
+             Flight flight = optionalFlight.get();
+             flight = FlightAdapter.fromDto(flightDto,flight);
+             flightsRepository.save(flight);
+             return FlightAdapter.toDto(flight);
+         }
+        throw new NoFlightException();
+
+    }
+
     private boolean isValidFlight(FlightDto flightDto) {
         if(flightDto.getDepartureLocation() == null) {
             return false;
@@ -66,17 +79,17 @@ public class FlightServiceImpl implements FlightService {
     }
 
     //eu
-    @Override
-    public FlightDto deleteFlight(String id)
-    {
-        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
-        if(optionalFlight.isPresent())
-        {
-            Flight flight = optionalFlight.get();
-            FlightDto flightDto = new FlightDto();
-            flightDto = FlightAdapter.toDto(flight);
-            flightsRepository.delete(FlightAdapter.fromDto(flightDto));
-        }
-        return null;
-    }
+//    @Override
+//    public FlightDto deleteFlight(String id)
+//    {
+//        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
+//        if(optionalFlight.isPresent())
+//        {
+//            Flight flight = optionalFlight.get();
+//            FlightDto flightDto = new FlightDto();
+//            flightDto = FlightAdapter.toDto(flight);
+//            flightsRepository.delete(FlightAdapter.fromDto(flightDto));
+//        }
+//        return null;
+//    }
 }

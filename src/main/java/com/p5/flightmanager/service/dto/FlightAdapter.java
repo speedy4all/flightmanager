@@ -26,6 +26,13 @@ public class FlightAdapter {
     public final static Flight fromDto(FlightDto flightDto)
     {
         Flight flight = new Flight();
+        fromDto(flightDto,flight);
+
+        return flight;
+    }
+
+    public final static Flight fromDto(FlightDto flightDto, Flight flight)
+    {
         flight.setName(flightDto.getName());
         flight.setDepartureLocation(flightDto.getDepartureLocation());
         flight.setDestinationLocation(flightDto.getDestinationLocation());

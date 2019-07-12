@@ -8,6 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface FlightsRepository extends CrudRepository<Flight, UUID> {
-    //test
 
 }

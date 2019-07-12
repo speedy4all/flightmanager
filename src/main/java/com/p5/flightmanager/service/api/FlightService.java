@@ -7,7 +7,6 @@ import java.util.List;
 
 @Service
 public interface FlightService {
-//test
 
     List<FlightDto> getAll();
 

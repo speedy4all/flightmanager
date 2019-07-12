@@ -20,7 +20,6 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightsRepository flightsRepository;
 
-//test
 
     public List<FlightDto> getAll() {
 
@@ -30,9 +29,8 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public FlightDto createFlight(FlightDto flightDto) {
 
-
-        Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
-        Flight flight = flightsRepository.save(newFlight);
+       // Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
+        Flight flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
 
         return FlightAdapter.toDto(flight);
     }

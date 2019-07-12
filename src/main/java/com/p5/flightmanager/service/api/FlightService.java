@@ -15,4 +15,6 @@ public interface FlightService {
     FlightDto getById(String id);
 
     FlightDto updateFlight(FlightDto flightDto);
+
+    void deleteFlight(String id);
 }

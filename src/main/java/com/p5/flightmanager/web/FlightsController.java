@@ -31,6 +31,7 @@ public class FlightsController {
 
     @GetMapping("/{id}")
     ResponseEntity<FlightDto> getById(@PathVariable String id) {
+
         return ResponseEntity.ok(flightService.getById(id));
     }
 
@@ -44,4 +45,8 @@ public class FlightsController {
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
     }
 
+    @DeleteMapping("/{id}")
+    void deleteFlight(@PathVariable String id){
+        flightService.deleteFlight(id);
+    }
 }

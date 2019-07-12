@@ -68,4 +68,14 @@ public class FlightServiceImpl implements FlightService {
         return null;
     }
 
+    @Override
+    public void deleteFlight(String id) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
+        if(optionalFlight.isPresent()) {
+            Flight flight = optionalFlight.get();
+            flightsRepository.delete(flight);
+        }
+    }
+
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/flights")
@@ -39,8 +40,15 @@ public class FlightsController {
         return ResponseEntity.ok(flightService.createFlight(flightDto));
     }
 
-    @PutMapping("/update")
+    @PutMapping
     ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
+    }
+
+    @DeleteMapping("/{iddelete}")
+    void deleteFlight(@PathVariable String iddelete)
+    {
+        //return ResponseEntity.ok(flightService.deleteFlight(iddelete));
+        flightService.deleteFlight(iddelete);
     }
 }

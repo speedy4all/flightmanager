@@ -54,12 +54,20 @@ public class FlightServiceImpl implements FlightService {
          Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
          if(optionalFlight.isPresent()){
              Flight flight = optionalFlight.get();
-             flight = FlightAdapter.fromDto(flightDto,flight);
-             flightsRepository.save(flight);
-             return FlightAdapter.toDto(flight);
+             flightsRepository.save(FlightAdapter.fromDto(flightDto,flight));
+             return FlightAdapter.toDto(FlightAdapter.fromDto(flightDto,flight));
          }
         throw new NoFlightException();
 
+    }
+
+    @Override
+    public void deleteFlight(String flightDtoID) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDtoID));
+        if(optionalFlight.isPresent()){
+            Flight flight = optionalFlight.get();
+            flightsRepository.delete(flight);
+        }
     }
 
     private boolean isValidFlight(FlightDto flightDto) {

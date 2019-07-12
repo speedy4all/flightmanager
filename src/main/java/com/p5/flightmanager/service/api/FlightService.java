@@ -1,6 +1,5 @@
 package com.p5.flightmanager.service.api;
 
-import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.dto.FlightDto;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,11 @@ public interface FlightService {
 
     List<FlightDto> getAll();
 
-    FlightDto createFlight();
+    FlightDto createFlight(FlightDto flightDto);
 
     FlightDto getById(String id);
+
+    FlightDto updateFlight(FlightDto flightDto);
+
+    boolean deleteFlight(String flightDto);
 }

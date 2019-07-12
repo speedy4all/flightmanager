@@ -1,5 +1,7 @@
 package com.p5.flightmanager.service.dto;
 
+import java.util.Date;
+
 public class FlightDto {
 
     private String id;
@@ -7,6 +9,33 @@ public class FlightDto {
     private String departureLocation;
     private String destinationLocation;
     private String fullFlightDescription;
+    private Date departureDate;
+    private Date destinationDate;
+    private Double durationTime;
+
+    public Date getDepartureDate() {
+        return departureDate;
+    }
+
+    public void setDepartureDate(Date departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public Date getDestinationDate() {
+        return destinationDate;
+    }
+
+    public void setDestinationDate(Date destinationDate) {
+        this.destinationDate = destinationDate;
+    }
+
+    public Double getDurationTime() {
+        return durationTime;
+    }
+
+    public void setDurationTime(Double durationTime) {
+        this.durationTime = durationTime;
+    }
 
     public String getFullFlightDescription() {
         return fullFlightDescription;

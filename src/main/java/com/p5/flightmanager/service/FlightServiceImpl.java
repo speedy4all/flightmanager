@@ -65,7 +65,7 @@ public class FlightServiceImpl implements FlightService {
             flightsRepository.save(flight);
             return FlightAdapter.toDto(flight);
         }
-        return null;
+        throw new NoFlightException();
     }
 
     @Override
@@ -74,7 +74,9 @@ public class FlightServiceImpl implements FlightService {
         if(optionalFlight.isPresent()) {
             Flight flight = optionalFlight.get();
             flightsRepository.delete(flight);
+            return;
         }
+        throw new NoFlightException();
     }
 
 

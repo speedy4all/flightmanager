@@ -1,4 +1,4 @@
-package com.p5.flightmanager;
+package com.p5.flightmanager.repository.models;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "T_FLIGHT")
@@ -15,8 +16,7 @@ public class Flight<String extends Serializable> implements Serializable {
 
     public Flight() {}
 
-    public Flight(String id, String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
-        this.id = id;
+    public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
         this.name = name;
         this.departureLocation = departureLocation;
         this.destinationLocation = destinationLocation;
@@ -29,7 +29,8 @@ public class Flight<String extends Serializable> implements Serializable {
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
     @Type(type = "pg-uuid")
-    private String id;
+    @Column(name = "id", updatable = false, unique = true)
+    private UUID id;
 
     @Column(name = "name")
     @Type(type = "string")
@@ -57,11 +58,11 @@ public class Flight<String extends Serializable> implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -6,19 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FlightAdapter {
-    public final static FlightDto toDto (Flight flight) {
+
+    public final static FlightDto toDto(Flight flight) {
         FlightDto flightDto = new FlightDto();
         flightDto.setId(flight.getId().toString());
         flightDto.setDepartureLocation(flight.getDepartureLocation());
         flightDto.setDestinationLocation(flight.getDestinationLocation());
         flightDto.setName(flight.getName());
         flightDto.setFullFlightDescription(flight.getDepartureLocation().concat("-").concat(flight.getDestinationLocation()));
+
         return flightDto;
     }
 
-    public final static List<FlightDto> toListDto(Iterable<Flight> flightList) {
+    public final static List<FlightDto> toListDto(Iterable<Flight> flightList){
         List<FlightDto> listDto = new ArrayList<>();
         flightList.forEach(flight -> listDto.add(toDto(flight)));
+
         return listDto;
     }
 }

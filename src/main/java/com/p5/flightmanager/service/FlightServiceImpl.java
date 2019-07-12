@@ -5,10 +5,10 @@ import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
+import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,14 +20,12 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightsRepository flightsRepository;
 
-    // private FlightAdapter flightAdapter = new FlightAdapter();
-
     public List<FlightDto> getAll() {
         return FlightAdapter.toListDto(flightsRepository.findAll());
     }
 
     @Override
-    public FlightDto createFlight() {
+    public FlightDto createFlight(FlightDto flightDto) {
         Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
         Flight flight = flightsRepository.save(newFlight);
         return FlightAdapter.toDto(flight);
@@ -40,7 +38,7 @@ public class FlightServiceImpl implements FlightService {
             Flight flight = optionalFlight.get();
             return FlightAdapter.toDto(flight);
         }
+        //throw new NoFlightException("No flight found");
         throw new NoFlightException();
     }
-
 }

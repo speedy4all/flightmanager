@@ -1,9 +1,13 @@
 package com.p5.flightmanager.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class FlightDto {
 
     private String id;
     private String name;
+
+    //@JsonAlias("departure_location") in caz ca e diferit numele din body
     private String departureLocation;
     private String destinationLocation;
     private String fullFlightDescription;

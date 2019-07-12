@@ -7,12 +7,7 @@ import com.p5.flightmanager.service.dto.FlightDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -43,4 +38,13 @@ public class FlightsController {
     ResponseEntity<FlightDto> createFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.createFlight(flightDto));
     }
+
+  @PutMapping("/update")
+  ResponseEntity<String> updateFlight(@RequestBody FlightDto flightDto) {
+      return ResponseEntity.ok("ok");
+  }
+@DeleteMapping("/{id}")
+    void deleteFlight(@PathVariable String id){
+        flightService.deleteFlight(id);}
+
 }

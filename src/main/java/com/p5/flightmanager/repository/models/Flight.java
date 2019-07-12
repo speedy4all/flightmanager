@@ -31,6 +31,7 @@ public class Flight implements Serializable {
         this.durationTime = durationTime;
         this.departureDate = departureDate;
         this.destinationDate = destinationDate;
+
     }
 
     @Id
@@ -122,3 +123,4 @@ public class Flight implements Serializable {
         this.destinationDate = destinationDate;
     }
 }
+

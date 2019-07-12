@@ -3,18 +3,26 @@ package com.p5.flightmanager.repository.models;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "T_FLIGHT")
-public class Flight<String extends Serializable> implements Serializable {
+public class Flight implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Flight() {}
+    public Flight() {
+        //default constructor
+    }
 
     public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
         this.name = name;

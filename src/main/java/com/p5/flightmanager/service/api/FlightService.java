@@ -1,17 +1,16 @@
 package com.p5.flightmanager.service.api;
 
-import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.dto.FlightDto;
-import org.jvnet.hk2.annotations.Service;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface FlightService {
 
-    public List<Flight> getAll();
+    List<FlightDto> getAll();
 
-    FlightDto createFlight();
+    FlightDto createFlight(FlightDto flightDto);
 
-    Flight getById(String id);
+    FlightDto getById(String id);
 }

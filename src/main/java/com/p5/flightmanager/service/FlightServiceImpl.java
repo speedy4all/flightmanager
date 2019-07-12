@@ -43,15 +43,18 @@ public class FlightServiceImpl implements FlightService {
         return FlightAdapter.toDto(flight);
     }
 
-    private  boolean isValidFlight(FlightDto flightDto) {
-        if(flightDto.getDepartureLocation()== null || flightDto.getDepartureLocation().isEmpty())
-            return false;
-        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty())
-            return false;
-        return true;
+    @Override
+    public FlightDto updateFlight(FlightDto flightDto) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
+        if(optionalFlight.isPresent()) {
+
+            Flight flight = optionalFlight.get();
+            flight = FlightAdapter.fromDto(flightDto, flight);
+            flightsRepository.save(flight);
+            return FlightAdapter.toDto(flight);
+        }
+        throw new NoFlightException();
     }
-
-
 
     @Override
     public FlightDto getById(String id) {
@@ -61,5 +64,22 @@ public class FlightServiceImpl implements FlightService {
             return FlightAdapter.toDto(flight);
         }
         throw new NoFlightException();
+    }
+
+    @Override
+    public void deleteFlight(String id) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
+        if(optionalFlight.isPresent()) {
+            Flight flight = optionalFlight.get();
+            flightsRepository.delete(flight);
+        }
+    }
+
+    private  boolean isValidFlight(FlightDto flightDto) {
+        if(flightDto.getDepartureLocation()== null || flightDto.getDepartureLocation().isEmpty())
+            return false;
+        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty())
+            return false;
+        return true;
     }
 }

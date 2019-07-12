@@ -9,6 +9,7 @@ import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -21,11 +22,13 @@ public class FlightServiceImpl implements FlightService {
     private FlightsRepository flightsRepository;
 
     public List<FlightDto> getAll() {
+
+        flightsRepository.findAll();
         return FlightAdapter.toListDto(flightsRepository.findAll());
     }
 
     @Override
-    public FlightDto createFlight(FlightDto flightDto) {
+    public FlightDto createFlight() {
         Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
         Flight flight = flightsRepository.save(newFlight);
         return FlightAdapter.toDto(flight);
@@ -38,7 +41,6 @@ public class FlightServiceImpl implements FlightService {
             Flight flight = optionalFlight.get();
             return FlightAdapter.toDto(flight);
         }
-        //throw new NoFlightException("No flight found");
         throw new NoFlightException();
     }
 }

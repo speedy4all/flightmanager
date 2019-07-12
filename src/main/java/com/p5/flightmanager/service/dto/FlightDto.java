@@ -1,9 +1,5 @@
 package com.p5.flightmanager.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-
-import java.util.Date;
-
 public class FlightDto {
 
     private String id;
@@ -11,35 +7,14 @@ public class FlightDto {
     private String departureLocation;
     private String destinationLocation;
     private String fullFlightDescription;
-    private Date departureDate;
-    private Date destinationDate;
-    private Double durationTime;
 
-    public Double getDurationTime() {
-        return durationTime;
+    public String getFullFlightDescription() {
+        return fullFlightDescription;
     }
 
-    public void setDurationTime(Double durationTime) {
-        this.durationTime = durationTime;
+    public void setFullFlightDescription(String fullFlightDescription) {
+        this.fullFlightDescription = fullFlightDescription;
     }
-
-    public Date getDepartureDate() {
-        return departureDate;
-    }
-
-    public void setDepartureDate(Date departureDate) {
-        this.departureDate = departureDate;
-    }
-
-    public Date getDestinationDate() {
-        return destinationDate;
-    }
-
-    public void setDestinationDate(Date destinationDate) {
-        this.destinationDate = destinationDate;
-    }
-
-
 
     public String getId() {
         return id;
@@ -71,13 +46,5 @@ public class FlightDto {
 
     public void setDestinationLocation(String destinationLocation) {
         this.destinationLocation = destinationLocation;
-    }
-
-    public String getFullFlightDescription() {
-        return fullFlightDescription;
-    }
-
-    public void setFullFlightDescription(String fullFlightDescription) {
-        this.fullFlightDescription = fullFlightDescription;
     }
 }

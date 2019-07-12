@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,7 @@ public class FlightsController {
     private FlightService flightService;
 
     @GetMapping
-    ResponseEntity<List<Flight>> getAll() {
+    ResponseEntity<List<FlightDto>> getAll() {
 
         return ResponseEntity.ok(flightService.getAll());
     }
@@ -39,9 +40,7 @@ public class FlightsController {
     }
 
     @PostMapping
-    ResponseEntity<FlightDto> createFlight() {
-        return ResponseEntity.ok(flightService.createFlight());
+    ResponseEntity<FlightDto> createFlight(@RequestBody FlightDto flightDto) {
+        return ResponseEntity.ok(flightService.createFlight(flightDto));
     }
-
-
 }

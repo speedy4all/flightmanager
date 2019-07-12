@@ -1,20 +1,15 @@
 package com.p5.flightmanager.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class FlightDto {
 
     private String id;
     private String name;
-    private String deaprtureLocation;
+    private String departureLocation;
+
     private String destinationLocation;
     private String fullFlightDescription;
-
-    public String getFullFlightDescription() {
-        return fullFlightDescription;
-    }
-
-    public void setFullFlightDescription(String fullFlightDescription) {
-        this.fullFlightDescription = fullFlightDescription;
-    }
 
     public String getId() {
         return id;
@@ -32,12 +27,12 @@ public class FlightDto {
         this.name = name;
     }
 
-    public String getDeaprtureLocation() {
-        return deaprtureLocation;
+    public String getDepartureLocation() {
+        return departureLocation;
     }
 
-    public void setDeaprtureLocation(String deaprtureLocation) {
-        this.deaprtureLocation = deaprtureLocation;
+    public void setDepartureLocation(String departureLocation) {
+        this.departureLocation = departureLocation;
     }
 
     public String getDestinationLocation() {
@@ -46,5 +41,13 @@ public class FlightDto {
 
     public void setDestinationLocation(String destinationLocation) {
         this.destinationLocation = destinationLocation;
+    }
+
+    public String getFullFlightDescription() {
+        return fullFlightDescription;
+    }
+
+    public void setFullFlightDescription(String fullFlightDescription) {
+        this.fullFlightDescription = fullFlightDescription;
     }
 }

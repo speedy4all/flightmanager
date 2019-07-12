@@ -7,11 +7,12 @@ import java.util.List;
 
 @Service
 public interface FlightService {
-//test
 
     List<FlightDto> getAll();
 
     FlightDto createFlight(FlightDto flightDto);
 
     FlightDto getById(String id);
+
+    FlightDto deleteFlight(String id);
 }

@@ -43,6 +43,15 @@ public class FlightServiceImpl implements FlightService {
         if (flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty()){
             return false;
         }
+        if (flightDto.getName() == null || flightDto.getName().isEmpty()){
+            return false;
+        }
+        if(flightDto.getDurationTime() == null || flightDto.getDurationTime().isNaN()) {
+            return false;
+        }
+        if(flightDto.getDepartureDate() == null || flightDto.getDestinationDate() == null) {
+            return false;
+        }
         return true;
     }
         @Override

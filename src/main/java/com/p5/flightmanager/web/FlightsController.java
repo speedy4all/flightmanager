@@ -39,7 +39,7 @@ public class FlightsController {
         return ResponseEntity.ok(flightService.createFlight(flightDto));
     }
 
-    @PutMapping("/update")
+    @PutMapping()
     ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
         //return ResponseEntity.ok("Update flight");

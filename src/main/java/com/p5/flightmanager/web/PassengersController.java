@@ -37,10 +37,14 @@ public class PassengersController {
         return ResponseEntity.ok(passengerService.getById(id));
     }
 
-    @PutMapping("/update")
+    @PutMapping()
     ResponseEntity<PassengerDto> updatePassenger(@RequestBody PassengerDto passengerDto) {
         return ResponseEntity.ok(passengerService.updatePassenger(passengerDto));
         //return ResponseEntity.ok("Update passenger");
+    }
 
+    @DeleteMapping("/{id}")
+    void deletePassenger(@PathVariable String id){
+        passengerService.deletePassenger(id);
     }
 }

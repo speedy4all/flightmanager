@@ -15,6 +15,6 @@ public interface PassengerService {
     PassengerDto getById(String id);
 
     PassengerDto updatePassenger(PassengerDto flightDto);
-//
-//    void deletePassenger(String id);
+
+    void deletePassenger(String id);
 }

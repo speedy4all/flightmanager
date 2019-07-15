@@ -8,6 +8,7 @@ import com.p5.flightmanager.service.dto.PassengerAdapter;
 import com.p5.flightmanager.service.dto.PassengerDto;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
+import com.p5.flightmanager.service.exceptions.NoPassengerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -46,7 +47,7 @@ public class PassengerServiceImpl implements PassengerService {
             return PassengerAdapter.toDto(passenger);
         }
 
-        throw new NoFlightException();
+        throw new NoPassengerException();
     }
 
     @Override
@@ -58,7 +59,16 @@ public class PassengerServiceImpl implements PassengerService {
             passengerRepository.save(passenger);
             return PassengerAdapter.toDto(passenger);
         }
-        throw new NoFlightException();
+        throw new NoPassengerException();
+    }
+
+    @Override
+    public void deletePassenger(String id) {
+        Optional<Passenger> optionalPassenger = passengerRepository.findById(UUID.fromString(id));
+        if(optionalPassenger.isPresent()){
+            Passenger passenger = optionalPassenger.get();
+            passengerRepository.delete(passenger);
+        }
     }
 
     public boolean isValidPassenger(PassengerDto passengerDto){

@@ -16,13 +16,14 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class FlightServiceImpl implements FlightService {
+public class FlightServiceImpl implements FlightService{
 
     @Autowired
     private FlightsRepository flightsRepository;
 
-    public List<FlightDto> getAll() {
-        return FlightAdapter.toListDto(flightsRepository.findAll());
+    public List<FlightDto> getAll(String search) {
+
+        return FlightAdapter.toListDto(flightsRepository.filterByName(search));
     }
 
     public boolean isValidFlight(FlightDto flightDto) {

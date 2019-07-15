@@ -9,12 +9,13 @@ import java.util.UUID;
 
 public class FlightAdapter {
 
+
     public final static FlightDto toDto(Flight flight) {
         FlightDto flightDto = new FlightDto();
         flightDto.setId(flight.getId().toString());
+        flightDto.setName(flight.getName());
         flightDto.setDepartureLocation(flight.getDepartureLocation());
         flightDto.setDestinationLocation(flight.getDestinationLocation());
-        flightDto.setName(flight.getName());
         flightDto.setFullFlightDescription(flight.getDepartureLocation().concat("-").concat(flight.getDestinationLocation()));
         flightDto.setDurationTime(flight.getDurationTime());
         flightDto.setDepartureDate(flight.getDepartureDate());
@@ -23,27 +24,30 @@ public class FlightAdapter {
         return flightDto;
     }
 
-    public final static List<FlightDto> toListDto(Iterable<Flight> flightList){
+
+    public final static List<FlightDto> toListDto(Iterable<Flight> flightList) {
         List<FlightDto> listDto = new ArrayList<>();
         flightList.forEach(flight -> listDto.add(toDto(flight)));
 
         return listDto;
     }
 
-    public final static Flight fromDto(FlightDto flightDto){
+    public final static Flight fromDto(FlightDto flightDto) {
         Flight flight = new Flight();
-        //flight.setId(UUID.fromString(flightDto.getId().toString()));
         FlightAdapter.fromDto(flightDto, flight);
+
         return flight;
+
     }
 
-    public final static Flight fromDto(FlightDto flightDto, Flight flight){
+    public final static Flight fromDto(FlightDto flightDto, Flight flight) {
+
+        flight.setName(flightDto.getName());
         flight.setDepartureLocation(flightDto.getDepartureLocation());
         flight.setDestinationLocation(flightDto.getDestinationLocation());
-        flight.setName(flightDto.getName());
+        flight.setDurationTime(flightDto.getDurationTime());
         flight.setDepartureDate(flightDto.getDepartureDate());
         flight.setDestinationDate(flightDto.getDestinationDate());
-        flight.setDurationTime(flightDto.getDurationTime());
 
         return flight;
     }

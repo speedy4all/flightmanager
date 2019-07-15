@@ -10,9 +10,10 @@ import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 
+
 @Entity
 @Table(name = "T_FLIGHT")
-public class Flight extends BaseModel implements Serializable{
+public class Flight extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
@@ -29,7 +30,7 @@ public class Flight extends BaseModel implements Serializable{
         this.destinationDate = destinationDate;
     }
 
-    public Flight(Flight source){
+    public Flight(Flight source) {
         super(source);
         this.name = source.name;
         this.departureLocation = source.departureLocation;
@@ -64,6 +65,7 @@ public class Flight extends BaseModel implements Serializable{
     @Type(type = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
+
 
     public String getName() {
         return name;

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -20,61 +21,45 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightsRepository flightsRepository;
 
+
     public List<FlightDto> getAll(String search) {
 
-//        if(search == null) {
-//            search = "";
-//        }
         return FlightAdapter.toListDto(flightsRepository.filterByName(search));
     }
 
     @Override
     public FlightDto createFlight(FlightDto flightDto) {
-        //Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
-        if(!isValidateFlight(flightDto)) {
-            throw  new EmptyFieldException();
-        }
-        Flight flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
 
+        Flight flight = null;
+        //Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
+        if(isValidFlight(flightDto)) {
+
+             flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
+        } else {
+            throw new EmptyFieldException();
+
+        }
         return FlightAdapter.toDto(flight);
     }
-
-    private boolean isValidateFlight(FlightDto flightDto) {
-        if (flightDto.getDepartureLocation() == null || flightDto.getDepartureLocation().isEmpty()) {
-            return false;
-        }
-        if (flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty()){
-            return false;
-        }
-        if (flightDto.getName() == null || flightDto.getName().isEmpty()){
-            return false;
-        }
-        if(flightDto.getDurationTime() == null || flightDto.getDurationTime().isNaN()) {
-            return false;
-        }
-        if(flightDto.getDepartureDate() == null || flightDto.getDestinationDate() == null) {
-            return false;
-        }
-        return true;
-    }
-        @Override
-        public FlightDto getById(String id) {
-            Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
-            if(optionalFlight.isPresent()) {
-                Flight flight = optionalFlight.get();
-                return FlightAdapter.toDto(flight);
-            }
-            //throw new NoFlightException("No flight found");
-            throw new NoFlightException();
-        }
 
     @Override
     public FlightDto updateFlight(FlightDto flightDto) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
         if(optionalFlight.isPresent()) {
+
             Flight flight = optionalFlight.get();
-            FlightAdapter.fromDto(flightDto, flight);
+            flight = FlightAdapter.fromDto(flightDto, flight);
             flightsRepository.save(flight);
+            return FlightAdapter.toDto(flight);
+        }
+        throw new NoFlightException();
+    }
+
+    @Override
+    public FlightDto getById(String id) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
+        if(optionalFlight.isPresent()) {
+            Flight flight = optionalFlight.get();
             return FlightAdapter.toDto(flight);
         }
         throw new NoFlightException();
@@ -86,10 +71,14 @@ public class FlightServiceImpl implements FlightService {
         if(optionalFlight.isPresent()) {
             Flight flight = optionalFlight.get();
             flightsRepository.delete(flight);
-            return;
         }
-        throw new NoFlightException();
     }
 
-
+    private  boolean isValidFlight(FlightDto flightDto) {
+        if(flightDto.getDepartureLocation()== null || flightDto.getDepartureLocation().isEmpty())
+            return false;
+        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty())
+            return false;
+        return true;
+    }
 }

@@ -10,7 +10,6 @@ import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,8 +20,11 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightsRepository flightsRepository;
 
-    public List<FlightDto> getAll() {
-        return FlightAdapter.toListDto(flightsRepository.findAll());
+    public List<FlightDto> getAll(String search) {
+
+        if(search == null)
+            search = "";
+        return FlightAdapter.toListDto(flightsRepository.filterByName(search.toLowerCase()));
     }
 
     public boolean isValidFlight(FlightDto flightDto) {

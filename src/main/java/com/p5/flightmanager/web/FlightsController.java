@@ -22,6 +22,7 @@ import java.util.List;
 @Transactional
 public class FlightsController {
 
+    //test
     @Autowired
     private FlightService flightService;
 

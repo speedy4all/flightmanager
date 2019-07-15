@@ -3,7 +3,15 @@ package com.p5.flightmanager.repository.models;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -11,6 +19,7 @@ import java.util.UUID;
 @MappedSuperclass
 @EntityListeners({BaseModel.EntityListener.class})
 public abstract class BaseModel implements Serializable {
+
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
     @GeneratedValue(generator = "uuid-gen")
@@ -18,17 +27,17 @@ public abstract class BaseModel implements Serializable {
     @Column(name = "id", updatable = false, unique = true)
     private UUID id;
 
-    @Column(name = "date_created", nullable = false)
-    @Type(type = "date")
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, name = "date_created")
+    @Type(type = "date")
     private Date createdDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_update")
     @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
 
-    @Column(name = "deleted", nullable = false)
+    @Column(nullable = false, name = "deleted")
     @Type(type = "boolean")
     private Boolean deleted = Boolean.FALSE;
 
@@ -74,15 +83,15 @@ public abstract class BaseModel implements Serializable {
         this.deleted = deleted;
     }
 
-    public static class EntityListener{
+    public static class EntityListener {
 
         @PrePersist
-        public void onRepersist(BaseModel baseModel){
+        public void onPrePersist(BaseModel baseModel) {
             baseModel.setCreatedDate(new Date());
         }
 
         @PreUpdate
-        public void onPreUpdate(BaseModel baseModel){
+        public void onPreUpdate(BaseModel baseModel) {
             baseModel.setUpdateDate(new Date());
         }
     }

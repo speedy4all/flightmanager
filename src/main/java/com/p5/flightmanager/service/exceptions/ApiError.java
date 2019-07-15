@@ -10,43 +10,43 @@ import java.util.List;
 public class ApiError {
 
     private HttpStatus status;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-YYYY HH:mm:ss")
-    private LocalDateTime timeStamp;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime timestamp;
 
     private String message;
     private String debugMessage;
     private List<ApiSubError> subErrors = new ArrayList<>();
 
-    private ApiError(){
-        timeStamp = LocalDateTime.now();
-    }
+    private ApiError() {timestamp = LocalDateTime.now();}
 
-    ApiError(HttpStatus status){
+    ApiError(HttpStatus status) {
         this();
         this.status = status;
     }
 
-    ApiError(HttpStatus status, String message, Throwable ex){
+    ApiError(HttpStatus status, String message, Throwable ex) {
         this();
-        this.status=status;
-        this.message=message;
+        this.status = status;
+        this.message = message;
         this.debugMessage = ex.getLocalizedMessage();
     }
+
 
     public HttpStatus getStatus() {
         return status;
     }
 
-    public void setStatuc(HttpStatus statuc) {
-        this.status = statuc;
+    public void setStatus(HttpStatus status) {
+        this.status = status;
     }
 
-    public LocalDateTime getTimeStamp() {
-        return timeStamp;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
-    public void setTimeStamp(LocalDateTime timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getMessage() {

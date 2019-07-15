@@ -24,7 +24,7 @@ public class FlightsController {
     private FlightService flightService;
 
     @GetMapping
-    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
+    ResponseEntity<List<FlightDto>> getAll(@RequestParam  String search) {
 
         return ResponseEntity.ok(flightService.getAll(search));
     }
@@ -40,12 +40,14 @@ public class FlightsController {
     }
 
     @PutMapping("/update")
-    ResponseEntity<FlightDto> updateFlight (@RequestBody FlightDto flightDto){
+    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
+        //return ResponseEntity.ok("Update flight");
+
     }
 
     @DeleteMapping("/{id}")
-    void deleteFlight (@PathVariable String id){
+    void deleteFlight(@PathVariable String id) {
         flightService.deleteFlight(id);
     }
 }

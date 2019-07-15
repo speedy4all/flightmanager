@@ -11,11 +11,10 @@ public class FlightDto {
     private String departureLocation;
 
     private String destinationLocation;
-    private String fullFlightDescription;
-
-    private double durationTime;
+    private Double durationTime;
     private Date departureDate;
     private Date destinationDate;
+    private String fullFlightDescription;
 
     public String getId() {
         return id;
@@ -57,11 +56,11 @@ public class FlightDto {
         this.fullFlightDescription = fullFlightDescription;
     }
 
-    public double getDurationTime() {
+    public Double getDurationTime() {
         return durationTime;
     }
 
-    public void setDurationTime(double durationTime) {
+    public void setDurationTime(Double durationTime) {
         this.durationTime = durationTime;
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface FlightService {
 
-    List<FlightDto> getAll();
+    List<FlightDto> getAll(String search);
 
     FlightDto createFlight(FlightDto flightDto);
 

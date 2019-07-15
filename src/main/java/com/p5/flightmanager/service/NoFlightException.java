@@ -1,5 +1,6 @@
 package com.p5.flightmanager.service;
 
+
 public class NoFlightException extends RuntimeException {
     public NoFlightException() {
         

@@ -7,6 +7,7 @@ import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public class FlightServiceImpl implements FlightService {
 
     // private FlightAdapter flightAdapter = new FlightAdapter();
 
-    public List<FlightDto> getAll() {
-        return FlightAdapter.toListDto(flightsRepository.findAll());
+    public List<FlightDto> getAll(String search) {
+        return FlightAdapter.toListDto(flightsRepository.getAllByNameIsContaining(search.toLowerCase()));
     }
 
     @Override
@@ -47,7 +48,6 @@ public class FlightServiceImpl implements FlightService {
     }
 
     public boolean isValidFlight(FlightDto flightDto) {
-
         if(flightDto.getDestinationLocation() == null || flightDto.getDepartureLocation().isEmpty())
             return false;
         return true;

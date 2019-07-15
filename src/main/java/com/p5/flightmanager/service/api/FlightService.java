@@ -8,9 +8,13 @@ import java.util.List;
 @Service
 public interface FlightService {
 
-    List<FlightDto> getAll();
+    List<FlightDto> getAll(String search);
 
     FlightDto createFlight(FlightDto flightDto);
 
     FlightDto getById(String id);
+
+    FlightDto updateFlight(FlightDto flightDto);
+
+    void deleteFlight(String id);
 }

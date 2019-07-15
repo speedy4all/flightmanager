@@ -14,5 +14,4 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
     //primul f e obiect
     //f e alias
     Iterable<Flight> filterByName(String search);
-
 }

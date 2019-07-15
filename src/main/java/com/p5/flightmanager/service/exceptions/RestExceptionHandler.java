@@ -30,6 +30,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ExceptionHandler(NoPassengerException.class)
+    ResponseEntity<Object> handleNoPassengerException(NoPassengerException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
     //constrruieste un nou obiect ResponseEntity care se va duce catre client, cu eroarea noastra si statusul ei
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError)
     {

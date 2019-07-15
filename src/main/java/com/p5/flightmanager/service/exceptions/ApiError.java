@@ -1,7 +1,6 @@
 package com.p5.flightmanager.service.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
@@ -32,6 +31,7 @@ public class ApiError {
         this.message = message;
         this.debugMessage = ex.getLocalizedMessage();
     }
+
 
     public HttpStatus getStatus() {
         return status;

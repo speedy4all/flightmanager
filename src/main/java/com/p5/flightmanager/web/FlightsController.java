@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController
@@ -25,7 +24,7 @@ public class FlightsController {
     private FlightService flightService;
 
     @GetMapping
-    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
+    ResponseEntity<List<FlightDto>> getAll(@RequestParam  String search) {
 
         return ResponseEntity.ok(flightService.getAll(search));
     }
@@ -37,13 +36,14 @@ public class FlightsController {
 
     @PostMapping
     ResponseEntity<FlightDto> createFlight(@RequestBody FlightDto flightDto) {
-
         return ResponseEntity.ok(flightService.createFlight(flightDto));
     }
 
     @PutMapping("/update")
     ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
+        //return ResponseEntity.ok("Update flight");
+
     }
 
     @DeleteMapping("/{id}")

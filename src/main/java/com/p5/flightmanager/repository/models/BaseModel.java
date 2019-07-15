@@ -3,7 +3,15 @@ package com.p5.flightmanager.repository.models;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -34,7 +42,7 @@ public abstract class BaseModel implements Serializable {
     private Boolean deleted = Boolean.FALSE;
 
     public BaseModel() {
-        //default constructor;
+        //default constructor
     }
 
     public BaseModel(BaseModel source) {

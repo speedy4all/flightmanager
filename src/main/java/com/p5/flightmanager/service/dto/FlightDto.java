@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 
 import java.util.Date;
 
-//folosim cand vrem sa nu aducem tot din baza in frontent
+//folosim cand vrem sa nu aducem tot din baza in frontend
 public class FlightDto {
 
     private String id;

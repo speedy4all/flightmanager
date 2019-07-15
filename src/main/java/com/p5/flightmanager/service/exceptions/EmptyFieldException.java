@@ -5,6 +5,7 @@ public class EmptyFieldException extends RuntimeException {
 
     public EmptyFieldException() {
     }
+
     @Override
     public String getMessage() {
         return "Not valid";

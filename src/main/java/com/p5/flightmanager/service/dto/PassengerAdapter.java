@@ -1,8 +1,5 @@
 package com.p5.flightmanager.service.dto;
 
-import com.p5.flightmanager.repository.models.Passengers;
-import com.p5.flightmanager.service.api.PassengerService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

@@ -35,11 +35,22 @@ public class FlightsController {
 
     @GetMapping("/{id}")
     ResponseEntity<FlightDto> getById(@PathVariable String id) {
+
         return ResponseEntity.ok(flightService.getById(id));
     }
 
     @PostMapping
     ResponseEntity<FlightDto> createFlight() {
         return ResponseEntity.ok(flightService.createFlight());
+    }
+
+    @PutMapping("/update")
+    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
+        return ResponseEntity.ok(flightService.updateFlight(flightDto));
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteFlight(@PathVariable String id){
+        flightService.deleteFlight(id);
     }
 }

@@ -1,10 +1,9 @@
 package com.p5.flightmanager.web;
 
 
-import com.p5.flightmanager.service.NoFlightException;
+import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightDto;
-import org.hibernate.query.criteria.internal.expression.function.CurrentTimeFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,7 +24,7 @@ public class FlightsController {
     private FlightService flightService;
 
     @GetMapping
-    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
+    ResponseEntity<List<FlightDto>> getAll(@RequestParam  String search) {
 
         return ResponseEntity.ok(flightService.getAll(search));
     }
@@ -44,12 +42,12 @@ public class FlightsController {
     @PutMapping("/update")
     ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
+        //return ResponseEntity.ok("Update flight");
+
     }
 
     @DeleteMapping("/{id}")
-    String deleteFlight(@PathVariable String id) {
+    void deleteFlight(@PathVariable String id) {
         flightService.deleteFlight(id);
-        Date today = new Date();
-        return "The flight ID: " + id + " was deleted at: " + today.toString() + "!";
     }
 }

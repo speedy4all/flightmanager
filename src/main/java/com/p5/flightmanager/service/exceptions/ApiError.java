@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApiError {
+
     private HttpStatus status;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
@@ -29,8 +30,8 @@ public class ApiError {
         this.status = status;
         this.message = message;
         this.debugMessage = ex.getLocalizedMessage();
-
     }
+
 
     public HttpStatus getStatus() {
         return status;

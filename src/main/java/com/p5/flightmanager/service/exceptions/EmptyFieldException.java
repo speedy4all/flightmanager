@@ -6,6 +6,6 @@ public class EmptyFieldException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return "Flight is not valid.";
+        return "Field is not valid";
     }
 }

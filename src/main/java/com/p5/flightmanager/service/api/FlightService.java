@@ -16,5 +16,5 @@ public interface FlightService {
 
     FlightDto updateFlight(FlightDto flightDto);
 
-    boolean deleteFlight(String flightDto);
+    void deleteFlight(String id);
 }

@@ -3,24 +3,22 @@ package com.p5.flightmanager.repository.models;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 @MappedSuperclass
-@EntityListeners(BaseModel.EntityListener.class)
+@EntityListeners({BaseModel.EntityListener.class})
 public abstract class BaseModel implements Serializable {
-
-    public BaseModel() {
-        // default constructor
-    }
-
-    public BaseModel(BaseModel source) {
-        this.createdDate = source.createdDate;
-        this.updateDate = source.updateDate;
-        this.deleted = source.deleted;
-    }
 
     @Id
     @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
@@ -42,6 +40,16 @@ public abstract class BaseModel implements Serializable {
     @Column(nullable = false, name = "deleted")
     @Type(type = "boolean")
     private Boolean deleted = Boolean.FALSE;
+
+    public BaseModel() {
+        //default constructor
+    }
+
+    public BaseModel(BaseModel source) {
+        this.createdDate = source.createdDate;
+        this.updateDate = source.updateDate;
+        this.deleted = source.deleted;
+    }
 
     public UUID getId() {
         return id;
@@ -76,6 +84,7 @@ public abstract class BaseModel implements Serializable {
     }
 
     public static class EntityListener {
+
         @PrePersist
         public void onPrePersist(BaseModel baseModel) {
             baseModel.setCreatedDate(new Date());
@@ -85,7 +94,5 @@ public abstract class BaseModel implements Serializable {
         public void onPreUpdate(BaseModel baseModel) {
             baseModel.setUpdateDate(new Date());
         }
-
-
     }
 }

@@ -9,7 +9,6 @@ public class FlightDto {
     private String id;
     private String name;
     private String departureLocation;
-
     private String destinationLocation;
     private Double durationTime;
     private Date departureDate;

@@ -14,7 +14,7 @@ import javax.ws.rs.Produces;
 import java.util.List;
 
 @RestController
-@RequestMapping("/flights")
+@RequestMapping("/flight")
 @Consumes("application/json")
 @Produces("application/json")
 @Transactional

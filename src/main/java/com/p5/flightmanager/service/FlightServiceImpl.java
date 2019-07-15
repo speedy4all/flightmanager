@@ -9,12 +9,11 @@ import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sun.awt.EmbeddedFrame;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -23,9 +22,9 @@ public class FlightServiceImpl implements FlightService {
     private FlightsRepository flightsRepository;
 
 
-    public List<FlightDto> getAll() {
+    public List<FlightDto> getAll(String search) {
 
-        return FlightAdapter.toListDto(flightsRepository.findAll());
+        return FlightAdapter.toListDto(flightsRepository.filterByName(search));
     }
 
     @Override

@@ -7,14 +7,11 @@ import com.p5.flightmanager.service.dto.FlightDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController
@@ -35,13 +32,13 @@ public class FlightsController {
 
     @GetMapping("/{id}")
     ResponseEntity<FlightDto> getById(@PathVariable String id) {
-
         return ResponseEntity.ok(flightService.getById(id));
     }
 
     @PostMapping
-    ResponseEntity<FlightDto> createFlight() {
-        return ResponseEntity.ok(flightService.createFlight());
+    ResponseEntity<FlightDto> createFlight(@RequestBody FlightDto flightDto) {
+
+        return ResponseEntity.ok(flightService.createFlight(flightDto));
     }
 
     @PutMapping("/update")
@@ -50,7 +47,7 @@ public class FlightsController {
     }
 
     @DeleteMapping("/{id}")
-    void deleteFlight(@PathVariable String id){
+    void deleteFlight(@PathVariable String id) {
         flightService.deleteFlight(id);
     }
 }

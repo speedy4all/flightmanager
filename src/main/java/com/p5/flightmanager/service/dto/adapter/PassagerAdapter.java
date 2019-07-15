@@ -1,8 +1,5 @@
 package com.p5.flightmanager.service.dto.adapter;
 
-import com.p5.flightmanager.repository.models.Passager;
-import com.p5.flightmanager.service.dto.PassagerDto;
-
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;

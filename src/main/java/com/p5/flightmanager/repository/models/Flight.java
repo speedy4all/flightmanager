@@ -1,22 +1,18 @@
 package com.p5.flightmanager.repository.models;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "T_FLIGHT")
-public class Flight implements Serializable {
+public class Flight extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
@@ -33,12 +29,15 @@ public class Flight implements Serializable {
         this.destinationDate = destinationDate;
     }
 
-    @Id
-    @GenericGenerator(name = "uuid-gen", strategy = "uuid2")
-    @GeneratedValue(generator = "uuid-gen")
-    @Type(type = "pg-uuid")
-    @Column(name = "id", updatable = false, unique = true)
-    private UUID id;
+    public Flight(Flight source){
+        super(source);
+        this.name = source.name;
+        this.departureLocation = source.departureLocation;
+        this.destinationLocation = source.destinationLocation;
+        this.durationTime = source.durationTime;
+        this.departureDate = source.departureDate;
+        this.destinationDate = source.destinationDate;
+    }
 
     @Column(name = "name")
     @Type(type = "string")
@@ -65,14 +64,6 @@ public class Flight implements Serializable {
     @Type(type = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

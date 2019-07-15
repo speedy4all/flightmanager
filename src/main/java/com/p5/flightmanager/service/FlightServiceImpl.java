@@ -9,7 +9,6 @@ import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -22,6 +21,10 @@ public class FlightServiceImpl implements FlightService {
     private FlightsRepository flightsRepository;
 
     public List<FlightDto> getAll(String search) {
+//        List<FlightDto> flightDtos = FlightAdapter.toListDto(flightsRepository.findAll());
+//        List<FlightDto> collect = flightDtos.stream().filter(x -> x.getName().contains(search)).collect(Collectors.toList());
+//        return flightdtos;
+        // -> complexitate mare (le aduce pe toate)
 
         return FlightAdapter.toListDto(flightsRepository.filterByName(search));
     }
@@ -29,33 +32,19 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public FlightDto createFlight(FlightDto flightDto) {
 
-        Flight flight = null;
-        //Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
-        if(isValidFlight(flightDto)) {
-
-             flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
-        } else {
+        if(!isValidFlight(flightDto))
+        {
             throw new EmptyFieldException();
-
         }
+
+        Flight flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
+
         return FlightAdapter.toDto(flight);
     }
 
     @Override
-    public FlightDto updateFlight(FlightDto flightDto) {
-        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
-        if(optionalFlight.isPresent()) {
-
-            Flight flight = optionalFlight.get();
-            flight = FlightAdapter.fromDto(flightDto, flight);
-            flightsRepository.save(flight);
-            return FlightAdapter.toDto(flight);
-        }
-        throw new NoFlightException();
-    }
-
-    @Override
     public FlightDto getById(String id) {
+
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
         if(optionalFlight.isPresent()) {
             Flight flight = optionalFlight.get();
@@ -65,19 +54,39 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void deleteFlight(String id) {
-        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
-        if(optionalFlight.isPresent()) {
+    public FlightDto updateFlight(FlightDto flightDto) {
+
+         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
+         if(optionalFlight.isPresent()){
+             Flight flight = optionalFlight.get();
+             flightsRepository.save(FlightAdapter.fromDto(flightDto,flight));
+             return FlightAdapter.toDto(FlightAdapter.fromDto(flightDto,flight));
+         }
+
+        throw new NoFlightException();
+    }
+
+    @Override
+    public void deleteFlight(String flightDtoID) {
+
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDtoID));
+        if(optionalFlight.isPresent()){
             Flight flight = optionalFlight.get();
             flightsRepository.delete(flight);
+            return;
         }
+
+        throw new NoFlightException();
     }
 
-    private  boolean isValidFlight(FlightDto flightDto) {
-        if(flightDto.getDepartureLocation()== null || flightDto.getDepartureLocation().isEmpty())
+    private boolean isValidFlight(FlightDto flightDto) {
+
+        if(flightDto.getDepartureLocation() == null || flightDto.getDepartureLocation().isEmpty()) {
             return false;
-        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty())
+        }
+        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty()) {
             return false;
+        }
         return true;
     }
 }

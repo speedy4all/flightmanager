@@ -15,11 +15,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/flights")
+// /flights?search=test&...
+//search e o coloana sau o conventie (alias-uri)
 @Consumes("application/json")
 @Produces("application/json")
 @Transactional
 public class FlightsController {
-//test
 
     @Autowired
     private FlightService flightService;

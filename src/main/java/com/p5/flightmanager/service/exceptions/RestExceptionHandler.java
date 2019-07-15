@@ -12,7 +12,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@ControllerAdvice
+@ControllerAdvice //->o clasa in care am o implementare care se aplica tuturor controlurilor
+//poate sa se ocupe si de requesturi, etc.
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
@@ -29,7 +30,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
-
+    //constrruieste un nou obiect ResponseEntity care se va duce catre client, cu eroarea noastra si statusul ei
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }

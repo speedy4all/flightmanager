@@ -24,9 +24,9 @@ public class FlightsController {
     private FlightService flightService;
 
     @GetMapping
-    ResponseEntity<List<FlightDto>> getAll() {
+    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
 
-        return ResponseEntity.ok(flightService.getAll());
+        return ResponseEntity.ok(flightService.getAll(search));
     }
 
     @GetMapping("/{id}")

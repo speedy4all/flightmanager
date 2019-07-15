@@ -10,6 +10,10 @@ import java.util.UUID;
 @Repository
 public interface FlightsRepository extends CrudRepository<Flight, UUID> {
 
+    Iterable<Flight> getAllByNameIsContaining(String name);
+
     @Query("select f from Flight f where lower(name) like concat('%', lower(?1), '%')")
     Iterable<Flight> filterByName(String search);
+
+
 }

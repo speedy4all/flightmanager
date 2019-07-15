@@ -3,13 +3,21 @@ package com.p5.flightmanager.repository.models;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 @MappedSuperclass
-@EntityListeners({BaseModel.EntityListner.class})
+@EntityListeners({BaseModel.EntityListener.class})
 public abstract class BaseModel implements Serializable {
 
     @Id
@@ -29,15 +37,15 @@ public abstract class BaseModel implements Serializable {
     @Type(type = "date")
     private Date updateDate;
 
-    @Column(name = "deleted")
+    @Column(nullable = false, name = "deleted")
     @Type(type = "boolean")
     private Boolean deleted = Boolean.FALSE;
 
-    public BaseModel(){
+    public BaseModel() {
         //default constructor
     }
 
-    public BaseModel(BaseModel source){
+    public BaseModel(BaseModel source) {
         this.createdDate = source.createdDate;
         this.updateDate = source.updateDate;
         this.deleted = source.deleted;
@@ -75,15 +83,15 @@ public abstract class BaseModel implements Serializable {
         this.deleted = deleted;
     }
 
-    public static class EntityListner{
+    public static class EntityListener {
 
         @PrePersist
-        public void onPrePersist(BaseModel baseModel){
+        public void onPrePersist(BaseModel baseModel) {
             baseModel.setCreatedDate(new Date());
         }
 
         @PreUpdate
-        public void onPreUpdate(BaseModel baseModel){
+        public void onPreUpdate(BaseModel baseModel) {
             baseModel.setUpdateDate(new Date());
         }
     }

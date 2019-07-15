@@ -1,10 +1,10 @@
-package com.p5.flightmanager.service.dto;
+package com.p5.flightmanager.service.dto.adapter;
 
 import com.p5.flightmanager.repository.models.Flight;
+import com.p5.flightmanager.service.dto.FlightDto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class FlightAdapter {
     public final static FlightDto toDto(Flight flight){
@@ -35,12 +35,12 @@ public class FlightAdapter {
     }
 
     public final static Flight fromDto(FlightDto flightDto, Flight flight){
-            flight.setName(flightDto.getName());
-            flight.setDepartureLocation(flightDto.getDepartureLocation());
-            flight.setDestinationLocation(flightDto.getDestinationLocation());
-            flight.setDurationTime(flightDto.getDurationTime());
-            flight.setDepartureDate(flightDto.getDepartureDate());
-            flight.setDestinationDate(flightDto.getDestinationDate());
+        flight.setName(flightDto.getName());
+        flight.setDepartureLocation(flightDto.getDepartureLocation());
+        flight.setDestinationLocation(flightDto.getDestinationLocation());
+        flight.setDurationTime(flightDto.getDurationTime());
+        flight.setDepartureDate(flightDto.getDepartureDate());
+        flight.setDestinationDate(flightDto.getDestinationDate());
 
         return flight;
     }

@@ -19,3 +19,30 @@ public class FlightmanagerApplication {
     }
 
 }
+
+
+/*
+
+{
+    "firstName": "Lorena-Ionela",
+    "lastName": "Pavel",
+    "npc": "2981110080045",
+    "birthDate": "1998-10-11"
+}
+
+
+
+{
+    "id": "8db2cc3e-9693-4deb-abe2-1005448f9029",
+    "name": "Second flight",
+    "departureLocation": "BUH",
+    "destinationLocation": "CJ",
+    "durationTime": 8,
+    "fullFlightDescription": "BUH-CJ",
+    "departureDate": "2019-07-11",
+    "destinationDate": "2019-07-11"
+}
+
+
+
+ */

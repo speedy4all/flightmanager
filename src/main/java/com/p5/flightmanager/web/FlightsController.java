@@ -14,7 +14,7 @@ import javax.ws.rs.Produces;
 import java.util.List;
 
 @RestController
-@RequestMapping("/flights")
+@RequestMapping("/flight")
 @Consumes("application/json")
 @Produces("application/json")
 @Transactional
@@ -24,14 +24,13 @@ public class FlightsController {
     private FlightService flightService;
 
     @GetMapping
-    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
+    ResponseEntity<List<FlightDto>> getAll(@RequestParam  String search) {
 
         return ResponseEntity.ok(flightService.getAll(search));
     }
 
     @GetMapping("/{id}")
     ResponseEntity<FlightDto> getById(@PathVariable String id) {
-
         return ResponseEntity.ok(flightService.getById(id));
     }
 
@@ -40,13 +39,15 @@ public class FlightsController {
         return ResponseEntity.ok(flightService.createFlight(flightDto));
     }
 
-    @PutMapping("/update")
+    @PutMapping()
     ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
+        //return ResponseEntity.ok("Update flight");
+
     }
 
     @DeleteMapping("/{id}")
-    void deleteFlight(@PathVariable String id){
+    void deleteFlight(@PathVariable String id) {
         flightService.deleteFlight(id);
     }
 }

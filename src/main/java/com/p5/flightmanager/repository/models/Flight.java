@@ -10,9 +10,10 @@ import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 
+
 @Entity
 @Table(name = "T_FLIGHT")
-public class Flight extends BaseModel implements Serializable{
+public class Flight extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
@@ -29,7 +30,7 @@ public class Flight extends BaseModel implements Serializable{
         this.destinationDate = destinationDate;
     }
 
-    public Flight(Flight source){
+    public Flight(Flight source) {
         super(source);
         this.name = source.name;
         this.departureLocation = source.departureLocation;
@@ -39,33 +40,7 @@ public class Flight extends BaseModel implements Serializable{
         this.destinationDate = source.destinationDate;
     }
 
-    @Column(name = "name")
-    @Type(type = "string")
-    private String name;
-
-    @Column(name = "departure_location")
-    @Type(type = "string")
-    private String departureLocation;
-
-    @Column(name = "destination_location")
-    @Type(type = "string")
-    private String destinationLocation;
-
-    @Column(name = "duration_time")
-    @Type(type = "double")
-    private Double durationTime;
-
-    @Column(name = "departure_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date departureDate;
-
-    @Column(name = "destination_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date destinationDate;
-
-    public String getName() {
+   public String getName() {
         return name;
     }
 
@@ -112,4 +87,31 @@ public class Flight extends BaseModel implements Serializable{
     public void setDestinationDate(Date destinationDate) {
         this.destinationDate = destinationDate;
     }
+
+    @Column(name = "name")
+    @Type(type = "string")
+    private String name;
+
+    @Column(name = "departure_location")
+    @Type(type = "string")
+    private String departureLocation;
+
+    @Column(name = "destination_location")
+    @Type(type = "string")
+    private String destinationLocation;
+
+    @Column(name = "duration_time")
+    @Type(type = "double")
+    private Double durationTime;
+
+    @Column(name = "departure_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date departureDate;
+
+    @Column(name = "destination_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date destinationDate;
+
 }

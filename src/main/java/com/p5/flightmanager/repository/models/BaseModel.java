@@ -3,7 +3,15 @@ package com.p5.flightmanager.repository.models;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -25,21 +33,21 @@ public abstract class BaseModel implements Serializable {
     private Date createdDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_updated")
+    @Column(name = "date_update")
     @Type(type = "date")
-    private Date updatedDate;
+    private Date updateDate;
 
     @Column(nullable = false, name = "deleted")
     @Type(type = "boolean")
     private Boolean deleted = Boolean.FALSE;
 
     public BaseModel() {
-        //default construcor
+        //default constructor
     }
 
-    public BaseModel(BaseModel source){
+    public BaseModel(BaseModel source) {
         this.createdDate = source.createdDate;
-        this.updatedDate = source.updatedDate;
+        this.updateDate = source.updateDate;
         this.deleted = source.deleted;
     }
 
@@ -59,12 +67,12 @@ public abstract class BaseModel implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Date getUpdatedDate() {
-        return updatedDate;
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     public Boolean getDeleted() {
@@ -78,13 +86,13 @@ public abstract class BaseModel implements Serializable {
     public static class EntityListener {
 
         @PrePersist
-        public void onPrePersit(BaseModel baseModel){
+        public void onPrePersist(BaseModel baseModel) {
             baseModel.setCreatedDate(new Date());
         }
 
         @PreUpdate
-        public void onPreUpdate(BaseModel baseModel){
-            baseModel.setUpdatedDate(new Date());
+        public void onPreUpdate(BaseModel baseModel) {
+            baseModel.setUpdateDate(new Date());
         }
     }
 }

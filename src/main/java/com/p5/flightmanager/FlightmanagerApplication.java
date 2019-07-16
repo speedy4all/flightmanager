@@ -20,19 +20,7 @@ public class FlightmanagerApplication {
 
 }
 
-
 /*
-
-Airport
-    -terminals
-    -location
-    -code (airport code)
-    -fus orar (offset) (Timezone -> String, sau Integer (180, 300 min))
-
-Plane
-    -nr locuri
-    -companie
-
 enum pt Flight (ce tip de flight este)
 
 
@@ -57,5 +45,15 @@ enum pt Flight (ce tip de flight este)
 }
 
 
+
+{
+	"id": "2e2bdfa7-3c63-4729-9dc6-95f2754925a0",
+	"name": "Hendri Cel mare",
+	"terminals": 4,
+	"city": "Bucuresti",
+	"country": "Romania",
+	"code": "OPT",
+	"timezoneOffset": 300
+}
 
  */

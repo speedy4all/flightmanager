@@ -6,8 +6,6 @@ public class NoFlightException extends RuntimeException {
     }
 
     @Override
-    public String getMessage(){
-        return "No flight found";
-    }
+    public String getMessage(){ return "No flight found"; }
 
 }

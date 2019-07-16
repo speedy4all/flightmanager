@@ -28,8 +28,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
-    @ExceptionHandler(NoPassagerException.class)
-    protected ResponseEntity<Object> handleNoPassagerException(NoPassagerException ex){
+    @ExceptionHandler(NoPassengerException.class)
+    protected ResponseEntity<Object> handleNoPassagerException(NoPassengerException ex){
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
@@ -42,7 +42,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
-
+    @ExceptionHandler(NoPlaneException.class)
+    protected  ResponseEntity<Object> handleNoPlaneException(NoPlaneException ex){
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
 
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError){
         return new ResponseEntity<>(apiError, apiError.getStatus());

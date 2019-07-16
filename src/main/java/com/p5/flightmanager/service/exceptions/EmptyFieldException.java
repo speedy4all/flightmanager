@@ -7,7 +7,5 @@ public class EmptyFieldException extends RuntimeException {
     }
 
     @Override
-    public String getMessage(){
-        return "Flight object is not valid";
-    }
+    public String getMessage(){ return "Object is not valid"; }
 }

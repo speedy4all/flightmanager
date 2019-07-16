@@ -1,6 +1,5 @@
 package com.p5.flightmanager.service.api;
 
-import com.p5.flightmanager.service.dto.PassengersDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

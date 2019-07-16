@@ -1,7 +1,6 @@
 package com.p5.flightmanager.web;
 
 import com.p5.flightmanager.service.api.PassengersService;
-import com.p5.flightmanager.service.dto.PassengersDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;

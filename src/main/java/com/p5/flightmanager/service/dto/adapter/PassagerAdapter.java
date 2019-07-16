@@ -1,7 +1,6 @@
 package com.p5.flightmanager.service.dto.adapter;
 
 import com.p5.flightmanager.repository.models.Passenger;
-import com.p5.flightmanager.service.dto.PassengersDto;
 
 import java.util.ArrayList;
 import java.util.List;

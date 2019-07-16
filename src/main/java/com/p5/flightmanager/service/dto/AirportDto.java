@@ -1,61 +1,50 @@
 package com.p5.flightmanager.service.dto;
 
-import javax.persistence.Id;
-import java.util.UUID;
-
 public class AirportDto {
-    private UUID Id;
-    private String Country;
-    private Double Offset;
-    private Double FlightsAvailable;
-    private String Location;
-    private String Name;
 
-    public UUID getId() {
-        return Id;
+    private String id;
+    private String code;
+    private String location;
+    private Integer utcOffset;
+    private String fullAirportDetails;
+
+    public String getId() {
+        return id;
     }
 
-    public void setId(UUID id) {
-        Id = id;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getCountry() {
-        return Country;
+    public String getCode() {
+        return code;
     }
 
-    public void setCountry(String country) {
-        Country = country;
-    }
-
-    public Double getOffset() {
-        return Offset;
-    }
-
-    public void setOffset(Double offset) {
-        Offset = offset;
-    }
-
-    public Double getFlightsAvailable() {
-        return FlightsAvailable;
-    }
-
-    public void setFlightsAvailable(Double flightsAvailable) {
-        FlightsAvailable = flightsAvailable;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getLocation() {
-        return Location;
+        return location;
     }
 
     public void setLocation(String location) {
-        Location = location;
+        this.location = location;
     }
 
-    public String getName() {
-        return Name;
+    public Integer getUtcOffset() {
+        return utcOffset;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setUtcOffset(Integer utcOffset) {
+        this.utcOffset = utcOffset;
+    }
+
+    public String getFullAirportDetails() {
+        return fullAirportDetails;
+    }
+
+    public void setFullAirportDetails(String fullAirportDetails) {
+        this.fullAirportDetails = fullAirportDetails;
     }
 }

@@ -14,7 +14,7 @@ import javax.ws.rs.Produces;
 import java.util.List;
 
 @RestController
-@RequestMapping("/flight")
+@RequestMapping("/flights")
 @Consumes("application/json")
 @Produces("application/json")
 @Transactional
@@ -24,7 +24,7 @@ public class FlightsController {
     private FlightService flightService;
 
     @GetMapping
-    ResponseEntity<List<FlightDto>> getAll(@RequestParam  String search) {
+    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
 
         return ResponseEntity.ok(flightService.getAll(search));
     }
@@ -39,7 +39,7 @@ public class FlightsController {
         return ResponseEntity.ok(flightService.createFlight(flightDto));
     }
 
-    @PutMapping()
+    @PutMapping("/update")
     ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
         //return ResponseEntity.ok("Update flight");

@@ -9,35 +9,38 @@ import java.util.Date;
 @Entity
 @Table(name = "T_PASSENGER")
 public class Passenger extends BaseModel implements Serializable {
+
     public static final long serialVersionUID = 1L;
 
     public Passenger() {
-        //default constructor
+        // default constructor
     }
 
-    public Passenger(String firstName, String lastName, Date birthdayDate, Integer age, String gender, String cnp, String phoneNumber, String emailAddress, String nationality) {
+    public Passenger(String firstName, String lastName, String gender, String email, String mobileNumber, Date dateOfBirth, String identificationCardNumber, Date issueDate, String nationality, String language) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdayDate = birthdayDate;
-        this.age = age;
         this.gender = gender;
-        this.cnp = cnp;
-        this.phoneNumber = phoneNumber;
-        this.emailAddress = emailAddress;
+        this.email = email;
+        this.mobileNumber = mobileNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.identificationCardNumber = identificationCardNumber;
+        this.issueDate = issueDate;
         this.nationality = nationality;
+        this.language = language;
     }
 
     public Passenger(Passenger source) {
         super(source);
-        this.firstName = source.firstName;
-        this.lastName = source.lastName;
-        this.birthdayDate = source.birthdayDate;
-        this.age = source.age;
-        this.gender = source.gender;
-        this.cnp = source.cnp;
-        this.phoneNumber = source.phoneNumber;
-        this.emailAddress = source.emailAddress;
-        this.nationality = source.nationality;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.mobileNumber = mobileNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.identificationCardNumber = identificationCardNumber;
+        this.issueDate = issueDate;
+        this.nationality = nationality;
+        this.language = language;
     }
 
     @Column(name = "first_name")
@@ -48,34 +51,39 @@ public class Passenger extends BaseModel implements Serializable {
     @Type(type = "string")
     private String lastName;
 
-    @Column(name = "birthday_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date birthdayDate;
-
-    @Column(name = "age")
-    @Type(type = "integer")
-    private Integer age;
-
     @Column(name = "gender")
     @Type(type = "string")
     private String gender;
 
-    @Column(name = "cnp")
+    @Column(name = "email")
     @Type(type = "string")
-    private String cnp;
+    private String email;
 
-    @Column(name = "phone_number")
+    @Column(name = "mobile_number")
     @Type(type = "string")
-    private String phoneNumber;
+    private String mobileNumber;
 
-    @Column(name = "email_address")
+    @Column(name = "date_of_birth")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfBirth;
+
+    @Column(name = "identification_card_number")
     @Type(type = "string")
-    private String emailAddress;
+    private String identificationCardNumber;
+
+    @Column(name = "issue_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date issueDate;
 
     @Column(name = "nationality")
     @Type(type = "string")
     private String nationality;
+
+    @Column(name = "language")
+    @Type(type = "string")
+    private String language;
 
     public String getFirstName() {
         return firstName;
@@ -93,22 +101,6 @@ public class Passenger extends BaseModel implements Serializable {
         this.lastName = lastName;
     }
 
-    public Date getBirthdayDate() {
-        return birthdayDate;
-    }
-
-    public void setBirthdayDate(Date birthdayDate) {
-        this.birthdayDate = birthdayDate;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -117,28 +109,44 @@ public class Passenger extends BaseModel implements Serializable {
         this.gender = gender;
     }
 
-    public String getCnp() {
-        return cnp;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCnp(String cnp) {
-        this.cnp = cnp;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getMobileNumber() {
+        return mobileNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getIdentificationCardNumber() {
+        return identificationCardNumber;
+    }
+
+    public void setIdentificationCardNumber(String identificationCardNumber) {
+        this.identificationCardNumber = identificationCardNumber;
+    }
+
+    public Date getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
     }
 
     public String getNationality() {
@@ -147,5 +155,13 @@ public class Passenger extends BaseModel implements Serializable {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

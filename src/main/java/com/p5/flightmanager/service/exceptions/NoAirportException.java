@@ -6,8 +6,7 @@ public class NoAirportException extends RuntimeException {
     }
 
     @Override
-    public String getMessage(){
+    public String getMessage() {
         return "No airport found";
     }
-
 }

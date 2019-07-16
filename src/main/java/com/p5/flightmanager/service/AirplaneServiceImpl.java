@@ -1,10 +1,17 @@
 package com.p5.flightmanager.service;
 
-import com.p5.flightmanager.repository.models.Flight;
-import com.p5.flightmanager.repository.FlightsRepository;
-import com.p5.flightmanager.service.api.FlightService;
-import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.adapter.FlightAdapter;
+import com.p5.flightmanager.repository.AirplaneRepository;
+import com.p5.flightmanager.repository.models.Airplane;
+import com.p5.flightmanager.repository.models.Airport;
+
+
+import com.p5.flightmanager.service.api.AirplaneService;
+
+import com.p5.flightmanager.service.dto.AirplaneDto;
+import com.p5.flightmanager.service.dto.AirportDto;
+
+
+import com.p5.flightmanager.service.dto.adapter.AirplaneAdapter;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,30 +22,30 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class FlightServiceImpl implements FlightService {
+public class AirplaneServiceImpl implements AirplaneService {
 
     @Autowired
-    private FlightsRepository flightsRepository;
+    private AirplaneRepository airplaneRepository;
 
 
-    public List<FlightDto> getAll(String search) {
+    public List<AirplaneDto> getAll(String search) {
 
-        return com.p5.flightmanager.service.dto.adapter.FlightAdapter.toListDto(flightsRepository.filterByName(search));
+        return com.p5.flightmanager.service.dto.adapter.AirplaneAdapter.toListDto(airplaneRepository.filterByName(search));
     }
 
     @Override
-    public FlightDto createFlight(FlightDto flightDto) {
+    public AirplaneDto createAirplane(AirplaneDto airplaneDto) {
 
-        Flight flight = null;
+        Airplane airplane = null;
         //Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
-        if(isValidFlight(flightDto)) {
+        if(isValidFlight(airplaneDto)) {
 
-             flight = flightsRepository.save(com.p5.flightmanager.service.dto.adapter.FlightAdapter.fromDto(flightDto));
+            airplane = airplaneRepository.save(com.p5.flightmanager.service.dto.adapter.AirplaneAdapter.fromDto(airplaneDto));
         } else {
             throw new EmptyFieldException();
 
         }
-        return com.p5.flightmanager.service.dto.adapter.FlightAdapter.toDto(flight);
+        return com.p5.flightmanager.service.dto.adapter.AirplaneAdapter.toDto(airplane);
     }
 
     @Override
@@ -80,4 +87,6 @@ public class FlightServiceImpl implements FlightService {
             return false;
         return true;
     }
+}
+
 }

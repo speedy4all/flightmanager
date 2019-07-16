@@ -1,7 +1,6 @@
 package com.p5.flightmanager.repository.models;
 
 import org.hibernate.annotations.Type;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -39,6 +38,8 @@ public class Flight extends BaseModel implements Serializable {
         this.departureDate = source.departureDate;
         this.destinationDate = source.destinationDate;
     }
+    //zbor local, international, cargo, charter
+    //Enmerated("String") => enum
 
     @Column(name = "name")
     @Type(type = "string")

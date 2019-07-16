@@ -71,8 +71,7 @@ public class FlightServiceImpl implements FlightService {
 
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDtoID));
         if(optionalFlight.isPresent()){
-            Flight flight = optionalFlight.get();
-            flightsRepository.delete(flight);
+            flightsRepository.delete(optionalFlight.get());
             return;
         }
 

@@ -1,8 +1,5 @@
 package com.p5.flightmanager.service.dto;
 
-import com.p5.flightmanager.repository.models.MyTitle;
-import com.p5.flightmanager.repository.models.Passenger;
-
 import java.util.Date;
 
 public class PassengerDto {

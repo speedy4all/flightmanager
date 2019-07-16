@@ -38,8 +38,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     //constrruieste un nou obiect ResponseEntity care se va duce catre client, cu eroarea noastra si statusul ei
-    private ResponseEntity<Object> buildResponseEntity(ApiError apiError)
-    {
+    private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 }

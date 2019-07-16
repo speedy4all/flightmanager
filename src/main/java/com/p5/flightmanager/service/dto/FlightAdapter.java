@@ -8,6 +8,7 @@ public class FlightAdapter {
 
     public final static FlightDto toDto(Flight flight) {
         FlightDto flightDto = new FlightDto();
+
         flightDto.setId(flight.getId().toString());
         flightDto.setName(flight.getName());
         flightDto.setDepartureDate(flight.getDepartureDate());

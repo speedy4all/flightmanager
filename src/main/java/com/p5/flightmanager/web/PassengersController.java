@@ -20,7 +20,7 @@ import java.util.List;
 @Consumes("application/json")
 @Produces("application/json")
 @Transactional
-public class PassengerController {
+public class PassengersController {
 
     @Autowired
     private PassengerService passengerService;

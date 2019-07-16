@@ -30,9 +30,7 @@ public class FlightServiceImpl implements FlightService {
     public FlightDto createFlight(FlightDto flightDto) {
 
         Flight flight = null;
-        //Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
         if(isValidFlight(flightDto)) {
-
              flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
         } else {
             throw new EmptyFieldException();
@@ -74,10 +72,12 @@ public class FlightServiceImpl implements FlightService {
     }
 
     private  boolean isValidFlight(FlightDto flightDto) {
-        if(flightDto.getDepartureLocation()== null || flightDto.getDepartureLocation().isEmpty())
+        if(flightDto.getDepartureLocation()== null || flightDto.getDepartureLocation().isEmpty()) {
             return false;
-        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty())
+        }
+        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty()) {
             return false;
+        }
         return true;
     }
 }

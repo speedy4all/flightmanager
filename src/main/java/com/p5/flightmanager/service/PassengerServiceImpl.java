@@ -29,12 +29,10 @@ public class PassengerServiceImpl implements PassengerService {
     public PassengerDto createPassenger(PassengerDto passengerDto) {
 
         Passenger passenger = null;
-        //Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
         if(isValidPassenger(passengerDto)) {
             passenger = passengersRepository.save(PassengerAdapter.fromDto(passengerDto));
         } else {
             throw new EmptyFieldException();
-
         }
         return PassengerAdapter.toDto(passenger);
     }
@@ -72,10 +70,12 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     private  boolean isValidPassenger(PassengerDto passengerDto) {
-        if(passengerDto.getFirstName() == null || passengerDto.getFirstName().isEmpty())
+        if(passengerDto.getFirstName() == null || passengerDto.getFirstName().isEmpty()) {
             return false;
-        if(passengerDto.getLastName() == null || passengerDto.getLastName().isEmpty())
+        }
+        if(passengerDto.getLastName() == null || passengerDto.getLastName().isEmpty()) {
             return false;
+        }
 
         return true;
     }

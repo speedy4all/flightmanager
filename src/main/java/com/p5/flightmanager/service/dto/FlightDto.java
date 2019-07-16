@@ -1,9 +1,8 @@
 package com.p5.flightmanager.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.p5.flightmanager.repository.models.Flight;
 
-import java.util.UUID;
+import java.util.Date;
 
 public class FlightDto {
 
@@ -12,25 +11,10 @@ public class FlightDto {
     private String departureLocation;
 
     private String destinationLocation;
-    private String fullFlightDescription;
-    private String departureDate;
     private Double durationTime;
-
-    public Double getDurationTime() {
-        return durationTime;
-    }
-
-    public void setDurationTime(Double durationTime) {
-        this.durationTime = durationTime;
-    }
-
-    public String getDepartureDate() {
-        return departureDate;
-    }
-
-    public void setDepartureDate(String departureDate) {
-        this.departureDate = departureDate;
-    }
+    private Date departureDate;
+    private Date destinationDate;
+    private String fullFlightDescription;
 
     public String getId() {
         return id;
@@ -72,32 +56,27 @@ public class FlightDto {
         this.fullFlightDescription = fullFlightDescription;
     }
 
-    public final static Flight fromDto(FlightDto flightDto){
-        Flight flight=new Flight();
-
-
-        flightDto.setDepartureLocation(flightDto.getDepartureLocation());
-        flightDto.setName(flightDto.getName());
-        flightDto.setDurationTime(flightDto.getDurationTime());
-        flightDto.setDepartureDate(flightDto.getDepartureDate());
-        flightDto.setDestinationLocation(flightDto.getDestinationLocation());
-
-        return flight;
-    }
-    public final static FlightDto toDto(Flight flightDto) {
-        FlightDto flight = new FlightDto();
-        //flightDto.setId(UUID.fromString(flightDto.getId()));
-        flightDto.setName(flightDto.getName());
-        flightDto.setDurationTime(flightDto.getDurationTime());
-        flightDto.setDepartureDate(flightDto.getDepartureDate());
-        flightDto.setDestinationLocation(flightDto.getDestinationLocation());
-
-
-
-        return flight;
+    public Double getDurationTime() {
+        return durationTime;
     }
 
-
-
-
+    public void setDurationTime(Double durationTime) {
+        this.durationTime = durationTime;
     }
+
+    public Date getDepartureDate() {
+        return departureDate;
+    }
+
+    public void setDepartureDate(Date departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public Date getDestinationDate() {
+        return destinationDate;
+    }
+
+    public void setDestinationDate(Date destinationDate) {
+        this.destinationDate = destinationDate;
+    }
+}

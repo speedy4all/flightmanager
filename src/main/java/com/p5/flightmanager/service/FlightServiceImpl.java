@@ -10,10 +10,10 @@ import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -22,73 +22,63 @@ public class FlightServiceImpl implements FlightService {
     private FlightsRepository flightsRepository;
 
 
-    public List<FlightDto> getAll() {
+    public List<FlightDto> getAll(String search) {
 
-        return FlightAdapter.toListDto(flightsRepository.findAll());
+        return FlightAdapter.toListDto(flightsRepository.filterByName(search));
     }
 
     @Override
     public FlightDto createFlight(FlightDto flightDto) {
 
+        Flight flight = null;
+        //Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
+        if(isValidFlight(flightDto)) {
 
-        ///Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
-        Flight flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
+             flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
+        } else {
+            throw new EmptyFieldException();
 
+        }
         return FlightAdapter.toDto(flight);
     }
 
+    @Override
+    public FlightDto updateFlight(FlightDto flightDto) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
+        if(optionalFlight.isPresent()) {
+
+            Flight flight = optionalFlight.get();
+            flight = FlightAdapter.fromDto(flightDto, flight);
+            flightsRepository.save(flight);
+            return FlightAdapter.toDto(flight);
+        }
+        throw new NoFlightException();
+    }
 
     @Override
     public FlightDto getById(String id) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
-        if (optionalFlight.isPresent()) {
+        if(optionalFlight.isPresent()) {
             Flight flight = optionalFlight.get();
             return FlightAdapter.toDto(flight);
         }
         throw new NoFlightException();
     }
 
-    private boolean isValidFlight(FlightDto flightDto) {
-
-        if (flightDto.getDepartureLocation() == null || flightDto.getDepartureLocation().isEmpty()) {
-
-            return false;
-
-        }
-        return true;
-    }
-
-
-    @Override
-    public FlightDto updateFlight(FlightDto flightDto) {
-        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
-        Flight flight;
-
-        if (optionalFlight.isPresent()) {
-            flight = flightsRepository.save(FlightAdapter.fromDto(flightDto, optionalFlight.get()));
-        } else {
-            throw new EmptyFieldException();
-        }
-
-        return FlightAdapter.toDto(flight);
-    }
-
     @Override
     public void deleteFlight(String id) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
-        if (optionalFlight.isPresent()) {
-            Flight flight=optionalFlight.get();
+        if(optionalFlight.isPresent()) {
+            Flight flight = optionalFlight.get();
             flightsRepository.delete(flight);
-
         }
-        else{
-            throw new EmptyFieldException();
-
-        }
-
-
-
     }
 
-
+    private  boolean isValidFlight(FlightDto flightDto) {
+        if(flightDto.getDepartureLocation()== null || flightDto.getDepartureLocation().isEmpty())
+            return false;
+        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty())
+            return false;
+        return true;
+    }
 }

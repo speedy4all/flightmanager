@@ -8,22 +8,22 @@ import java.util.Date;
 
 @Entity
 @Table(name = "T_PASSAGER")
-public class Passager extends BaseModel implements Serializable {
+public class Passenger extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Passager(){
+    public Passenger(){
         //default constructor
     }
 
-    public Passager(String firstName, String lastName, String npc, Date birthdate) {
+    public Passenger(String firstName, String lastName, String npc, Date birthdate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.npc = npc;
         this.birthDate = birthDate;
     }
 
-    public Passager(Passager source) {
+    public Passenger(Passenger source) {
         super(source);
         this.firstName = source.firstName;
         this.lastName = source.lastName;

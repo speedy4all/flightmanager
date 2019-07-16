@@ -2,7 +2,7 @@ package com.p5.flightmanager.service.dto;
 
 import java.util.Date;
 
-public class PassagerDto {
+public class PassengersDto {
     private String id;
     private String firstName;
     private String lastName;

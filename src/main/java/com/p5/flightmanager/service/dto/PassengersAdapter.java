@@ -1,14 +1,16 @@
 package com.p5.flightmanager.service.dto;
 
+import com.p5.flightmanager.repository.models.Passenger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class PassengerAdapter {
+public class PassengersAdapter {
 
-    public final static PassengerDto toDto(Passengers passengers) {
-        PassengerDto passengerDto = new PassengerDto();
-        passengerDto.setName(passengers.getName());
+    public final static PassengersDto toDto(Passenger passengers) {
+        PassengersDto passengerDto = new PassengerDto();
+        passengerDto.setN(passengers.getName());
         passengerDto.setSurname(passengers.getSurname());
         passengerDto.setFullname(passengers.getName().concat("-").concat(passengers.getSurname()));
         passengerDto.setNationality(passengers.getNationality());

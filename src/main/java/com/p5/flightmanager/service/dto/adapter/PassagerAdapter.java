@@ -1,45 +1,41 @@
 package com.p5.flightmanager.service.dto.adapter;
 
-import com.p5.flightmanager.repository.models.Passager;
-import com.p5.flightmanager.service.dto.PassagerDto;
+import com.p5.flightmanager.repository.models.Passenger;
+import com.p5.flightmanager.service.dto.PassengersDto;
 
-import java.time.Period;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class PassagerAdapter {
-    public static final PassagerDto toDto(Passager passager){
-        PassagerDto passagerDto = new PassagerDto();
+    public static final PassengersDto toDto(Passenger passenger){
+        PassengersDto passengersDto = new PassengersDto();
 
-        passagerDto.setBirthDate(passager.getBirthDate());
-        passagerDto.setFirstName(passager.getFirstName());
-        passagerDto.setLastName(passager.getLastName());
-        passagerDto.setId(passager.getId().toString());
-        //passagerDto.setAge(new Date().getYear() - passager.getBirthDate().getYear());
+        passengersDto.setBirthDate(passenger.getBirthDate());
+        passengersDto.setFirstName(passenger.getFirstName());
+        passengersDto.setLastName(passenger.getLastName());
+        passengersDto.setId(passenger.getId().toString());
+        //passengersDto.setAge(new Date().getYear() - passenger.getBirthDate().getYear());
 
-        return passagerDto;
+        return passengersDto;
     }
 
-    public final static List<PassagerDto> toListDto(Iterable<Passager> passagerList){
-        List<PassagerDto> passagersDto = new ArrayList<>();
-        passagerList.forEach(passager -> passagersDto.add(toDto(passager)));
+    public final static List<PassengersDto> toListDto(Iterable<Passenger> passagerList){
+        List<PassengersDto> passagersDto = new ArrayList<>();
+        passagerList.forEach(passenger -> passagersDto.add(toDto(passenger)));
 
         return passagersDto;
     }
 
-    public static final Passager fromDto(PassagerDto passagerDto) {
-        Passager passager = new Passager();
-        return fromDto(passagerDto, passager);
+    public static final Passenger fromDto(PassengersDto passengersDto) {
+        Passenger passenger = new Passenger();
+        return fromDto(passengersDto, passenger);
     }
 
-    public static final Passager fromDto(PassagerDto passagerDto, Passager passager){
-        passager.setBirthDate(passagerDto.getBirthDate());
-        passager.setFirstName(passagerDto.getFirstName());
-        passager.setLastName(passagerDto.getLastName());
+    public static final Passenger fromDto(PassengersDto passengersDto, Passenger passenger){
+        passenger.setBirthDate(passengersDto.getBirthDate());
+        passenger.setFirstName(passengersDto.getFirstName());
+        passenger.setLastName(passengersDto.getLastName());
 
-        return passager;
+        return passenger;
     }
 }

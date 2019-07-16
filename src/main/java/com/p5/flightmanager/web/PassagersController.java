@@ -1,7 +1,7 @@
 package com.p5.flightmanager.web;
 
-import com.p5.flightmanager.service.api.PassagerService;
-import com.p5.flightmanager.service.dto.PassagerDto;
+import com.p5.flightmanager.service.api.PassengersService;
+import com.p5.flightmanager.service.dto.PassengersDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,30 +19,30 @@ import java.util.List;
 public class PassagersController {
 
     @Autowired
-    private PassagerService passagerService;
+    private PassengersService passengersService;
 
     @GetMapping
-    ResponseEntity<List<PassagerDto>> getAll(@RequestParam String search) {
-        return ResponseEntity.ok(passagerService.getAll(search));
+    ResponseEntity<List<PassengersDto>> getAll(@RequestParam String search) {
+        return ResponseEntity.ok(passengersService.getAll(search));
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<PassagerDto> getById(@PathVariable String id) {
-        return ResponseEntity.ok(passagerService.getById(id));
+    ResponseEntity<PassengersDto> getById(@PathVariable String id) {
+        return ResponseEntity.ok(passengersService.getById(id));
     }
 
     @PostMapping
-    ResponseEntity<PassagerDto> createPassager(@RequestBody PassagerDto passagerDto) {
-        return ResponseEntity.ok(passagerService.createPassager(passagerDto));
+    ResponseEntity<PassengersDto> createPassager(@RequestBody PassengersDto passengersDto) {
+        return ResponseEntity.ok(passengersService.createPassager(passengersDto));
     }
 
     @PutMapping("/update")
-    ResponseEntity<PassagerDto> updatePassager(@RequestBody PassagerDto passagerDto){
-        return ResponseEntity.ok(passagerService.updatePassager(passagerDto));
+    ResponseEntity<PassengersDto> updatePassager(@RequestBody PassengersDto passengersDto){
+        return ResponseEntity.ok(passengersService.updatePassager(passengersDto));
     }
 
     @DeleteMapping("/{id}")
     void deletePassager(@PathVariable String id){
-        passagerService.deletePassager(id);
+        passengersService.deletePassager(id);
     }
 }

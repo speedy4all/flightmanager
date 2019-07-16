@@ -1,5 +1,6 @@
 package com.p5.flightmanager.repository.models;
 
+import com.p5.flightmanager.service.dto.FlightType;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -17,13 +18,14 @@ public class Flight extends BaseModel implements Serializable {
         //default constructor
     }
 
-    public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
+    public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate, FlightType flightType) {
         this.name = name;
         this.departureLocation = departureLocation;
         this.destinationLocation = destinationLocation;
         this.durationTime = durationTime;
         this.departureDate = departureDate;
         this.destinationDate = destinationDate;
+        this.flightType = flightType;
     }
 
     public Flight(Flight source) {
@@ -34,6 +36,7 @@ public class Flight extends BaseModel implements Serializable {
         this.durationTime = source.durationTime;
         this.departureDate = source.departureDate;
         this.destinationDate = source.destinationDate;
+        this.flightType = source.flightType;
     }
 
     @Column
@@ -70,7 +73,7 @@ public class Flight extends BaseModel implements Serializable {
         return flightType;
     }
 
-    public void setFlightType(FlightType lo) {
+    public void setFlightType(FlightType flightType) {
         this.flightType = flightType;
     }
 

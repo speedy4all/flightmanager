@@ -9,6 +9,8 @@ import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -79,13 +81,14 @@ public class FlightServiceImpl implements FlightService {
     }
 
     private boolean isValidFlight(FlightDto flightDto) {
-
-        if(flightDto.getDepartureLocation() == null || flightDto.getDepartureLocation().isEmpty()) {
+        if(StringUtils.isEmpty(flightDto.getDepartureLocation())) {
             return false;
         }
+
         if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty()) {
             return false;
         }
+        //TODO: api error
         return true;
     }
 

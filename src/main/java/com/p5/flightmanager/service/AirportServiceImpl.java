@@ -30,7 +30,6 @@ public class AirportServiceImpl implements AirportService {
         {
             return AirportAdapter.toDto(optional.get());
         }
-
         throw new NoAirportException();
     }
 

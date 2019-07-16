@@ -1,8 +1,5 @@
 package com.p5.flightmanager.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.p5.flightmanager.repository.models.FlightType;
-
 import java.util.Date;
 
 //folosim cand vrem sa nu aducem tot din baza in frontend

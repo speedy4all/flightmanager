@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -45,7 +44,6 @@ public class FlightServiceImpl implements FlightService {
     public FlightDto updateFlight(FlightDto flightDto) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
         if(optionalFlight.isPresent()) {
-
             Flight flight = optionalFlight.get();
             flight = FlightAdapter.fromDto(flightDto, flight);
             flightsRepository.save(flight);

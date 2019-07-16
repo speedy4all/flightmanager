@@ -5,6 +5,8 @@ import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.service.api.PassengerService;
 import com.p5.flightmanager.service.dto.PassengerAdapter;
 import com.p5.flightmanager.service.dto.PassengerDto;
+import com.p5.flightmanager.service.exceptions.EmptyFieldException;
+import com.p5.flightmanager.service.exceptions.NoPassengerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +28,11 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public PassengerDto createPassenger(PassengerDto passengerDto) {
         Passenger passenger = null;
-        passenger = passengerRepository.save(PassengerAdapter.fromDto(passengerDto));
+        if(isValidPassenger(passengerDto)){
+            passenger = passengerRepository.save(PassengerAdapter.fromDto(passengerDto));
+        }else{
+            throw new EmptyFieldException();
+        }
         return PassengerAdapter.toDto(passenger);
     }
 
@@ -37,7 +43,15 @@ public class PassengerServiceImpl implements PassengerService {
             Passenger passenger = passengerOptional.get();
             return PassengerAdapter.toDto(passenger);
         }
-        return null;
+        throw new NoPassengerException();
+    }
+
+    private boolean isValidPassenger(PassengerDto passengerDto){
+        if(passengerDto.getFirstName() == null || passengerDto.getFirstName().isEmpty())
+            return false;
+        if(passengerDto.getLastName() == null || passengerDto.getLastName().isEmpty())
+            return false;
+        return true;
     }
 
     @Override
@@ -49,7 +63,7 @@ public class PassengerServiceImpl implements PassengerService {
             passengerRepository.save(passenger);
             return PassengerAdapter.toDto(passenger);
         }
-        return null;
+        throw new NoPassengerException();
     }
 
     @Override

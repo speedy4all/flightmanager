@@ -10,6 +10,8 @@ import java.util.Date;
 @Table(name = "T_PASSENGER")
 public class Passenger extends BaseModel implements Serializable {
 
+    public static final long serialVersionUID = 1L;
+
     public Passenger(){
         //default constructor
     }

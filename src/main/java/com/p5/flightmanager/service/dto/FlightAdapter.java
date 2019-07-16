@@ -3,9 +3,7 @@ package com.p5.flightmanager.service.dto;
 import com.p5.flightmanager.repository.models.Flight;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class FlightAdapter {
 
@@ -28,16 +26,13 @@ public class FlightAdapter {
     public final static List<FlightDto> toListDto(Iterable<Flight> flightList) {
         List<FlightDto> listDto = new ArrayList<>();
         flightList.forEach(flight -> listDto.add(toDto(flight)));
-
         return listDto;
     }
 
     public final static Flight fromDto(FlightDto flightDto) {
         Flight flight = new Flight();
         FlightAdapter.fromDto(flightDto, flight);
-
         return flight;
-
     }
 
     public final static Flight fromDto(FlightDto flightDto, Flight flight) {
@@ -48,7 +43,6 @@ public class FlightAdapter {
         flight.setDurationTime(flightDto.getDurationTime());
         flight.setDepartureDate(flightDto.getDepartureDate());
         flight.setDestinationDate(flightDto.getDestinationDate());
-
         return flight;
     }
 }

@@ -1,6 +1,7 @@
 package com.p5.flightmanager.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.p5.flightmanager.repository.models.FlightType;
 
 import java.util.Date;
 
@@ -15,7 +16,15 @@ public class FlightDto {
     private Double durationTime;
     private String destinationLocation;
     private String fullFlightDescription;
+    private FlightType flightType;
 
+    public FlightType getFlightType() {
+        return flightType;
+    }
+
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
+    }
 
     public Date getDepartureDate() {
         return departureDate;

@@ -4,7 +4,6 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Enumeration;
 
 @Entity
 @Table(name = "T_PASSENGER")
@@ -24,7 +23,6 @@ public class Passenger extends BaseModel implements Serializable {
         this.phoneNumber = phoneNumber;
         this.nationality = nationality;
         this.bornDate = bornDate;
-        this.destinationDate = destinationDate;
         this.title = title;
     }
 
@@ -37,7 +35,6 @@ public class Passenger extends BaseModel implements Serializable {
         this.phoneNumber = source.phoneNumber;
         this.nationality = source.nationality;
         this.bornDate = source.bornDate;
-        this.destinationDate = source.destinationDate;
         this.title = source.title;
     }
 

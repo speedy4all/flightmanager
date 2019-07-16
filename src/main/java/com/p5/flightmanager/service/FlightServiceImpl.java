@@ -5,9 +5,9 @@ import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.exceptions.EmptyFieldException;
-import com.p5.flightmanager.service.exceptions.NoFlightException;
+import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
@@ -88,4 +88,5 @@ public class FlightServiceImpl implements FlightService {
         }
         return true;
     }
+
 }

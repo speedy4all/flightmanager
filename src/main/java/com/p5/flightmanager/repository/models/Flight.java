@@ -1,12 +1,9 @@
 package com.p5.flightmanager.repository.models;
 
+import com.p5.flightmanager.service.dto.FlightType;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -39,6 +36,8 @@ public class Flight extends BaseModel implements Serializable {
         this.departureDate = source.departureDate;
         this.destinationDate = source.destinationDate;
     }
+
+
 
    public String getName() {
         return name;
@@ -88,6 +87,10 @@ public class Flight extends BaseModel implements Serializable {
         this.destinationDate = destinationDate;
     }
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private FlightType flightType;
+
     @Column(name = "name")
     @Type(type = "string")
     private String name;
@@ -113,5 +116,13 @@ public class Flight extends BaseModel implements Serializable {
     @Type(type = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
+
+    public FlightType getFlightType() {
+        return flightType;
+    }
+
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
+    }
 
 }

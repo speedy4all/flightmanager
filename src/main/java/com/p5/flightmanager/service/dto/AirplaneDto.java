@@ -1,62 +1,41 @@
 package com.p5.flightmanager.service.dto;
 
-import java.util.UUID;
-
 public class AirplaneDto {
 
-    private Integer EnginesNumber;
-    private Integer Weight;
-    private Integer SeatsNumber;
-    private String BaseColor;
-    private String Name;
+    private String id;
+    private String model;
+    private Integer numberOfSeats;
+    private String fullPlaneDetails;
 
-    public Integer getEnginesNumber() {
-        return EnginesNumber;
+    public String getModel() {
+        return model;
     }
 
-    public void setEnginesNumber(Integer enginesNumber) {
-        EnginesNumber = enginesNumber;
+    public void setModel(String model) {
+        this.model = model;
     }
 
-    public Integer getWeight() {
-        return Weight;
+    public Integer getNumberOfSeats() {
+        return numberOfSeats;
     }
 
-    public void setWeight(Integer weight) {
-        Weight = weight;
+    public void setNumberOfSeats(Integer numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
     }
 
-    public Integer getSeatsNumber() {
-        return SeatsNumber;
+    public String getFullPlaneDetails() {
+        return fullPlaneDetails;
     }
 
-    public void setSeatsNumber(Integer seatsNumber) {
-        SeatsNumber = seatsNumber;
+    public void setFullPlaneDetails(String fullPlaneDetails) {
+        this.fullPlaneDetails = fullPlaneDetails;
     }
 
-    public String getBaseColor() {
-        return BaseColor;
+    public String getId() {
+        return id;
     }
 
-    public void setBaseColor(String baseColor) {
-        BaseColor = baseColor;
+    public void setId(String id) {
+        this.id = id;
     }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public UUID getId() {
-        return Id;
-    }
-
-    public void setId(UUID id) {
-        Id = id;
-    }
-
-    private UUID Id;
 }

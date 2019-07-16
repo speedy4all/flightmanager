@@ -9,20 +9,20 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "T_PLANE")
-public class Plane extends BaseModel implements Serializable {
+public class Airplanes extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Plane() {
+    public Airplanes() {
         //default constructor
     }
 
-    public Plane(String model, Integer numberOfSeats) {
+    public Airplanes(String model, Integer numberOfSeats) {
         this.model = model;
         this.numberOfSeats = numberOfSeats;
     }
 
-    public Plane(Plane source) {
+    public Airplanes(Airplanes source) {
         super(source);
         this.model = source.model;
         this.numberOfSeats = source.numberOfSeats;

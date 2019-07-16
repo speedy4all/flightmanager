@@ -1,9 +1,6 @@
 package com.p5.flightmanager.web;
 
-import ch.qos.logback.core.pattern.util.RegularEscapeUtil;
-import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.service.api.AirportService;
-import com.p5.flightmanager.service.dto.AirportAdapter;
 import com.p5.flightmanager.service.dto.AirportDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
-import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController

@@ -10,19 +10,20 @@ public class PassengerAdapter {
     public final static PassengerDto toDto(Passenger passenger) {
         PassengerDto passengerDto = new PassengerDto();
         passengerDto.setId(passenger.getId().toString());
+        passengerDto.setDateOfBirth(passenger.getDateOfBirth());
         passengerDto.setFirstName(passenger.getFirstName());
-        passengerDto.setLastName(passenger.getLastName());
-        passengerDto.setFullName(passenger.getFirstName().concat("-").concat(passenger.getLastName()));
-        passengerDto.setBirthdayDate(passenger.getBirthdayDate());
-        passengerDto.setAge(passenger.getAge());
+        passengerDto.setFullPassengerName(passenger.getFirstName().concat(" ").concat(passenger.getLastName()));
         passengerDto.setGender(passenger.getGender());
-        passengerDto.setCnp(passenger.getCnp());
-        passengerDto.setPhoneNumber(passenger.getPhoneNumber());
-        passengerDto.setEmailAddress(passenger.getEmailAddress());
+        passengerDto.setIdentificationCardNumber(passenger.getIdentificationCardNumber());
+        passengerDto.setIssueDate(passenger.getIssueDate());
+        passengerDto.setLanguage(passenger.getLanguage());
+        passengerDto.setLastName(passenger.getLastName());
+        passengerDto.setMobileNumber(passenger.getMobileNumber());
         passengerDto.setNationality(passenger.getNationality());
 
         return passengerDto;
     }
+
 
     public final static List<PassengerDto> toListDto(Iterable<Passenger> passengerList) {
         List<PassengerDto> listDto = new ArrayList<>();
@@ -34,19 +35,19 @@ public class PassengerAdapter {
     public final static Passenger fromDto(PassengerDto passengerDto) {
         Passenger passenger = new Passenger();
         PassengerAdapter.fromDto(passengerDto, passenger);
-
         return passenger;
+
     }
 
     public final static Passenger fromDto(PassengerDto passengerDto, Passenger passenger) {
+        passenger.setDateOfBirth(passengerDto.getDateOfBirth());
         passenger.setFirstName(passengerDto.getFirstName());
-        passenger.setLastName(passengerDto.getLastName());
-        passenger.setAge(passengerDto.getAge());
-        passenger.setBirthdayDate(passengerDto.getBirthdayDate());
         passenger.setGender(passengerDto.getGender());
-        passenger.setCnp(passengerDto.getCnp());
-        passenger.setPhoneNumber(passengerDto.getPhoneNumber());
-        passenger.setEmailAddress(passengerDto.getEmailAddress());
+        passenger.setIdentificationCardNumber(passengerDto.getIdentificationCardNumber());
+        passenger.setIssueDate(passengerDto.getIssueDate());
+        passenger.setLanguage(passengerDto.getLanguage());
+        passenger.setLastName(passengerDto.getLastName());
+        passenger.setMobileNumber(passengerDto.getMobileNumber());
         passenger.setNationality(passengerDto.getNationality());
 
         return passenger;

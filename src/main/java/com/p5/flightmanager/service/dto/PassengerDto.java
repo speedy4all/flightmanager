@@ -1,5 +1,7 @@
 package com.p5.flightmanager.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 import java.util.Date;
 
 public class PassengerDto {
@@ -7,16 +9,15 @@ public class PassengerDto {
     private String id;
     private String firstName;
     private String lastName;
-    private Integer age;
-    private Date birthdayDate;
     private String gender;
-    private String cnp;
-    private String phoneNumber;
-    private String emailAddress;
+    private String email;
+    private String mobileNumber;
+    private Date dateOfBirth;
+    private String identificationCardNumber;
+    private Date issueDate;
     private String nationality;
-
-    private String fullName;
-
+    private String language;
+    private String fullPassengerName;
 
     public String getId() {
         return id;
@@ -42,20 +43,52 @@ public class PassengerDto {
         this.lastName = lastName;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public String getGender() {
         return gender;
     }
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getIdentificationCardNumber() {
+        return identificationCardNumber;
+    }
+
+    public void setIdentificationCardNumber(String identificationCardNumber) {
+        this.identificationCardNumber = identificationCardNumber;
+    }
+
+    public Date getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
     }
 
     public String getNationality() {
@@ -66,43 +99,19 @@ public class PassengerDto {
         this.nationality = nationality;
     }
 
-    public Date getBirthdayDate() {
-        return birthdayDate;
+    public String getLanguage() {
+        return language;
     }
 
-    public void setBirthdayDate(Date birthdayDate) {
-        this.birthdayDate = birthdayDate;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
-    public String getCnp() {
-        return cnp;
+    public String getFullPassengerName() {
+        return fullPassengerName;
     }
 
-    public void setCnp(String cnp) {
-        this.cnp = cnp;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFullPassengerName(String fullPassengerName) {
+        this.fullPassengerName = fullPassengerName;
     }
 }

@@ -4,6 +4,7 @@ import com.p5.flightmanager.service.api.PassengerService;
 import com.p5.flightmanager.service.dto.PassengerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/passager")
 @Consumes("application/json")
 @Produces("application/json")
+@Transactional
 
 public class PassengerController {
 

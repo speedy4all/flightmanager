@@ -6,15 +6,17 @@ public class PassengerDto {
 
     private String id;
     private String firstName;
-    private String secondName;
+    private String lastName;
     private Integer age;
-    private String sex;
     private Date birthdayDate;
-    private String email;
+    private String gender;
+    private String cnp;
     private String phoneNumber;
-    private String country;
-    private String identifyNumber;
+    private String emailAddress;
+    private String nationality;
+
     private String fullName;
+
 
     public String getId() {
         return id;
@@ -32,12 +34,12 @@ public class PassengerDto {
         this.firstName = firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Integer getAge() {
@@ -48,28 +50,36 @@ public class PassengerDto {
         this.age = age;
     }
 
-    public String getSex() {
-        return sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public Date getBirthdayDate() {
         return birthdayDate;
     }
 
-    public void setBirthdayDate(Date birthDate) {
-        this.birthdayDate = birthDate;
+    public void setBirthdayDate(Date birthdayDate) {
+        this.birthdayDate = birthdayDate;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCnp() {
+        return cnp;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCnp(String cnp) {
+        this.cnp = cnp;
     }
 
     public String getPhoneNumber() {
@@ -80,20 +90,12 @@ public class PassengerDto {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCountry() {
-        return country;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getIdentifyNumber() {
-        return identifyNumber;
-    }
-
-    public void setIdentifyNumber(String identifyNumber) {
-        this.identifyNumber = identifyNumber;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     public String getFullName() {
@@ -103,5 +105,4 @@ public class PassengerDto {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-
 }

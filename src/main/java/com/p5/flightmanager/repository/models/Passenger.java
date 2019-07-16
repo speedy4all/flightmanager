@@ -9,68 +9,88 @@ import java.util.Date;
 @Entity
 @Table(name = "T_PASSENGER")
 public class Passenger extends BaseModel implements Serializable {
-
     public static final long serialVersionUID = 1L;
 
-    public Passenger(){
+    public Passenger() {
         //default constructor
     }
 
-    public Passenger(String firstName, String secondName, Integer age, String sex, String identifyNumber, String country, Date birthdayDate, String email, String phoneNumber) {
+    public Passenger(String firstName, String lastName, Date birthdayDate, Integer age, String gender, String cnp, String phoneNumber, String emailAddress, String nationality) {
         this.firstName = firstName;
-        this.secondName = secondName;
-        this.age = age;
-        this.sex = sex;
-        this.identifyNumber = identifyNumber;
-        this.country = country;
+        this.lastName = lastName;
         this.birthdayDate = birthdayDate;
-        this.email = email;
+        this.age = age;
+        this.gender = gender;
+        this.cnp = cnp;
         this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.nationality = nationality;
     }
 
     public Passenger(Passenger source) {
         super(source);
         this.firstName = source.firstName;
-        this.secondName = source.secondName;
-        this.age = source.age;
-        this.sex = source.sex;
-        this.identifyNumber = source.identifyNumber;
-        this.country = source.country;
+        this.lastName = source.lastName;
         this.birthdayDate = source.birthdayDate;
-        this.email = source.email;
+        this.age = source.age;
+        this.gender = source.gender;
+        this.cnp = source.cnp;
         this.phoneNumber = source.phoneNumber;
+        this.emailAddress = source.emailAddress;
+        this.nationality = source.nationality;
     }
 
-    public Integer getAge() {
-        return age;
+    @Column(name = "first_name")
+    @Type(type = "string")
+    private String firstName;
+
+    @Column(name = "last_name")
+    @Type(type = "string")
+    private String lastName;
+
+    @Column(name = "birthday_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date birthdayDate;
+
+    @Column(name = "age")
+    @Type(type = "integer")
+    private Integer age;
+
+    @Column(name = "gender")
+    @Type(type = "string")
+    private String gender;
+
+    @Column(name = "cnp")
+    @Type(type = "string")
+    private String cnp;
+
+    @Column(name = "phone_number")
+    @Type(type = "string")
+    private String phoneNumber;
+
+    @Column(name = "email_address")
+    @Type(type = "string")
+    private String emailAddress;
+
+    @Column(name = "nationality")
+    @Type(type = "string")
+    private String nationality;
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSex() {
-        return sex;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getIdentifyNumber() {
-        return identifyNumber;
-    }
-
-    public void setIdentifyNumber(String identifyNumber) {
-        this.identifyNumber = identifyNumber;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Date getBirthdayDate() {
@@ -81,12 +101,28 @@ public class Passenger extends BaseModel implements Serializable {
         this.birthdayDate = birthdayDate;
     }
 
-    public String getEmail() {
-        return email;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getCnp() {
+        return cnp;
+    }
+
+    public void setCnp(String cnp) {
+        this.cnp = cnp;
     }
 
     public String getPhoneNumber() {
@@ -97,57 +133,19 @@ public class Passenger extends BaseModel implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getNationality() {
+        return nationality;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
-
-    @Column(name = "first_name")
-    @Type(type = "string")
-    private String firstName;
-
-    @Column(name = "second_name")
-    @Type(type = "string")
-    private String secondName;
-
-    @Column(name = "age")
-    @Type(type = "integer")
-    private Integer age;
-
-    @Column(name = "sex")
-    @Type(type = "string")
-    private String sex;
-
-    @Column(name = "identify_number")
-    @Type(type = "string")
-    private String identifyNumber;
-
-    @Column(name = "country")
-    @Type(type = "string")
-    private String country;
-
-    @Column(name = "birthday_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date birthdayDate;
-
-    @Column(name = "email")
-    @Type(type = "string")
-    @Temporal(TemporalType.TIMESTAMP)
-    private String email;
-
-    @Column(name = "phone_number")
-    @Type(type = "string")
-    private String phoneNumber;
 }

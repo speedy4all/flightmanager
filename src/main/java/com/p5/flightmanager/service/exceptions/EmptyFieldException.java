@@ -2,12 +2,10 @@ package com.p5.flightmanager.service.exceptions;
 
 public class EmptyFieldException extends RuntimeException {
 
-    public EmptyFieldException(){
-
-    }
+    public EmptyFieldException() {}
 
     @Override
-    public String getMessage(){
-        return "Flight object is not valid";
+    public String getMessage() {
+        return "Field is not valid";
     }
 }

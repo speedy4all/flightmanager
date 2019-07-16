@@ -3,9 +3,7 @@ package com.p5.flightmanager.service.dto;
 import com.p5.flightmanager.repository.models.Flight;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class FlightAdapter {
 

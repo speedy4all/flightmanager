@@ -83,9 +83,11 @@ public class FlightServiceImpl implements FlightService {
         if(flightDto.getDepartureLocation() == null || flightDto.getDepartureLocation().isEmpty()) {
             return false;
         }
+
         if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty()) {
             return false;
         }
+
         return true;
     }
 

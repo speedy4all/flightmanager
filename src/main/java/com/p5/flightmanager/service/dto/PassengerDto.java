@@ -1,5 +1,7 @@
 package com.p5.flightmanager.service.dto;
 
+import com.p5.flightmanager.repository.models.TitlePassenger;
+
 import java.util.Date;
 
 public class PassengerDto {
@@ -12,7 +14,7 @@ public class PassengerDto {
     private String phoneNumber;
     private String nationality;
     private Date bornDate;
-    private String title;
+    private TitlePassenger title;
     private String fullName;
 
     public String getId() {
@@ -87,11 +89,11 @@ public class PassengerDto {
         this.bornDate = bornDate;
     }
 
-    public String getTitle() {
+    public TitlePassenger getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(TitlePassenger title) {
         this.title = title;
     }
 }

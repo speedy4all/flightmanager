@@ -15,7 +15,7 @@ public class Passenger extends BaseModel implements Serializable {
         //default constructor
     }
 
-    public Passenger(String firstName, String lastName, String personalID, String email, String phoneNumber, String nationality, Date bornDate, Date destinationDate, String title) {
+    public Passenger(String firstName, String lastName, String personalID, String email, String phoneNumber, String nationality, Date bornDate, Date destinationDate, TitlePassenger title) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.personalID = personalID;
@@ -73,8 +73,8 @@ public class Passenger extends BaseModel implements Serializable {
     private Date destinationDate;
 
     @Column(name = "title")
-    @Type(type = "string")
-    private String title;
+    @Enumerated(EnumType.STRING)
+    private TitlePassenger title;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -144,11 +144,11 @@ public class Passenger extends BaseModel implements Serializable {
         this.destinationDate = destinationDate;
     }
 
-    public String getTitle() {
+    public TitlePassenger getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(TitlePassenger title) {
         this.title = title;
     }
     

@@ -1,7 +1,5 @@
 package com.p5.flightmanager.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-
 import java.util.Date;
 
 public class FlightDto {

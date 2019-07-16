@@ -39,6 +39,8 @@ public class AirportServiceImpl implements AirportService {
             throw new EmptyFieldException();
         }
 
+
+        //TODO: api error here; to implement enum on flight BTW
         return AirportAdapter.toDto(airport);
     }
 

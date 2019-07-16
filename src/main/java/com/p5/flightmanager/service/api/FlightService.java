@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface FlightService {
 
-    List<FlightDto> getAll();
+    List<FlightDto> getAll(String search);
 
     FlightDto createFlight(FlightDto flightDto);
 
@@ -16,5 +16,6 @@ public interface FlightService {
 
     FlightDto updateFlight(FlightDto flightDto);
 
-    void deleteFlight(String id);
+    void deleteFlight(String flightDtoID);
+
 }

@@ -6,6 +6,7 @@ public class PassagerDto {
     private String id;
     private String firstName;
     private String lastName;
+    private String npc;
     private Date birthDate;
     private int age;
 
@@ -47,5 +48,13 @@ public class PassagerDto {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getNpc() {
+        return npc;
+    }
+
+    public void setNpc(String npc) {
+        this.npc = npc;
     }
 }

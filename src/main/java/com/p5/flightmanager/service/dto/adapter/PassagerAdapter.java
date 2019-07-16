@@ -1,6 +1,7 @@
 package com.p5.flightmanager.service.dto.adapter;
 
 import com.p5.flightmanager.repository.models.Passager;
+import com.p5.flightmanager.service.PassagerServiceImpl;
 import com.p5.flightmanager.service.dto.PassagerDto;
 
 import java.time.Period;
@@ -18,7 +19,8 @@ public class PassagerAdapter {
         passagerDto.setFirstName(passager.getFirstName());
         passagerDto.setLastName(passager.getLastName());
         passagerDto.setId(passager.getId().toString());
-        //passagerDto.setAge(new Date().getYear() - passager.getBirthDate().getYear());
+        passagerDto.setNpc(passager.getNpc());
+        passagerDto.setAge(PassagerServiceImpl.calculateAge(passager.getBirthDate(), new Date()));
 
         return passagerDto;
     }
@@ -39,6 +41,7 @@ public class PassagerAdapter {
         passager.setBirthDate(passagerDto.getBirthDate());
         passager.setFirstName(passagerDto.getFirstName());
         passager.setLastName(passagerDto.getLastName());
+        passager.setNpc(passagerDto.getNpc());
 
         return passager;
     }

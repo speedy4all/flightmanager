@@ -23,6 +23,19 @@ public class FlightmanagerApplication {
 
 /*
 
+Airport
+    -terminals
+    -location
+    -code (airport code)
+    -fus orar (offset) (Timezone -> String, sau Integer (180, 300 min))
+
+Plane
+    -nr locuri
+    -companie
+
+enum pt Flight (ce tip de flight este)
+
+
 {
     "firstName": "Lorena-Ionela",
     "lastName": "Pavel",

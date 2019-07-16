@@ -11,5 +11,5 @@ import java.util.UUID;
 public interface AirportsRepository extends CrudRepository<Airport, UUID> {
 
     @Query("select f from Airport f where lower(location) like concat('%',lower(?1),'%')")
-    Iterable<Airport> filterByName(String search);
+    Iterable<Airport> filterByLocation(String search);
 }

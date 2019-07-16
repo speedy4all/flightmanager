@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface PassengerService {
 
-    List<PassengerDto> getAll();
+    List<PassengerDto> getAll(String search);
 
     PassengerDto createPassenger(PassengerDto passengerDto);
 

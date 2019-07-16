@@ -1,15 +1,10 @@
 package com.p5.flightmanager.service;
 
 import com.p5.flightmanager.repository.PassengersRepository;
-import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.models.Passenger;
-import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.api.PassengerService;
-import com.p5.flightmanager.service.dto.FlightAdapter;
-import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.PassengerAdapter;
 import com.p5.flightmanager.service.dto.PassengerDto;
-import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoPassengerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,8 +21,8 @@ public class PassengerServiceImpl implements PassengerService {
     private PassengersRepository passengerRepository;
 
     @Override
-    public List<PassengerDto> getAll() {
-        return PassengerAdapter.toListDto(passengerRepository.findAll());
+    public List<PassengerDto> getAll(String search) {
+        return PassengerAdapter.toListDto(passengerRepository.filterByFirstName(search));
 
     }
 

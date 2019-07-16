@@ -20,7 +20,7 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     public List<AirportDto> getAll(String search) {
-        return AirportAdapter.toListDto(airportsRepository.filterByName(search));
+        return AirportAdapter.toListDto(airportsRepository.filterByLocation(search));
     }
 
     @Override

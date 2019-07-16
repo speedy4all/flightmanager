@@ -23,9 +23,9 @@ public class PassengerController {
     private PassengerService passengerService;
 
     @GetMapping
-    ResponseEntity<List<PassengerDto>> getAll() {
+    ResponseEntity<List<PassengerDto>> getAll(@RequestParam String search) {
 
-        return ResponseEntity.ok(passengerService.getAll());
+        return ResponseEntity.ok(passengerService.getAll(search));
     }
 
     @GetMapping("/{id}")

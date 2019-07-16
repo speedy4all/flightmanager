@@ -25,11 +25,13 @@ public class FlightsController {
 
     @GetMapping
     ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
+
         return ResponseEntity.ok(flightService.getAll(search));
     }
 
     @GetMapping("/{id}")
     ResponseEntity<FlightDto> getById(@PathVariable String id) {
+
         return ResponseEntity.ok(flightService.getById(id));
     }
 
@@ -39,7 +41,7 @@ public class FlightsController {
     }
 
     @PutMapping("/update")
-    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto){
+    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
     }
 

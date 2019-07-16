@@ -3,7 +3,7 @@ package com.p5.flightmanager.service;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.service.api.FlightService;
-import com.p5.flightmanager.service.dto.adapter.FlightAdapter;
+import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
@@ -21,49 +21,63 @@ public class FlightServiceImpl implements FlightService {
     private FlightsRepository flightsRepository;
 
     public List<FlightDto> getAll(String search) {
-        if (search == null){
-            search = "";
-        }
 
-        return FlightAdapter.toListDto(flightsRepository.filterByName(search.toLowerCase()));
+//        if(search == null) {
+//            search = "";
+//        }
+        return FlightAdapter.toListDto(flightsRepository.filterByName(search));
     }
 
     @Override
     public FlightDto createFlight(FlightDto flightDto) {
-//        Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
-        Flight flight;
-        if (isValidFlight(flightDto)){
-            flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
-        } else {
-            throw new EmptyFieldException();
+        //Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
+        if(!isValidateFlight(flightDto)) {
+            throw  new EmptyFieldException();
         }
+        Flight flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
 
         return FlightAdapter.toDto(flight);
     }
 
-    @Override
-    public FlightDto getById(String id) {
-        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
-        if(optionalFlight.isPresent()) {
-            Flight flight = optionalFlight.get();
-
-            return FlightAdapter.toDto(flight);
+    private boolean isValidateFlight(FlightDto flightDto) {
+        if (flightDto.getDepartureLocation() == null || flightDto.getDepartureLocation().isEmpty()) {
+            return false;
         }
-        throw new NoFlightException();
+        if (flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty()){
+            return false;
+        }
+        if (flightDto.getName() == null || flightDto.getName().isEmpty()){
+            return false;
+        }
+        if(flightDto.getDurationTime() == null || flightDto.getDurationTime().isNaN()) {
+            return false;
+        }
+        if(flightDto.getDepartureDate() == null || flightDto.getDestinationDate() == null) {
+            return false;
+        }
+        return true;
     }
+        @Override
+        public FlightDto getById(String id) {
+            Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
+            if(optionalFlight.isPresent()) {
+                Flight flight = optionalFlight.get();
+                return FlightAdapter.toDto(flight);
+            }
+            //throw new NoFlightException("No flight found");
+            throw new NoFlightException();
+        }
 
     @Override
     public FlightDto updateFlight(FlightDto flightDto) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
-        Flight flight;
-
         if(optionalFlight.isPresent()) {
-            flight = flightsRepository.save(FlightAdapter.fromDto(flightDto, optionalFlight.get()));
-        } else {
-            throw new EmptyFieldException();
+            Flight flight = optionalFlight.get();
+            FlightAdapter.fromDto(flightDto, flight);
+            flightsRepository.save(flight);
+            return FlightAdapter.toDto(flight);
         }
-
-        return FlightAdapter.toDto(flight);
+        throw new NoFlightException();
     }
 
     @Override
@@ -72,16 +86,10 @@ public class FlightServiceImpl implements FlightService {
         if(optionalFlight.isPresent()) {
             Flight flight = optionalFlight.get();
             flightsRepository.delete(flight);
-        } else {
-            throw new NoFlightException();
+            return;
         }
+        throw new NoFlightException();
     }
 
-    private boolean isValidFlight(FlightDto flightDto){
-        if (flightDto.getDepartureLocation() == null || flightDto.getDepartureLocation().isEmpty()){
-            return false;
-        }
 
-        return true;
-    }
 }

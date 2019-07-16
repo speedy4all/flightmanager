@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @MappedSuperclass
-@EntityListeners({BaseModel.EntityListner.class})
+@EntityListeners({BaseModel.EntityListener.class})
 public abstract class BaseModel implements Serializable {
 
     @Id
@@ -25,21 +25,21 @@ public abstract class BaseModel implements Serializable {
     private Date createdDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_update")
+    @Column(name = "date_updated")
     @Type(type = "date")
-    private Date updateDate;
+    private Date updatedDate;
 
-    @Column(name = "deleted")
+    @Column(nullable = false, name = "deleted")
     @Type(type = "boolean")
     private Boolean deleted = Boolean.FALSE;
 
-    public BaseModel(){
-        //default constructor
+    public BaseModel() {
+        //default construcor
     }
 
     public BaseModel(BaseModel source){
         this.createdDate = source.createdDate;
-        this.updateDate = source.updateDate;
+        this.updatedDate = source.updatedDate;
         this.deleted = source.deleted;
     }
 
@@ -59,12 +59,12 @@ public abstract class BaseModel implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Date getUpdateDate() {
-        return updateDate;
+    public Date getUpdatedDate() {
+        return updatedDate;
     }
 
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
     public Boolean getDeleted() {
@@ -75,16 +75,16 @@ public abstract class BaseModel implements Serializable {
         this.deleted = deleted;
     }
 
-    public static class EntityListner{
+    public static class EntityListener {
 
         @PrePersist
-        public void onPrePersist(BaseModel baseModel){
+        public void onPrePersit(BaseModel baseModel){
             baseModel.setCreatedDate(new Date());
         }
 
         @PreUpdate
         public void onPreUpdate(BaseModel baseModel){
-            baseModel.setUpdateDate(new Date());
+            baseModel.setUpdatedDate(new Date());
         }
     }
 }

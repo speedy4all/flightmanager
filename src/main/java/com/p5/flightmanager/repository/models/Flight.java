@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "T_FLIGHT")
-public class Flight extends BaseModel implements Serializable {
+public class Flight extends BaseModel implements Serializable{
 
     public static final long serialVersionUID = 1L;
 

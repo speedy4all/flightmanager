@@ -10,15 +10,13 @@ import java.util.List;
 public class ApiError {
 
     private HttpStatus status;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime timestamp;
-
     private String message;
     private String debugMessage;
     private List<ApiSubError> subErrors = new ArrayList<>();
 
-    private ApiError(){
+    private ApiError() {
         timestamp = LocalDateTime.now();
     }
 
@@ -27,11 +25,11 @@ public class ApiError {
         this.status = status;
     }
 
-    ApiError(HttpStatus status, String message, Throwable exception){
+    ApiError(HttpStatus status, String message, Throwable ex){
         this();
         this.status = status;
         this.message = message;
-        this.debugMessage = exception.getLocalizedMessage();
+        this.debugMessage = ex.getLocalizedMessage();
     }
 
     public HttpStatus getStatus() {

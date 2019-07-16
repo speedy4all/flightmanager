@@ -33,7 +33,6 @@ public class FlightServiceImpl implements FlightService {
         Flight flight = null;
         //Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
         if(isValidFlight(flightDto)) {
-
              flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
         } else {
             throw new EmptyFieldException();

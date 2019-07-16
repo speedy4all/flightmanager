@@ -1,6 +1,6 @@
 package com.p5.flightmanager.service.dto;
 
-public class PassagerDto {
+public class PassengerDto {
     private String name;
     private Double birthdate;
     private String npc;

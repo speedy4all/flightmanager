@@ -1,6 +1,5 @@
-package com.p5.flightmanager.repository;
+package com.p5.flightmanager.repository.models;
 
-import com.p5.flightmanager.repository.models.BaseModel;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -10,20 +9,20 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="T_PASSAGER")
-public class Passager extends BaseModel implements Serializable {
+public class Passenger extends BaseModel implements Serializable {
     public static final long serialVersionUID=1L;
-    public Passager(){
+    public Passenger(){
 
     }
 
-    public Passager(Passager source) {
+    public Passenger(Passenger source) {
         super(source);
         this.name=source.name;
         this.birthDate=source.birthDate;
         this.npc=source.npc;
     }
 
-    public Passager(String name, Double birthDate, String npc){
+    public Passenger(String name, Double birthDate, String npc){
         this.name=name;
         this.birthDate=birthDate;
         this.npc=npc;

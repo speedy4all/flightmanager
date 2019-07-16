@@ -1,7 +1,7 @@
 package com.p5.flightmanager.service.exceptions;
 
-public class NoPassagerException extends RuntimeException{
-    public NoPassagerException(){
+public class NoPassengerException extends RuntimeException{
+    public NoPassengerException(){
 
     }
     @Override

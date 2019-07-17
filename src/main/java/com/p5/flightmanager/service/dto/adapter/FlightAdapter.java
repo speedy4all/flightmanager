@@ -18,6 +18,7 @@ public class FlightAdapter {
         flightDto.setFullFlightDescription(flight.getDepartureLocation().concat("-").concat(flight.getDestinationLocation()));
         flightDto.setDepartureDate(flight.getDepartureDate());
         flightDto.setDestinationDate(flight.getDestinationDate());
+        flightDto.setFlightType(flight.getFlightType());
 
         return flightDto;
     }
@@ -41,6 +42,7 @@ public class FlightAdapter {
         flight.setDurationTime(flightDto.getDurationTime());
         flight.setDepartureDate(flightDto.getDepartureDate());
         flight.setDestinationDate(flightDto.getDestinationDate());
+        flight.setFlightType(flightDto.getFlightType());
 
         return flight;
     }

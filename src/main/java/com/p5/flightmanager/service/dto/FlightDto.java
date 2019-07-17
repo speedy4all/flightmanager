@@ -12,6 +12,11 @@ public class FlightDto {
     private String fullFlightDescription;
     private Date departureDate;
     private Date destinationDate;
+    private FlightType flightType;
+
+    public FlightType getFlightType() { return flightType; }
+
+    public void setFlightType(FlightType flightType) { this.flightType = flightType; }
 
     public Date getDepartureDate() {
         return departureDate;
@@ -33,9 +38,7 @@ public class FlightDto {
         return fullFlightDescription;
     }
 
-    public void setFullFlightDescription(String fullFlightDescription) {
-        this.fullFlightDescription = fullFlightDescription;
-    }
+    public void setFullFlightDescription(String fullFlightDescription) { this.fullFlightDescription = fullFlightDescription; }
 
     public String getId() {
         return id;

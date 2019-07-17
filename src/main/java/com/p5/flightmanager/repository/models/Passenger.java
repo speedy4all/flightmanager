@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "T_PASSAGER")
+@Table(name = "T_PASSENGER")
 public class Passenger extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;

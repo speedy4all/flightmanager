@@ -1,7 +1,9 @@
 package com.p5.flightmanager.service;
 
+import com.p5.flightmanager.repository.AirportsRepository;
 import com.p5.flightmanager.repository.PassengersRepository;
 import com.p5.flightmanager.repository.PlanesRepository;
+import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
@@ -12,9 +14,11 @@ import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,6 +35,9 @@ public class FlightServiceImpl implements FlightService {
 
     @Autowired
     private PlanesRepository planeRepository;
+
+    @Autowired
+    private AirportsRepository airportsRepository;
 
     public List<FlightDto> getAll(String search) {
 
@@ -107,6 +114,40 @@ public class FlightServiceImpl implements FlightService {
                 flightsRepository.save(flight);
             }
         }
+    }
+
+    @Override
+    public void addDestinationAirport(String flightId, String destinationAirportId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
+        if(optionalFlight.isPresent()) {
+            Optional<Airport> optionalAirport = airportsRepository.findById(UUID.fromString(destinationAirportId));
+            if(optionalAirport.isPresent()) {
+                Flight flight = optionalFlight.get();
+                Airport airport = optionalAirport.get();
+                flight.setDestinationAirport(airport);
+                flightsRepository.save(flight);
+            }
+        }
+    }
+
+    @Override
+    public void addLocationAirport(String flightId, String locationnAirportId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
+        if(optionalFlight.isPresent()) {
+            Optional<Airport> optionalAirport = airportsRepository.findById(UUID.fromString(locationnAirportId));
+            if(optionalAirport.isPresent()) {
+                Flight flight = optionalFlight.get();
+                Airport airport = optionalAirport.get();
+                flight.setLocationAirport(airport);
+                flightsRepository.save(flight);
+            }
+        }
+    }
+
+    @Override
+    public List<FlightDto> getBySearchParams(Date departureDate, String location) {
+        Iterable<Flight> flights = flightsRepository.getBySearchparams(departureDate, location);
+        return FlightAdapter.toListDto(flights);
     }
 
     private boolean isValidFlight(FlightDto flightDto) {

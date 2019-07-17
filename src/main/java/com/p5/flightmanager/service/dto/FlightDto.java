@@ -1,8 +1,5 @@
 package com.p5.flightmanager.service.dto;
 
-import com.p5.flightmanager.repository.models.Passenger;
-import com.p5.flightmanager.repository.models.Plane;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,14 +15,16 @@ public class FlightDto {
     private String destinationLocation;
     private String fullFlightDescription;
     private FlightType flightType;
-    private Plane plane;
-    private List<PassengerDto> passengerDtos = new ArrayList<>();
+    private PlaneDto plane;
+    private AirportDto destinationAirport;
+    private AirportDto locationAirport;
+    private List<PassengerDto> passengers = new ArrayList<>();
 
-    public Plane getPlane() {
+    public PlaneDto getPlane() {
         return plane;
     }
 
-    public void setPlane(Plane plane) {
+    public void setPlane(PlaneDto plane) {
         this.plane = plane;
     }
 
@@ -101,11 +100,27 @@ public class FlightDto {
         this.fullFlightDescription = fullFlightDescription;
     }
 
-    public List<PassengerDto> getPassengerDtos() {
-        return passengerDtos;
+    public List<PassengerDto> getPassengers() {
+        return passengers;
     }
 
-    public void setPassengerDtos(List<PassengerDto> passengerDtos) {
-        this.passengerDtos = passengerDtos;
+    public void setPassengers(List<PassengerDto> passengers) {
+        this.passengers = passengers;
+    }
+
+    public AirportDto getDestinationAirport() {
+        return destinationAirport;
+    }
+
+    public void setDestinationAirport(AirportDto destinationAirport) {
+        this.destinationAirport = destinationAirport;
+    }
+
+    public AirportDto getLocationAirport() {
+        return locationAirport;
+    }
+
+    public void setLocationAirport(AirportDto locationAirport) {
+        this.locationAirport = locationAirport;
     }
 }

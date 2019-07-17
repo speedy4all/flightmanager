@@ -3,12 +3,13 @@ package com.p5.flightmanager.web;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -61,4 +62,19 @@ public class FlightController {
     void addPlaneToFlight(@PathVariable String flightId, @PathVariable String planeId){
         flightService.addPlaneToFlight(flightId,planeId);
     }
+
+    @PutMapping("/{flightId}/add-destination/{planeId}")
+    void addDestinationAirport(@PathVariable String flightId, @PathVariable String planeId){
+        flightService.addDestinationAirport(flightId,planeId);
+    }
+
+    @PutMapping("/{flightId}/add-location/{planeId}")
+    void addLocationAirport(@PathVariable String flightId, @PathVariable String planeId){
+        flightService.addLocationAirport(flightId,planeId);
+    }
+
+    @GetMapping("/search-by")
+    ResponseEntity<List<FlightDto>> getBySearchParams(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date departureDate, @RequestParam String location) {
+        return ResponseEntity.ok(flightService.getBySearchParams(departureDate, location));
+    } //iso date e format an-luna-zi
 }

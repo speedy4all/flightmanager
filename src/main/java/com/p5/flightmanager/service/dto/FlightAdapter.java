@@ -1,6 +1,7 @@
 package com.p5.flightmanager.service.dto;
 
 import com.p5.flightmanager.repository.models.Flight;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +19,16 @@ public class FlightAdapter {
         flightDto.setDepartureLocation(flight.getDepartureLocation());
         flightDto.setDestinationLocation(flight.getDestinationLocation());
         flightDto.setDurationTime(flight.getDurationTime());
-        flightDto.setPlane(flight.getPlane());
-        flightDto.setPassengerDtos(PassengerAdapter.toListDto(flight.getPassengerList()));
+        if(flight.getPlane() != null) {
+            flightDto.setPlane(PlaneAdapter.toDto(flight.getPlane()));
+        }
+        if(flight.getDestinationAirport() != null) {
+            flightDto.setDestinationAirport(AirportAdapter.toDto(flight.getDestinationAirport()));
+        }
+        if(flight.getLocationAirport() != null) {
+            flightDto.setLocationAirport(AirportAdapter.toDto(flight.getLocationAirport()));
+        }
+        flightDto.setPassengers(PassengerAdapter.toListDto(flight.getPassengerList()));
 
         return flightDto;
     }

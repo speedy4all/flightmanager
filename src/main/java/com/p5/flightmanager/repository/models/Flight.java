@@ -18,9 +18,11 @@ public class Flight extends BaseModel implements Serializable {
 //pe flight adaugam un plane (mai multe flighturi la un plane)
 //aeroport cu flight many to many
 //metoda prin care asignam unui aeroport un flight
-//pe aeroport o lsta de light
+//pe aeroport o lsta de flight
 //pe flight un aeroport destination, unu location
     public static final long serialVersionUID = 1L;
+    //toate flighturile care au data de plecare o anumita data si locatia, o locatie
+
 
     @Column()
     @Enumerated(EnumType.STRING)
@@ -65,8 +67,16 @@ public class Flight extends BaseModel implements Serializable {
     List<Passenger> passengerList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
-    //@JoinColumn(name = "plane_id", nullable = false, foreignKey = @ForeignKey(name = "fk_plane"))
+    @JoinColumn(name = "plane_id", nullable = false)
     Plane plane;
+
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Airport.class)
+    @JoinColumn(name = "destination_airport_id", nullable = false)
+    Airport destinationAirport;
+
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Airport.class)
+    @JoinColumn(name = "location_airport_id", nullable = false)
+    Airport locationAirport;
 
     public Flight() {
         //default constructor
@@ -165,5 +175,21 @@ public class Flight extends BaseModel implements Serializable {
 
     public void setDestinationDate(Date destinationDate) {
         this.destinationDate = destinationDate;
+    }
+
+    public Airport getDestinationAirport() {
+        return destinationAirport;
+    }
+
+    public void setDestinationAirport(Airport destinationAirport) {
+        this.destinationAirport = destinationAirport;
+    }
+
+    public Airport getLocationAirport() {
+        return locationAirport;
+    }
+
+    public void setLocationAirport(Airport locationAirport) {
+        this.locationAirport = locationAirport;
     }
 }

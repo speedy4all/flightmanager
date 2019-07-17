@@ -11,8 +11,15 @@ import java.util.List;
 public interface AirportService {
 
     List<AirportDto> getAll(String search);
+
     AirportDto getById(String id);
+
     AirportDto updateAirport(AirportDto airportDto);
+
     AirportDto createAirport(AirportDto airportDto);
+
     void delete(String id);
+
+    void addFlight(String airportId, String flightId);
+
 }

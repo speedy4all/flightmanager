@@ -6,8 +6,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -46,5 +48,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     //constrruieste un nou obiect ResponseEntity care se va duce catre client, cu eroarea noastra si statusul ei
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
         return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    //@ResponseStatus(HttpStatus.NOT_FOUND)
+    ResponseEntity<Object> handleBadArguments(MethodArgumentNotValidException ex) {
+        return buildResponseEntity(new ApiError((HttpStatus.BAD_REQUEST)));
     }
 }

@@ -5,7 +5,11 @@ import org.hibernate.annotations.Type;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
+import java.util.Date;
+
 
 @Entity
 @Table(name = "T_AIRPORT")
@@ -13,46 +17,44 @@ public class Airport extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Airport(){
-        //default constructor
-    }
-
-    public Airport(String name, String city, String country, Integer offSet, String IATA) {
-        this.name = name;
-        this.city = city;
-        this.country = country;
-        this.offSet = offSet;
-        this.iata = IATA;
-    }
-
-    public Airport(Airport source) {
-        super(source);
-        this.name = source.name;
-        this.city = source.city;
-        this.country = source.country;
-        this.offSet = source.offSet;
-        this.iata = source.iata;
-    }
-
     @Column(name = "name")
     @Type(type = "string")
-    private String name;
+    public String name;
 
-    @Column(name = "city")
+    @Column(name = "location")
     @Type(type = "string")
-    private String city;
+    public String location;
 
-    @Column(name = "country")
+    @Column(name = "identification_number")
     @Type(type = "string")
-    private String country;
+    public String identificationNumber;
 
-    @Column(name = "off_set")
-    @Type(type = "int")
-    private Integer offSet;
+    @Column(name = "timezone_offset")
+    @Type(type = "integer")
+    public Integer offset;
 
-    @Column(name = "iata")
-    @Type(type = "string")
-    private String iata;
+    @Column(name = "terminals")
+    @Type(type = "integer")
+    public Integer terminals;
+
+    public Airport() {
+        // default constructor
+    }
+
+    public Airport(String name, String location, String identificationNumber, Integer offset) {
+        this.name = name;
+        this.location = location;
+        this.identificationNumber = identificationNumber;
+        this.offset = offset;
+    }
+
+    public Airport(BaseModel source) {
+        super(source);
+        this.name = name;
+        this.location = location;
+        this.identificationNumber = identificationNumber;
+        this.offset = offset;
+    }
 
     public String getName() {
         return name;
@@ -62,36 +64,31 @@ public class Airport extends BaseModel implements Serializable {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getCountry() {
-        return country;
+    public String getIdentificationNumber() {
+        return identificationNumber;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setIdentificationNumber(String identificationNumber) {
+        this.identificationNumber = identificationNumber;
     }
 
-    public Integer getOffSet() {
-        return offSet;
+    public Integer getOffset() {
+        return offset;
     }
 
-    public void setOffSet(Integer offSet) {
-        this.offSet = offSet;
+    public void setOffset(Integer offset) {
+        this.offset = offset;
     }
 
-    public String getIata() {
-        return iata;
-    }
+    public Integer getTerminals() { return terminals; }
 
-    public void setIata(String iata) {
-        this.iata = iata;
-    }
-
+    public void setTerminals(Integer terminals) { this.terminals = terminals; }
 }

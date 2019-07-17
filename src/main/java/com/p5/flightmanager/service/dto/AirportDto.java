@@ -2,15 +2,24 @@ package com.p5.flightmanager.service.dto;
 
 public class AirportDto {
 
-    private String id;
-    private String name;
-    private String city;
-    private String country;
-    private Integer offSet;
-    private String IATA;
+    public String id;
+    public String name;
+    public String location;
+    public String identificationNumber;
+    public Integer offset;
+    public Integer terminals;
+    private String fullDescription;
 
     public String getId() {
         return id;
+    }
+
+    public Integer getTerminals() {
+        return terminals;
+    }
+
+    public void setTerminals(Integer terminals) {
+        this.terminals = terminals;
     }
 
     public void setId(String id) {
@@ -25,35 +34,35 @@ public class AirportDto {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getCountry() {
-        return country;
+    public String getIdentificationNumber() {
+        return identificationNumber;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setIdentificationNumber(String identificationNumber) {
+        this.identificationNumber = identificationNumber;
     }
 
-    public Integer getOffSet() {
-        return offSet;
+    public Integer getOffset() {
+        return offset;
     }
 
-    public void setOffSet(Integer offSet) {
-        this.offSet = offSet;
+    public void setOffset(Integer offset) {
+        this.offset = offset;
     }
 
-    public String getIATA() {
-        return IATA;
+    public String getFullFlightDescription() {
+        return fullDescription;
     }
 
-    public void setIATA(String IATA) {
-        this.IATA = IATA;
+    public void setFullDescription(String fullDescription) {
+        this.fullDescription = fullDescription;
     }
 }

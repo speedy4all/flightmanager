@@ -4,7 +4,7 @@ import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.repository.PassengersRepository;
 import com.p5.flightmanager.service.api.PassengerService;
 import com.p5.flightmanager.service.dto.PassengerDto;
-import com.p5.flightmanager.service.dto.PassengerAdapter;
+import com.p5.flightmanager.service.dto.Pa;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoPassengerException;
 import org.springframework.beans.factory.annotation.Autowired;

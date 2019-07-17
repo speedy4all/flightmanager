@@ -46,4 +46,9 @@ public class AirportController {
     void delete(@PathVariable String id){
         airportService.deleteAirport(id);
     }
+
+    @PutMapping("/{airportId}/add-flight/{flightId}")
+    void addFlightToAirport(@PathVariable String airportId, @PathVariable String flightId){
+        airportService.addFlightToAirport(airportId, flightId);
+    }
 }

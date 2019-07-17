@@ -17,4 +17,6 @@ public interface AirportService {
     AirportDto updateAirport(AirportDto airportDto);
 
     void deleteAirport(String id);
+
+    void addFlightToAirport(String airportId, String flightId);
 }

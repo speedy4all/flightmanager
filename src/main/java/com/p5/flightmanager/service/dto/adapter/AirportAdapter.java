@@ -19,6 +19,8 @@ public class AirportAdapter {
         airportDto.setCode(airport.getCode());
         airportDto.setTimezoneOffset(airport.getTimezoneOffset());
 
+        airportDto.setFlightList(FlightAdapter.toListDto(airport.getFlightList()));
+
         return airportDto;
     }
 

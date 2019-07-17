@@ -1,5 +1,9 @@
 package com.p5.flightmanager.service.dto;
 
+import com.p5.flightmanager.repository.models.Flight;
+
+import java.util.List;
+
 public class AirportDto {
 
     private String id;
@@ -9,6 +13,11 @@ public class AirportDto {
     private Integer terminals;
     private String code;
     private Integer timezoneOffset;
+    private List<FlightDto> flightList;
+
+    public List<FlightDto> getFlightList() { return flightList; }
+
+    public void setFlightList(List<FlightDto> flightList) { this.flightList = flightList; }
 
     public String getId() {
         return id;

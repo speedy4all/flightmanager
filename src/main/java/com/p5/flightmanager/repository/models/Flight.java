@@ -50,9 +50,12 @@ public class Flight extends BaseModel implements Serializable {
             joinColumns = { @JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_passenger"))},
                     inverseJoinColumns = { @JoinColumn(name = "passenger_id", nullable = false, foreignKey = @ForeignKey(name = "fk_passenger_flight"))},
             uniqueConstraints = { @UniqueConstraint(columnNames = {"flight_id", "passenger_id"}, name = "uk_flight_passenger")},
-            indexes = { @Index(columnList = "passenger_id", name = "ix_flight_passenger")}
-            )
+            indexes = { @Index(columnList = "passenger_id", name = "ix_flight_passenger")})
     private List<Passenger> passengerList = new ArrayList<>();
+
+//    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
+//    @JoinTable()
+//    private Plane plane;
 
     public Flight() {
         //default constructor

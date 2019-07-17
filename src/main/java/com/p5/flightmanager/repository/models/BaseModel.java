@@ -2,6 +2,8 @@ package com.p5.flightmanager.repository.models;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -34,6 +36,7 @@ public abstract class BaseModel implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_update")
     @Type(type = "date")
+    @LastModifiedDate // ??
     private Date updateDate;
 
     @Column(nullable = false, name = "deleted")

@@ -1,7 +1,9 @@
 package com.p5.flightmanager.repository.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.p5.flightmanager.service.dto.FlightType;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "T_FLIGHT")
 public class Flight extends BaseModel implements Serializable {
-    //pe flight adaugam un plane (mai multe flighturi la un plane)
+//pe flight adaugam un plane (mai multe flighturi la un plane)
 //aeroport cu flight many to many
 //metoda prin care asignam unui aeroport un flight
 //pe aeroport o lsta de light
@@ -62,7 +64,9 @@ public class Flight extends BaseModel implements Serializable {
             indexes = { @Index(columnList = "passenger_id", name = "ix_flight_passenger")})
     List<Passenger> passengerList = new ArrayList<>();
 
-
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
+    //@JoinColumn(name = "plane_id", nullable = false, foreignKey = @ForeignKey(name = "fk_plane"))
+    Plane plane;
 
     public Flight() {
         //default constructor
@@ -96,6 +100,15 @@ public class Flight extends BaseModel implements Serializable {
 
     public void setPassengerList(List<Passenger> passengerList) {
         this.passengerList = passengerList;
+    }
+
+
+    public Plane getPlane() {
+        return plane;
+    }
+
+    public void setPlane(Plane plane) {
+        this.plane = plane;
     }
 
     public FlightType getFlightType() {

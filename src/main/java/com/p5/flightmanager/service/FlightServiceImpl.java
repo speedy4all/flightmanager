@@ -1,9 +1,11 @@
 package com.p5.flightmanager.service;
 
 import com.p5.flightmanager.repository.PassengersRepository;
+import com.p5.flightmanager.repository.PlanesRepository;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
+import com.p5.flightmanager.repository.models.Plane;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
@@ -26,6 +28,9 @@ public class FlightServiceImpl implements FlightService {
 
     @Autowired
     private PassengersRepository passengerRepository;
+
+    @Autowired
+    private PlanesRepository planeRepository;
 
     public List<FlightDto> getAll(String search) {
 
@@ -88,8 +93,20 @@ public class FlightServiceImpl implements FlightService {
                 flightsRepository.save(flight);
             }
         }
+    }
 
-
+    @Override
+    public void addPlaneToFlight(String flightId, String planeId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
+        if(optionalFlight.isPresent()) {
+            Optional<Plane> optionalPlane = planeRepository.findById(UUID.fromString(planeId));
+            if(optionalPlane.isPresent()) {
+                Flight flight = optionalFlight.get();
+                Plane plane = optionalPlane.get();
+                flight.setPlane(plane);
+                flightsRepository.save(flight);
+            }
+        }
     }
 
     private boolean isValidFlight(FlightDto flightDto) {

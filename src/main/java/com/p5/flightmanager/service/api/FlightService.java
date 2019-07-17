@@ -19,4 +19,6 @@ public interface FlightService {
     void deleteFlight(String flightDtoID);
 
     void addPassengerToFlight(String flightId, String passengerId);
+
+    void addPlaneToFlight(String flightId, String planeId);
 }

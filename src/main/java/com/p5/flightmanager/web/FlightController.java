@@ -56,4 +56,9 @@ public class FlightController {
     void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId) {
         flightService.addPassengerToFlight(flightId,passengerId);
     }
+
+    @PutMapping("/{flightId}/add-plane/{planeId}")
+    void addPlaneToFlight(@PathVariable String flightId, @PathVariable String planeId){
+        flightService.addPlaneToFlight(flightId,planeId);
+    }
 }

@@ -1,6 +1,7 @@
 package com.p5.flightmanager.service.dto;
 
 import com.p5.flightmanager.repository.models.Passenger;
+import com.p5.flightmanager.repository.models.Plane;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,8 +18,16 @@ public class FlightDto {
     private String destinationLocation;
     private String fullFlightDescription;
     private FlightType flightType;
-
+    private Plane plane;
     private List<PassengerDto> passengerDtos = new ArrayList<>();
+
+    public Plane getPlane() {
+        return plane;
+    }
+
+    public void setPlane(Plane plane) {
+        this.plane = plane;
+    }
 
     public FlightType getFlightType() {
         return flightType;

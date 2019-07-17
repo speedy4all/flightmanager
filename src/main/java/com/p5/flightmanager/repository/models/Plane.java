@@ -106,7 +106,7 @@ public class Plane extends BaseModel implements Serializable {
 
     @Column(name = "altitude")
     @Type(type = "double")
-    private  double altitude;
+    private double altitude;
 
     @Column(name = "fuelCapacity")
     @Type(type = "double")

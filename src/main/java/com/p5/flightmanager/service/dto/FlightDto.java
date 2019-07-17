@@ -2,7 +2,9 @@ package com.p5.flightmanager.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 //folosim cand vrem sa nu aducem tot din baza in frontend
 public class FlightDto {
@@ -16,6 +18,8 @@ public class FlightDto {
     private String destinationLocation;
     private String fullFlightDescription;
     private String nationality;
+    private FlightType flightType;
+    private List<PassengerDto> passengerDtos = new ArrayList<>();
 
     public String getNationality() {
         return nationality;
@@ -89,4 +93,19 @@ public class FlightDto {
         this.fullFlightDescription = fullFlightDescription;
     }
 
+    public FlightType getFlightType() {
+        return flightType;
+    }
+
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
+    }
+
+    public List<PassengerDto> getPassengerDtos() {
+        return passengerDtos;
+    }
+
+    public void setPassengerDtos(List<PassengerDto> passengerDtos) {
+        this.passengerDtos = passengerDtos;
+    }
 }

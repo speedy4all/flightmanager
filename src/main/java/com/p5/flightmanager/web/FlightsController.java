@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.List;
 
@@ -50,5 +51,10 @@ public class FlightsController {
     void deleteFlight(@PathVariable String iddelete) {
 
         flightService.deleteFlight(iddelete);
+    }
+
+    @PutMapping("/{flightId}/add-passenger/{passengerId}")
+    void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId) {
+        flightService.addPassengerToFlight(flightId, passengerId);
     }
 }

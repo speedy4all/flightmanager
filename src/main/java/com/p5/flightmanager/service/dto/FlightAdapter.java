@@ -16,6 +16,9 @@ public class FlightAdapter {
         flightDto.setDepartureLocation(flight.getDepartureLocation());
         flightDto.setDestinationLocation(flight.getDestinationLocation());
         flightDto.setDurationTime(flight.getDurationTime());
+        flightDto.setFlightType(flight.getFlightType());
+
+        flightDto.setPassengerDtos(PassengerAdapter.toListDto(flight.getPassengerList()));
 
         return flightDto;
     }

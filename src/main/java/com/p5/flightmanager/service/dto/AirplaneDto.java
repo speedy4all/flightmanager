@@ -9,6 +9,7 @@ public class AirplaneDto {
     private Integer numberOfSeats;
     private String fullDescription;
 
+
     public String getId() {
         return id;
     }

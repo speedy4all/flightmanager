@@ -50,4 +50,10 @@ public class FlightsController {
     void deleteFlight(@PathVariable String id) {
         flightService.deleteFlight(id);
     }
+
+    @PutMapping("/{}flightId/add-passenger/{passengerId}")
+    void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId){
+        flightService.addPassengerToFlight(flightId,passengerId);
+    }
+
 }

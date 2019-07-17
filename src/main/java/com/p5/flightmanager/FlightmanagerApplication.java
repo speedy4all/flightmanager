@@ -22,10 +22,10 @@ public class FlightmanagerApplication {
 /*
 
 {
-    "firstName": "Lorena-Ionela",
-    "lastName": "Pavel",
-    "npc": "2981110080045",
-    "birthDate": "1998-10-11"
+    "firstName": "Narcis-Florin",
+    "lastName": "Basarlici",
+    "npc": "1980525360670",
+    "birthDate": "1998-05-25"
 }
 
 

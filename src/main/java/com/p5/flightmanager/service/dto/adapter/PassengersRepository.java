@@ -1,4 +1,4 @@
-package com.p5.flightmanager.repository;
+package com.p5.flightmanager.service.dto.adapter;
 
 import com.p5.flightmanager.repository.models.Passenger;
 import org.springframework.data.jpa.repository.Query;

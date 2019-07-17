@@ -5,7 +5,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -117,6 +119,15 @@ public class Flight extends BaseModel implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
 
+    @ManyToMany(fetch=FetchType.LAZY, targetEntity = Passenger.class)
+    @JoinTable (name="t_flight_passenger",
+            joinColumns = {@JoinColumn(name="flight_id", nullable = false, foreignKey = @ForeignKey(name="fk_flight_passenger"))},
+            inverseJoinColumns={@JoinColumn(name="passenger_id",nullable = false,foreignKey = @ForeignKey(name="fk_passenger_flight"))},
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id","passenger_id"},name="uk_flight_passenger")},
+            indexes={@Index(columnList = "passenger_id",name="ix_flight_passenger")}
+            )
+    List<Passenger> passengerList= new ArrayList<>();
+
     public FlightType getFlightType() {
         return flightType;
     }
@@ -125,4 +136,11 @@ public class Flight extends BaseModel implements Serializable {
         this.flightType = flightType;
     }
 
+    public List<Passenger> getPassengerList() {
+        return passengerList;
+    }
+
+    public void setPassengerList(List<Passenger> passengerList) {
+        this.passengerList = passengerList;
+    }
 }

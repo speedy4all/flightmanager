@@ -1,7 +1,5 @@
 package com.p5.flightmanager.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-
 import java.util.Date;
 
 public class PassengerDto {
@@ -13,19 +11,8 @@ public class PassengerDto {
     private String email;
     private String mobileNumber;
     private Date dateOfBirth;
-    private String identificationCardNumber;
-    private Date issueDate;
-    private String nationality;
+    private String personalIdentificationCode;
     private String language;
-    private String fullPassengerName;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -75,28 +62,12 @@ public class PassengerDto {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getIdentificationCardNumber() {
-        return identificationCardNumber;
+    public String getPersonalIdentificationCode() {
+        return personalIdentificationCode;
     }
 
-    public void setIdentificationCardNumber(String identificationCardNumber) {
-        this.identificationCardNumber = identificationCardNumber;
-    }
-
-    public Date getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+    public void setPersonalIdentifierCode(String personalIdentificationCode) {
+        this.personalIdentificationCode = personalIdentificationCode;
     }
 
     public String getLanguage() {
@@ -107,11 +78,11 @@ public class PassengerDto {
         this.language = language;
     }
 
-    public String getFullPassengerName() {
-        return fullPassengerName;
+    public String getId() {
+        return id;
     }
 
-    public void setFullPassengerName(String fullPassengerName) {
-        this.fullPassengerName = fullPassengerName;
+    public void setId(String id) {
+        this.id = id;
     }
 }

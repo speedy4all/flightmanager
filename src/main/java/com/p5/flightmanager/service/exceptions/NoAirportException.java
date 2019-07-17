@@ -1,7 +1,6 @@
 package com.p5.flightmanager.service.exceptions;
 
 public class NoAirportException extends RuntimeException {
-
     public NoAirportException() {
     }
 
@@ -9,5 +8,4 @@ public class NoAirportException extends RuntimeException {
     public String getMessage() {
         return "No airport found";
     }
-
 }

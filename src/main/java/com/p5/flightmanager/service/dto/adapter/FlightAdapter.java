@@ -27,16 +27,13 @@ public class FlightAdapter {
     public final static List<FlightDto> toListDto(Iterable<Flight> flightList) {
         List<FlightDto> listDto = new ArrayList<>();
         flightList.forEach(flight -> listDto.add(toDto(flight)));
-
         return listDto;
     }
 
     public final static Flight fromDto(FlightDto flightDto) {
         Flight flight = new Flight();
         FlightAdapter.fromDto(flightDto, flight);
-
         return flight;
-
     }
 
     public final static Flight fromDto(FlightDto flightDto, Flight flight) {
@@ -48,7 +45,6 @@ public class FlightAdapter {
         flight.setDurationTime(flightDto.getDurationTime());
         flight.setDepartureDate(flightDto.getDepartureDate());
         flight.setDestinationDate(flightDto.getDestinationDate());
-
         return flight;
     }
 }

@@ -20,7 +20,6 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightsRepository flightsRepository;
 
-
     public List<FlightDto> getAll(String search) {
 
         return FlightAdapter.toListDto(flightsRepository.filterByName(search));
@@ -43,7 +42,6 @@ public class FlightServiceImpl implements FlightService {
     public FlightDto updateFlight(FlightDto flightDto) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
         if(optionalFlight.isPresent()) {
-
             Flight flight = optionalFlight.get();
             flight = FlightAdapter.fromDto(flightDto, flight);
             flightsRepository.save(flight);

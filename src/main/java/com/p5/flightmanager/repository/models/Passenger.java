@@ -12,24 +12,11 @@ public class Passenger extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Passenger() {
-        // default constructor
+    public Passenger(){
+        //default constructor
     }
 
-    public Passenger(String firstName, String lastName, String gender, String email, String mobileNumber, Date dateOfBirth, String identificationCardNumber, Date issueDate, String nationality, String language) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.email = email;
-        this.mobileNumber = mobileNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.identificationCardNumber = identificationCardNumber;
-        this.issueDate = issueDate;
-        this.nationality = nationality;
-        this.language = language;
-    }
-
-    public Passenger(Passenger source) {
+    public Passenger(BaseModel source, String firstName, String lastName, String gender, String email, String mobileNumber, Date dateOfBirth, String personalIdentificationCode, String language) {
         super(source);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,9 +24,18 @@ public class Passenger extends BaseModel implements Serializable {
         this.email = email;
         this.mobileNumber = mobileNumber;
         this.dateOfBirth = dateOfBirth;
-        this.identificationCardNumber = identificationCardNumber;
-        this.issueDate = issueDate;
-        this.nationality = nationality;
+        this.personalIdentificationCode = personalIdentificationCode;
+        this.language = language;
+    }
+
+    public Passenger(String firstName, String lastName, String gender, String email, String mobileNumber, Date dateOfBirth, String personalIdentificationCode, String language) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.mobileNumber = mobileNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.personalIdentificationCode = personalIdentificationCode;
         this.language = language;
     }
 
@@ -68,18 +64,9 @@ public class Passenger extends BaseModel implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfBirth;
 
-    @Column(name = "identification_card_number")
+    @Column(name = "personal_identification_code")
     @Type(type = "string")
-    private String identificationCardNumber;
-
-    @Column(name = "issue_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date issueDate;
-
-    @Column(name = "nationality")
-    @Type(type = "string")
-    private String nationality;
+    private String personalIdentificationCode;
 
     @Column(name = "language")
     @Type(type = "string")
@@ -133,28 +120,12 @@ public class Passenger extends BaseModel implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getIdentificationCardNumber() {
-        return identificationCardNumber;
+    public String getPersonalIdentificationCode() {
+        return personalIdentificationCode;
     }
 
-    public void setIdentificationCardNumber(String identificationCardNumber) {
-        this.identificationCardNumber = identificationCardNumber;
-    }
-
-    public Date getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+    public void setPersonalIdentifierCode(String personalIdentificationCode) {
+        this.personalIdentificationCode = personalIdentificationCode;
     }
 
     public String getLanguage() {

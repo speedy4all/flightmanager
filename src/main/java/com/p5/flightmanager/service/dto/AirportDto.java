@@ -1,5 +1,8 @@
 package com.p5.flightmanager.service.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AirportDto  {
 
     private String id;
@@ -9,6 +12,7 @@ public class AirportDto  {
     private int offset;
     private double length;
     private int altitude;
+    private List<FlightDto> flights = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -64,5 +68,13 @@ public class AirportDto  {
 
     public void setAltitude(int altitude) {
         this.altitude = altitude;
+    }
+
+    public List<FlightDto> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(List<FlightDto> flights) {
+        this.flights = flights;
     }
 }

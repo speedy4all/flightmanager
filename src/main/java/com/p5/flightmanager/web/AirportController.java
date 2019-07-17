@@ -46,9 +46,14 @@ public class AirportController {
         return ResponseEntity.ok(airportService.updateAirport(airportDto));
     }
 
-    @DeleteMapping("/{iddelete}")
-    void deleteAirport(@PathVariable String iddelete) {
-        airportService.delete(iddelete);
+    @DeleteMapping("/{id}")
+    void deleteAirport(@PathVariable String id) {
+        airportService.delete(id);
+    }
+
+    @PutMapping("/{airportId}/add-flight/{flightId}")
+    void addFlight(@PathVariable String airportId, @PathVariable String flightId) {
+        airportService.addFlight(airportId, flightId);
     }
 
 }

@@ -21,4 +21,8 @@ public interface FlightService {
     void addPassengerToFlight(String flightId, String passengerId);
 
     void addPlaneToFlight(String flightId, String planeId);
+
+    void addDestinationAirport(String flightId, String destinationAirportId);
+
+    void addLocationAirport(String flightId, String locationAirportId);
 }

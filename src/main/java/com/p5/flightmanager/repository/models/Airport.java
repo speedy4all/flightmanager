@@ -1,10 +1,11 @@
 package com.p5.flightmanager.repository.models;
 
 import org.hibernate.annotations.Type;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "T_AIRPORT")
@@ -35,6 +36,14 @@ public class Airport extends BaseModel implements Serializable {
     @Column
     @Type(type = "integer")
     int altitude;
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Flight.class)
+            @JoinTable(name = "T_AIRPORT_FLIGHT",
+                    joinColumns = {@JoinColumn(name = "airport_id", nullable = false, foreignKey = @ForeignKey(name = "fk_airport_flight"))},
+                    inverseJoinColumns = {@JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_airport"))},
+                    uniqueConstraints = { @UniqueConstraint(columnNames = {"flight_id", "airport_id"}, name = "uk_airport_flight")},
+                    indexes = { @Index(columnList = "flight_id", name = "ix_airport_flight")})
+    List<Flight> flights = new ArrayList();
 
     public Airport(int terminals, String code, String location, int offset, double length, int altitude) {
         this.terminals = terminals;
@@ -105,5 +114,13 @@ public class Airport extends BaseModel implements Serializable {
 
     public void setAltitude(int altitude) {
         this.altitude = altitude;
+    }
+
+    public List<Flight> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(List<Flight> flights) {
+        this.flights = flights;
     }
 }

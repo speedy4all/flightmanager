@@ -20,6 +20,8 @@ public class FlightAdapter {
         flightDto.setDestinationDate(flight.getDestinationDate());
         flightDto.setFlightType(flight.getFlightType());
 
+        flightDto.setPassengerDtos(PassengerAdapter.toListDto(flight.getPassengerList()));
+
         return flightDto;
     }
 

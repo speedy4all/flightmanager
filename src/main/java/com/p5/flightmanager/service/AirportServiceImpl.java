@@ -40,7 +40,7 @@ public class AirportServiceImpl implements AirportService {
         }
 
 
-        //TODO: api error here; to implement enum on flight BTW
+        //TODO: implement api error here
         return AirportAdapter.toDto(airport);
     }
 

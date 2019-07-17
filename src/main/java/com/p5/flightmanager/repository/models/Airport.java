@@ -13,29 +13,6 @@ public class Airport extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Airport(){
-        // default constructor
-    }
-
-    public Airport(String name, Integer terminals, String city, String country, String code, Integer timezoneOffset) {
-        this.name = name;
-        this.terminals = terminals;
-        this.city = city;
-        this.country = country;
-        this.code = code;
-        this.timezoneOffset = timezoneOffset;
-    }
-
-    public Airport(Airport airport){
-        super(airport);
-        this.name = airport.name;
-        this.terminals = airport.terminals;
-        this.city = airport.city;
-        this.country = airport.country;
-        this.code = airport.code;
-        this.timezoneOffset = airport.timezoneOffset;
-    }
-
     @Column(name = "name")
     @Type(type = "string")
     private String name;
@@ -60,17 +37,53 @@ public class Airport extends BaseModel implements Serializable {
     @Type(type = "integer")
     private Integer timezoneOffset;
 
-    public String getName() { return name; }
+    public Airport() {
+        // default constructor
+    }
 
-    public void setName(String name) { this.name = name; }
+    public Airport(String name, Integer terminals, String city, String country, String code, Integer timezoneOffset) {
+        this.name = name;
+        this.terminals = terminals;
+        this.city = city;
+        this.country = country;
+        this.code = code;
+        this.timezoneOffset = timezoneOffset;
+    }
 
-    public String getCity() { return city; }
+    public Airport(Airport airport) {
+        super(airport);
+        this.name = airport.name;
+        this.terminals = airport.terminals;
+        this.city = airport.city;
+        this.country = airport.country;
+        this.code = airport.code;
+        this.timezoneOffset = airport.timezoneOffset;
+    }
 
-    public void setCity(String city) { this.city = city; }
 
-    public String getCountry() { return country; }
+    public String getName() {
+        return name;
+    }
 
-    public void setCountry(String country) { this.country = country; }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public Integer getTerminals() {
         return terminals;
@@ -88,9 +101,13 @@ public class Airport extends BaseModel implements Serializable {
         this.code = code;
     }
 
-    public Integer getTimezoneOffset() { return timezoneOffset; }
+    public Integer getTimezoneOffset() {
+        return timezoneOffset;
+    }
 
-    public void setTimezoneOffset(Integer timezoneOffset) { this.timezoneOffset = timezoneOffset; }
+    public void setTimezoneOffset(Integer timezoneOffset) {
+        this.timezoneOffset = timezoneOffset;
+    }
 }
 
 //  Airport

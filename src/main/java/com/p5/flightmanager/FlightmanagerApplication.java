@@ -20,6 +20,11 @@ public class FlightmanagerApplication {
 
 }
 
+//TODO: pe flight 1 plane (ManyToOne);
+//TODO: pe flight 2 airports (departure, destination);
+//TODO: pe airport ManyToMany : airport-flight; metoda de a asigna unui aeroport un flight (lista de flight-uri);
+
+
 /*
 enum pt Flight (ce tip de flight este)
 

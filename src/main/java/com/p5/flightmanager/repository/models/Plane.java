@@ -13,7 +13,15 @@ public class Plane extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Plane(){
+    @Column(name = "name")
+    @Type(type = "string")
+    private String name;
+
+    @Column(name = "number_of_seats")
+    @Type(type = "integer")
+    private Integer numberOfSeats;
+
+    public Plane() {
         //default constructor
     }
 
@@ -22,19 +30,12 @@ public class Plane extends BaseModel implements Serializable {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public Plane(Plane plane){
+    public Plane(Plane plane) {
         super(plane);
         this.name = name;
         this.numberOfSeats = numberOfSeats;
     }
 
-    @Column(name = "name")
-    @Type(type = "string")
-    private String name;
-
-    @Column(name = "number_of_seats")
-    @Type(type = "integer")
-    private Integer numberOfSeats;
 
     public String getName() {
         return name;

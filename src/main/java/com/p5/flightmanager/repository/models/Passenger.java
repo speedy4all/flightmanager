@@ -12,7 +12,24 @@ public class Passenger extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Passenger(){
+    @Column(name = "first_name")
+    @Type(type = "string")
+    private String firstName;
+
+    @Column(name = "last_name")
+    @Type(type = "string")
+    private String lastName;
+
+    @Column(name = "npc")
+    @Type(type = "string")
+    private String npc;
+
+    @Column(name = "birth_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date birthDate;
+
+    public Passenger() {
         //default constructor
     }
 
@@ -31,22 +48,6 @@ public class Passenger extends BaseModel implements Serializable {
         this.birthDate = source.birthDate;
     }
 
-    @Column(name = "first_name")
-    @Type(type = "string")
-    private String firstName;
-
-    @Column(name = "last_name")
-    @Type(type = "string")
-    private String lastName;
-
-    @Column(name = "npc")
-    @Type(type = "string")
-    private String npc;
-
-    @Column(name = "birth_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date birthDate;
 
     public String getFirstName() {
         return firstName;

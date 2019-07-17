@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import java.util.List;
 
 @RestController
-@RequestMapping("/passagers")
+@RequestMapping("/passengers")
 @Consumes("application/json")
 @Produces("application/json")
 @Transactional

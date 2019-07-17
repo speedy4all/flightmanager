@@ -12,7 +12,45 @@ public class Passenger extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Passenger(){
+    @Column(name = "first_name")
+    @Type(type = "string")
+    private String firstName;
+
+    @Column(name = "second_name")
+    @Type(type = "string")
+    private String secondName;
+
+    @Column(name = "age")
+    @Type(type = "integer")
+    private Integer age;
+
+    @Column(name = "sex")
+    @Type(type = "string")
+    private String sex;
+
+    @Column(name = "identify_number")
+    @Type(type = "string")
+    private String identifyNumber;
+
+    @Column(name = "country")
+    @Type(type = "string")
+    private String country;
+
+    @Column(name = "birthday_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date birthdayDate;
+
+    @Column(name = "email")
+    @Type(type = "string")
+    @Temporal(TemporalType.TIMESTAMP)
+    private String email;
+
+    @Column(name = "phone_number")
+    @Type(type = "string")
+    private String phoneNumber;
+
+    public Passenger() {
         //default constructor
     }
 
@@ -113,41 +151,4 @@ public class Passenger extends BaseModel implements Serializable {
         this.secondName = secondName;
     }
 
-    @Column(name = "first_name")
-    @Type(type = "string")
-    private String firstName;
-
-    @Column(name = "second_name")
-    @Type(type = "string")
-    private String secondName;
-
-    @Column(name = "age")
-    @Type(type = "integer")
-    private Integer age;
-
-    @Column(name = "sex")
-    @Type(type = "string")
-    private String sex;
-
-    @Column(name = "identify_number")
-    @Type(type = "string")
-    private String identifyNumber;
-
-    @Column(name = "country")
-    @Type(type = "string")
-    private String country;
-
-    @Column(name = "birthday_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date birthdayDate;
-
-    @Column(name = "email")
-    @Type(type = "string")
-    @Temporal(TemporalType.TIMESTAMP)
-    private String email;
-
-    @Column(name = "phone_number")
-    @Type(type = "string")
-    private String phoneNumber;
 }

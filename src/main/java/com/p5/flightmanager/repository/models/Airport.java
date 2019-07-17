@@ -13,7 +13,27 @@ public class Airport extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Airport(){
+    @Column(name = "name")
+    @Type(type = "string")
+    private String name;
+
+    @Column(name = "city")
+    @Type(type = "string")
+    private String city;
+
+    @Column(name = "country")
+    @Type(type = "string")
+    private String country;
+
+    @Column(name = "off_set")
+    @Type(type = "int")
+    private Integer offSet;
+
+    @Column(name = "iata")
+    @Type(type = "string")
+    private String iata;
+
+    public Airport() {
         //default constructor
     }
 
@@ -34,25 +54,6 @@ public class Airport extends BaseModel implements Serializable {
         this.iata = source.iata;
     }
 
-    @Column(name = "name")
-    @Type(type = "string")
-    private String name;
-
-    @Column(name = "city")
-    @Type(type = "string")
-    private String city;
-
-    @Column(name = "country")
-    @Type(type = "string")
-    private String country;
-
-    @Column(name = "off_set")
-    @Type(type = "int")
-    private Integer offSet;
-
-    @Column(name = "iata")
-    @Type(type = "string")
-    private String iata;
 
     public String getName() {
         return name;

@@ -9,37 +9,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "T_AIRPORT")
 public class Airport extends BaseModel implements Serializable {
-    /*
-    terminals
-    code
-    location
-    offset - string (timezone) / valoare integer in minute
-    */
 
     public static final long serialVersionUID = 1L;
-
-    public Airport(int terminals, String code, String location, int offset, double length, int altitude) {
-        this.terminals = terminals;
-        this.code = code;
-        this.location = location;
-        this.offset = offset;
-        this.length = length;
-        this.altitude = altitude;
-    }
-
-    public Airport() {
-        //empty constructor
-    }
-
-    public Airport(Airport source) {
-        super(source);
-        this.terminals = source.terminals;
-        this.code = source.code;
-        this.location = source.location;
-        this.offset = source.offset;
-        this.length = source.length;
-        this.altitude = source.altitude;
-    }
 
     @Column
     @Type(type = "integer")
@@ -64,6 +35,29 @@ public class Airport extends BaseModel implements Serializable {
     @Column
     @Type(type = "integer")
     int altitude;
+
+    public Airport(int terminals, String code, String location, int offset, double length, int altitude) {
+        this.terminals = terminals;
+        this.code = code;
+        this.location = location;
+        this.offset = offset;
+        this.length = length;
+        this.altitude = altitude;
+    }
+
+    public Airport() {
+        //empty constructor
+    }
+
+    public Airport(Airport source) {
+        super(source);
+        this.terminals = source.terminals;
+        this.code = source.code;
+        this.location = source.location;
+        this.offset = source.offset;
+        this.length = source.length;
+        this.altitude = source.altitude;
+    }
 
     public int getTerminals() {
         return terminals;

@@ -7,17 +7,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.List;
 
 @RestController
 @RequestMapping("/flights")
-// /flights?search=test&...
-//search e o coloana sau o conventie (alias-uri)
 @Consumes("application/json")
 @Produces("application/json")
-@Transactional
-public class FlightsController {
+@Transactional //im momentul in care s-a mappat metodele din clasa vor primi o tranzactie noua de fiecare data cand o metoda este apelata
+//la fiecare metoda se dechide cate o tranzactie
+public class FlightController {
 
     @Autowired
     private FlightService flightService;
@@ -50,5 +50,10 @@ public class FlightsController {
     void deleteFlight(@PathVariable String iddelete) {
 
         flightService.deleteFlight(iddelete);
+    }
+
+    @PutMapping("/{flightId}/add-passenger/{passengerId}")
+    void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId) {
+        flightService.addPassengerToFlight(flightId,passengerId);
     }
 }

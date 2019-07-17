@@ -5,41 +5,22 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
 @Table(name = "T_FLIGHT")
 public class Flight extends BaseModel implements Serializable {
-
+    //pe flight adaugam un plane (mai multe flighturi la un plane)
+//aeroport cu flight many to many
+//metoda prin care asignam unui aeroport un flight
+//pe aeroport o lsta de light
+//pe flight un aeroport destination, unu location
     public static final long serialVersionUID = 1L;
 
-    public Flight() {
-        //default constructor
-    }
-
-    public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate, FlightType flightType) {
-        this.name = name;
-        this.departureLocation = departureLocation;
-        this.destinationLocation = destinationLocation;
-        this.durationTime = durationTime;
-        this.departureDate = departureDate;
-        this.destinationDate = destinationDate;
-        this.flightType = flightType;
-    }
-
-    public Flight(Flight source) {
-        super(source);
-        this.name = source.name;
-        this.departureLocation = source.departureLocation;
-        this.destinationLocation = source.destinationLocation;
-        this.durationTime = source.durationTime;
-        this.departureDate = source.departureDate;
-        this.destinationDate = source.destinationDate;
-        this.flightType = source.flightType;
-    }
-
-    @Column
+    @Column()
     @Enumerated(EnumType.STRING)
     private FlightType flightType;
 
@@ -68,6 +49,54 @@ public class Flight extends BaseModel implements Serializable {
     @Type(type = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
+
+    //daca punema pasagerii la plane, daca planeul are un alt zbor automat se vor lua si pasagerii (nu e corect)
+    //daca plane-ul se strica si trebuie schimbat, trebuie sa am grija sa schimb si pasagerii
+    //primul many e clasa in care suntem
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class)
+    //lazy = aduce datale doar in momentul in care apelam metoda de get
+    @JoinTable(name = "T_FLIGHT_PASSENGER", //numele tabelei de legatura
+            joinColumns = {@JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_passenger"))},
+            inverseJoinColumns = {@JoinColumn(name = "passenger_id", nullable = false, foreignKey = @ForeignKey(name = "fk_passenger_flight"))},
+            uniqueConstraints = { @UniqueConstraint(columnNames = {"flight_id", "passenger_id"}, name = "uk_flight_passenger")},
+            indexes = { @Index(columnList = "passenger_id", name = "ix_flight_passenger")})
+    List<Passenger> passengerList = new ArrayList<>();
+
+
+
+    public Flight() {
+        //default constructor
+    }
+
+    public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate, FlightType flightType) {
+        this.name = name;
+        this.departureLocation = departureLocation;
+        this.destinationLocation = destinationLocation;
+        this.durationTime = durationTime;
+        this.departureDate = departureDate;
+        this.destinationDate = destinationDate;
+        this.flightType = flightType;
+    }
+
+    public Flight(Flight source) {
+        super(source);
+        this.name = source.name;
+        this.departureLocation = source.departureLocation;
+        this.destinationLocation = source.destinationLocation;
+        this.durationTime = source.durationTime;
+        this.departureDate = source.departureDate;
+        this.destinationDate = source.destinationDate;
+        this.flightType = source.flightType;
+    }
+
+
+    public List<Passenger> getPassengerList() {
+        return passengerList;
+    }
+
+    public void setPassengerList(List<Passenger> passengerList) {
+        this.passengerList = passengerList;
+    }
 
     public FlightType getFlightType() {
         return flightType;

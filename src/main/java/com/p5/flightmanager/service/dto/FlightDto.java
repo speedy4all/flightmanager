@@ -1,8 +1,11 @@
 package com.p5.flightmanager.service.dto;
 
-import java.util.Date;
+import com.p5.flightmanager.repository.models.Passenger;
 
-//folosim cand vrem sa nu aducem tot din baza in frontend
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class FlightDto {
 
     private String id;
@@ -14,6 +17,8 @@ public class FlightDto {
     private String destinationLocation;
     private String fullFlightDescription;
     private FlightType flightType;
+
+    private List<PassengerDto> passengerDtos = new ArrayList<>();
 
     public FlightType getFlightType() {
         return flightType;
@@ -87,4 +92,11 @@ public class FlightDto {
         this.fullFlightDescription = fullFlightDescription;
     }
 
+    public List<PassengerDto> getPassengerDtos() {
+        return passengerDtos;
+    }
+
+    public void setPassengerDtos(List<PassengerDto> passengerDtos) {
+        this.passengerDtos = passengerDtos;
+    }
 }

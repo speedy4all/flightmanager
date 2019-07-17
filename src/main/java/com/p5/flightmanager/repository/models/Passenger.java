@@ -12,33 +12,6 @@ public class Passenger extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Passenger() {
-        //default constructor
-    }
-
-    public Passenger(String firstName, String lastName, String personalID, String email, String phoneNumber, String nationality, Date bornDate, Date destinationDate, TitlePassenger title) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.personalID = personalID;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.nationality = nationality;
-        this.bornDate = bornDate;
-        this.title = title;
-    }
-
-    public Passenger(Passenger source) {
-        super(source);
-        this.firstName = source.firstName;
-        this.lastName = source.lastName;
-        this.personalID = source.personalID;
-        this.email = source.email;
-        this.phoneNumber = source.phoneNumber;
-        this.nationality = source.nationality;
-        this.bornDate = source.bornDate;
-        this.title = source.title;
-    }
-
     @Column(name = "first_name")
     @Type(type = "string")
     private String firstName;
@@ -76,6 +49,33 @@ public class Passenger extends BaseModel implements Serializable {
     @Column(name = "title")
     @Enumerated(EnumType.STRING)
     private TitlePassenger title;
+
+    public Passenger() {
+        //default constructor
+    }
+
+    public Passenger(String firstName, String lastName, String personalID, String email, String phoneNumber, String nationality, Date bornDate, Date destinationDate, TitlePassenger title) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.personalID = personalID;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.nationality = nationality;
+        this.bornDate = bornDate;
+        this.title = title;
+    }
+
+    public Passenger(Passenger source) {
+        super(source);
+        this.firstName = source.firstName;
+        this.lastName = source.lastName;
+        this.personalID = source.personalID;
+        this.email = source.email;
+        this.phoneNumber = source.phoneNumber;
+        this.nationality = source.nationality;
+        this.bornDate = source.bornDate;
+        this.title = source.title;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

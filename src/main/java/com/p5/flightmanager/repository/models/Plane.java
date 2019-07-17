@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "T_PLANE")
 public class Plane extends BaseModel implements Serializable {
-    //model, nr locuri,
 
     @Column
     @Type(type = "string")

@@ -1,7 +1,9 @@
 package com.p5.flightmanager.service;
 
+import com.p5.flightmanager.repository.PassengersRepository;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
+import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
@@ -22,11 +24,10 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private FlightsRepository flightsRepository;
 
+    @Autowired
+    private PassengersRepository passengerRepository;
+
     public List<FlightDto> getAll(String search) {
-//        List<FlightDto> flightDtos = FlightAdapter.toListDto(flightsRepository.findAll());
-//        List<FlightDto> collect = flightDtos.stream().filter(x -> x.getName().contains(search)).collect(Collectors.toList());
-//        return flightdtos;
-        // -> complexitate mare (le aduce pe toate)
 
         return FlightAdapter.toListDto(flightsRepository.filterByName(search));
     }
@@ -39,9 +40,7 @@ public class FlightServiceImpl implements FlightService {
             throw new EmptyFieldException();
         }
 
-        Flight flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
-
-        return FlightAdapter.toDto(flight);
+        return FlightAdapter.toDto(flightsRepository.save(FlightAdapter.fromDto(flightDto)));
     }
 
     @Override
@@ -60,9 +59,7 @@ public class FlightServiceImpl implements FlightService {
 
          Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
          if(optionalFlight.isPresent()){
-             Flight flight = optionalFlight.get();
-             flightsRepository.save(FlightAdapter.fromDto(flightDto,flight));
-             return FlightAdapter.toDto(FlightAdapter.fromDto(flightDto,flight));
+             return FlightAdapter.toDto( flightsRepository.save(FlightAdapter.fromDto(flightDto,optionalFlight.get())));
          }
 
         throw new NoFlightException();
@@ -80,6 +77,21 @@ public class FlightServiceImpl implements FlightService {
         throw new NoFlightException();
     }
 
+    @Override
+    public void addPassengerToFlight(String flightId, String passengerId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
+        if(optionalFlight.isPresent()) {
+            Optional<Passenger> optionalPassenger = passengerRepository.findById(UUID.fromString(passengerId));
+            if(optionalPassenger.isPresent()) {
+                Flight flight = optionalFlight.get();
+                optionalFlight.get().getPassengerList().add(optionalPassenger.get());
+                flightsRepository.save(flight);
+            }
+        }
+
+
+    }
+
     private boolean isValidFlight(FlightDto flightDto) {
         if(StringUtils.isEmpty(flightDto.getDepartureLocation())) {
             return false;
@@ -88,7 +100,7 @@ public class FlightServiceImpl implements FlightService {
         if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty()) {
             return false;
         }
-        //TODO: api error
+        //TODO api error
         return true;
     }
 

@@ -2,11 +2,12 @@ package com.p5.flightmanager.service.exceptions;
 
 public class NoPlaneException extends RuntimeException{
 
-    public NoPlaneException() {
+    public NoPlaneException(){
+
     }
 
     @Override
-    public String getMessage() {
-        return "No plane found";
+    public String getMessage(){
+        return "No Plane found";
     }
 }

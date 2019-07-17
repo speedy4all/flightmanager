@@ -1,12 +1,9 @@
 package com.p5.flightmanager.repository.models;
 
+import com.p5.flightmanager.service.dto.FlightType;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -40,34 +37,9 @@ public class Flight extends BaseModel implements Serializable {
         this.destinationDate = source.destinationDate;
     }
 
-    @Column(name = "name")
-    @Type(type = "string")
-    private String name;
-
-    @Column(name = "departure_location")
-    @Type(type = "string")
-    private String departureLocation;
-
-    @Column(name = "destination_location")
-    @Type(type = "string")
-    private String destinationLocation;
-
-    @Column(name = "duration_time")
-    @Type(type = "double")
-    private Double durationTime;
-
-    @Column(name = "departure_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date departureDate;
-
-    @Column(name = "destination_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date destinationDate;
 
 
-    public String getName() {
+   public String getName() {
         return name;
     }
 
@@ -114,4 +86,43 @@ public class Flight extends BaseModel implements Serializable {
     public void setDestinationDate(Date destinationDate) {
         this.destinationDate = destinationDate;
     }
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private FlightType flightType;
+
+    @Column(name = "name")
+    @Type(type = "string")
+    private String name;
+
+    @Column(name = "departure_location")
+    @Type(type = "string")
+    private String departureLocation;
+
+    @Column(name = "destination_location")
+    @Type(type = "string")
+    private String destinationLocation;
+
+    @Column(name = "duration_time")
+    @Type(type = "double")
+    private Double durationTime;
+
+    @Column(name = "departure_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date departureDate;
+
+    @Column(name = "destination_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date destinationDate;
+
+    public FlightType getFlightType() {
+        return flightType;
+    }
+
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
+    }
+
 }

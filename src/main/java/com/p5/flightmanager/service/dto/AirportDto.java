@@ -3,10 +3,11 @@ package com.p5.flightmanager.service.dto;
 public class AirportDto {
 
     private String id;
-    private String code;
-    private String location;
-    private Integer utcOffset;
-    private String fullAirportDetails;
+    private String name;
+    private String city;
+    private String country;
+    private Integer offSet;
+    private String IATA;
 
     public String getId() {
         return id;
@@ -16,35 +17,43 @@ public class AirportDto {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getName() {
+        return name;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getCity() {
+        return city;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public Integer getUtcOffset() {
-        return utcOffset;
+    public String getCountry() {
+        return country;
     }
 
-    public void setUtcOffset(Integer utcOffset) {
-        this.utcOffset = utcOffset;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public String getFullAirportDetails() {
-        return fullAirportDetails;
+    public Integer getOffSet() {
+        return offSet;
     }
 
-    public void setFullAirportDetails(String fullAirportDetails) {
-        this.fullAirportDetails = fullAirportDetails;
+    public void setOffSet(Integer offSet) {
+        this.offSet = offSet;
+    }
+
+    public String getIATA() {
+        return IATA;
+    }
+
+    public void setIATA(String IATA) {
+        this.IATA = IATA;
     }
 }

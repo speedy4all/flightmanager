@@ -10,59 +10,88 @@ import java.io.Serializable;
 @Entity
 @Table(name = "T_AIRPORT")
 public class Airport extends BaseModel implements Serializable {
+
     public static final long serialVersionUID = 1L;
 
-    public Airport() {
+    public Airport(){
         //default constructor
     }
 
-    public Airport(String code, String location, Integer utcOffset) {
-        this.code = code;
-        this.location = location;
-        this.utcOffset = utcOffset;
+    public Airport(String name, String city, String country, Integer offSet, String IATA) {
+        this.name = name;
+        this.city = city;
+        this.country = country;
+        this.offSet = offSet;
+        this.iata = IATA;
     }
 
     public Airport(Airport source) {
         super(source);
-        this.code = source.code;
-        this.location = source.location;
-        this.utcOffset = source.utcOffset;
+        this.name = source.name;
+        this.city = source.city;
+        this.country = source.country;
+        this.offSet = source.offSet;
+        this.iata = source.iata;
     }
 
-    @Column(name = "airport_code")
+    @Column(name = "name")
     @Type(type = "string")
-    private String code;
+    private String name;
 
-    @Column(name = "airport_location")
+    @Column(name = "city")
     @Type(type = "string")
-    private String location;
+    private String city;
 
-    @Column(name = "utc_offest")
-    @Type(type = "integer")
-    private Integer utcOffset;
+    @Column(name = "country")
+    @Type(type = "string")
+    private String country;
 
-    public String getCode() {
+    @Column(name = "off_set")
+    @Type(type = "int")
+    private Integer offSet;
 
-        return code;
+    @Column(name = "iata")
+    @Type(type = "string")
+    private String iata;
+
+    public String getName() {
+        return name;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getCity() {
+        return city;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public Integer getUtcOffset() {
-        return utcOffset;
+    public String getCountry() {
+        return country;
     }
 
-    public void setUtcOffset(Integer utcOffset) {
-        this.utcOffset = utcOffset;
+    public void setCountry(String country) {
+        this.country = country;
     }
+
+    public Integer getOffSet() {
+        return offSet;
+    }
+
+    public void setOffSet(Integer offSet) {
+        this.offSet = offSet;
+    }
+
+    public String getIata() {
+        return iata;
+    }
+
+    public void setIata(String iata) {
+        this.iata = iata;
+    }
+
 }

@@ -73,11 +73,6 @@ public class AirportServiceImpl implements AirportService {
         }
     }
 
-    @Override
-    public void addFlight(String airportId, String flightId) {
-
-    }
-
     public boolean isValidAirport(AirportDto airportDto){
         if(StringUtils.isEmpty(airportDto.getName()))
         {
@@ -90,5 +85,10 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public Optional<Airport> getByName(String name) {
         return airportRepository.findByCity(name);
+    }
+
+    @Override
+    public void addFlight(String airportId, String flightId) {
+
     }
 }

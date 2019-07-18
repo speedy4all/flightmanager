@@ -1,11 +1,12 @@
-package com.p5.flightmanager.service.dto.adapter;
+package com.p5.flightmanager.service.dto;
 
+import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
-import com.p5.flightmanager.service.dto.AirportAdapter;
-import com.p5.flightmanager.service.dto.FlightDto;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class FlightAdapter {
 

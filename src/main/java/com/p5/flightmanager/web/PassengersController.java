@@ -12,9 +12,9 @@ import javax.ws.rs.Produces;
 import java.util.List;
 
 @RestController
-@RequestMapping("/passengers")
-@Consumes("application/json")
-@Produces("application/json")
+@RequestMapping("/passenger")
+@Consumes("/application/json")
+@Produces("/application/json")
 @Transactional
 public class PassengersController {
 
@@ -22,8 +22,14 @@ public class PassengersController {
     private PassengerService passengerService;
 
     @GetMapping
-    ResponseEntity<List<PassengerDto>> getAll(@RequestParam String search) {
+    ResponseEntity<List<PassengerDto>> getAll(@RequestParam String search){
+
         return ResponseEntity.ok(passengerService.getAll(search));
+    }
+
+    @PostMapping
+    ResponseEntity<PassengerDto> createPassenger(@RequestBody PassengerDto passengerDto){
+        return ResponseEntity.ok(passengerService.createPassenger(passengerDto));
     }
 
     @GetMapping("/{id}")
@@ -31,18 +37,14 @@ public class PassengersController {
         return ResponseEntity.ok(passengerService.getById(id));
     }
 
-    @PostMapping
-    ResponseEntity<PassengerDto> createPassager(@RequestBody PassengerDto passengerDto) {
-        return ResponseEntity.ok(passengerService.createPassager(passengerDto));
-    }
-
-    @PutMapping("/update")
-    ResponseEntity<PassengerDto> updatePassager(@RequestBody PassengerDto passengerDto){
-        return ResponseEntity.ok(passengerService.updatePassager(passengerDto));
+    @PutMapping()
+    ResponseEntity<PassengerDto> updatePassenger(@RequestBody PassengerDto passengerDto) {
+        return ResponseEntity.ok(passengerService.updatePassenger(passengerDto));
+        //return ResponseEntity.ok("Update passenger");
     }
 
     @DeleteMapping("/{id}")
-    void deletePassager(@PathVariable String id){
-        passengerService.deletePassager(id);
+    void deletePassenger(@PathVariable String id){
+        passengerService.deletePassenger(id);
     }
 }

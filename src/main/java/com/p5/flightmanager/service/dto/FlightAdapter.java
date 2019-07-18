@@ -1,53 +1,51 @@
-package com.p5.flightmanager.service.dto;
+package com.p5.flightmanager.service.dto.adapter;
 
 import com.p5.flightmanager.repository.models.Flight;
-import com.p5.flightmanager.service.dto.adapter.PassengerAdapter;
+import com.p5.flightmanager.service.dto.FlightDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlightAdapter {
-
-
-    public final static FlightDto toDto(Flight flight) {
+    public final static FlightDto toDto(Flight flight){
         FlightDto flightDto = new FlightDto();
-        flightDto.setFlightType(flight.getFlightType());
+
         flightDto.setId(flight.getId().toString());
         flightDto.setName(flight.getName());
         flightDto.setDepartureLocation(flight.getDepartureLocation());
         flightDto.setDestinationLocation(flight.getDestinationLocation());
-        flightDto.setFullFlightDescription(flight.getDepartureLocation().concat("-").concat(flight.getDestinationLocation()));
         flightDto.setDurationTime(flight.getDurationTime());
+        flightDto.setFullFlightDescription(flight.getDepartureLocation().concat("-").concat(flight.getDestinationLocation()));
         flightDto.setDepartureDate(flight.getDepartureDate());
         flightDto.setDestinationDate(flight.getDestinationDate());
+        flightDto.setFlightType(flight.getFlightType());
 
         flightDto.setPassengerDtos(PassengerAdapter.toListDto(flight.getPassengerList()));
 
         return flightDto;
     }
 
+    public final static List<FlightDto> toListDto(Iterable<Flight> flightList){
+        List<FlightDto> flightsDto = new ArrayList<>();
+        flightList.forEach(flight -> flightsDto.add(toDto(flight)));
 
-    public final static List<FlightDto> toListDto(Iterable<Flight> flightList) {
-        List<FlightDto> listDto = new ArrayList<>();
-        flightList.forEach(flight -> listDto.add(toDto(flight)));
-        return listDto;
+        return flightsDto;
     }
 
-    public final static Flight fromDto(FlightDto flightDto) {
+    public final static Flight fromDto(FlightDto flightDto){
         Flight flight = new Flight();
-        FlightAdapter.fromDto(flightDto, flight);
-        return flight;
+        return fromDto(flightDto, flight);
     }
 
-    public final static Flight fromDto(FlightDto flightDto, Flight flight) {
-
+    public final static Flight fromDto(FlightDto flightDto, Flight flight){
         flight.setName(flightDto.getName());
-        flight.setFlightType(flightDto.getFlightType());
         flight.setDepartureLocation(flightDto.getDepartureLocation());
         flight.setDestinationLocation(flightDto.getDestinationLocation());
         flight.setDurationTime(flightDto.getDurationTime());
         flight.setDepartureDate(flightDto.getDepartureDate());
         flight.setDestinationDate(flightDto.getDestinationDate());
+        flight.setFlightType(flightDto.getFlightType());
+
         return flight;
     }
 }

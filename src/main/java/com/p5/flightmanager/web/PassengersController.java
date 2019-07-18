@@ -23,7 +23,6 @@ public class PassengersController {
 
     @GetMapping
     ResponseEntity<List<PassengerDto>> getAll(@RequestParam String search) {
-
         return ResponseEntity.ok(passengerService.getAll(search));
     }
 
@@ -33,18 +32,17 @@ public class PassengersController {
     }
 
     @PostMapping
-    ResponseEntity<PassengerDto> createPassenger(@RequestBody PassengerDto passengerDto) {
-        return ResponseEntity.ok(passengerService.createPassenger(passengerDto));
+    ResponseEntity<PassengerDto> createPassager(@RequestBody PassengerDto passengerDto) {
+        return ResponseEntity.ok(passengerService.createPassager(passengerDto));
     }
 
     @PutMapping("/update")
-    ResponseEntity<PassengerDto> updatePassenger(@RequestBody PassengerDto passengerDto) {
-        return ResponseEntity.ok(passengerService.updatePassenger(passengerDto));
-        //return ResponseEntity.ok("Update flight");
+    ResponseEntity<PassengerDto> updatePassager(@RequestBody PassengerDto passengerDto){
+        return ResponseEntity.ok(passengerService.updatePassager(passengerDto));
     }
 
     @DeleteMapping("/{id}")
-    void deleteFlight(@PathVariable String id) {
-        passengerService.deletePassenger(id);
+    void deletePassager(@PathVariable String id){
+        passengerService.deletePassager(id);
     }
 }

@@ -3,16 +3,20 @@ package com.p5.flightmanager.service.dto;
 import java.util.Date;
 
 public class PassengerDto {
-
     private String id;
     private String firstName;
     private String lastName;
-    private String gender;
-    private String email;
-    private String mobileNumber;
-    private Date dateOfBirth;
-    private String personalIdentificationCode;
-    private String language;
+    private String npc;
+    private Date birthDate;
+    private int age;
+
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -30,59 +34,27 @@ public class PassengerDto {
         this.lastName = lastName;
     }
 
-    public String getGender() {
-        return gender;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public String getEmail() {
-        return email;
+    public int getAge() {
+        return age;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getNpc() {
+        return npc;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getPersonalIdentificationCode() {
-        return personalIdentificationCode;
-    }
-
-    public void setPersonalIdentifierCode(String personalIdentificationCode) {
-        this.personalIdentificationCode = personalIdentificationCode;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setNpc(String npc) {
+        this.npc = npc;
     }
 }

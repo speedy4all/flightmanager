@@ -9,12 +9,53 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 @Entity
 @Table(name = "T_FLIGHT")
 public class Flight extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
+
+    @Column(name = "name")
+    @Type(type = "string")
+    private String name;
+
+    @Column(name = "departure_location")
+    @Type(type = "string")
+    private String departureLocation;
+
+    @Column(name = "destination_location")
+    @Type(type = "string")
+    private String destinationLocation;
+
+    @Column(name = "duration_time")
+    @Type(type = "double")
+    private Double durationTime;
+
+    @Column(name = "departure_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date departureDate;
+
+    @Column(name = "destination_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date destinationDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "flight_type")
+    private FlightType flightType;
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class)
+            @JoinTable(name = "T_FLIGHT_PASSENGER",
+            joinColumns = { @JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_passenger"))},
+                    inverseJoinColumns = { @JoinColumn(name = "passenger_id", nullable = false, foreignKey = @ForeignKey(name = "fk_passenger_flight"))},
+            uniqueConstraints = { @UniqueConstraint(columnNames = {"flight_id", "passenger_id"}, name = "uk_flight_passenger")},
+            indexes = { @Index(columnList = "passenger_id", name = "ix_flight_passenger")})
+    private List<Passenger> passengerList = new ArrayList<>();
+
+//    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
+//    @JoinTable()
+//    private Plane plane;
 
     public Flight() {
         //default constructor
@@ -39,9 +80,23 @@ public class Flight extends BaseModel implements Serializable {
         this.destinationDate = source.destinationDate;
     }
 
+    public List<Passenger> getPassengerList() {
+        return passengerList;
+    }
 
+    public void setPassengerList(List<Passenger> passengerList) {
+        this.passengerList = passengerList;
+    }
 
-   public String getName() {
+    public FlightType getFlightType() {
+        return flightType;
+    }
+
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
+    }
+
+    public String getName() {
         return name;
     }
 
@@ -87,60 +142,5 @@ public class Flight extends BaseModel implements Serializable {
 
     public void setDestinationDate(Date destinationDate) {
         this.destinationDate = destinationDate;
-    }
-
-    @Column
-    @Enumerated(EnumType.STRING)
-    private FlightType flightType;
-
-    @Column(name = "name")
-    @Type(type = "string")
-    private String name;
-
-    @Column(name = "departure_location")
-    @Type(type = "string")
-    private String departureLocation;
-
-    @Column(name = "destination_location")
-    @Type(type = "string")
-    private String destinationLocation;
-
-    @Column(name = "duration_time")
-    @Type(type = "double")
-    private Double durationTime;
-
-    @Column(name = "departure_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date departureDate;
-
-    @Column(name = "destination_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date destinationDate;
-
-    @ManyToMany(fetch=FetchType.LAZY, targetEntity = Passenger.class)
-    @JoinTable (name="t_flight_passenger",
-            joinColumns = {@JoinColumn(name="flight_id", nullable = false, foreignKey = @ForeignKey(name="fk_flight_passenger"))},
-            inverseJoinColumns={@JoinColumn(name="passenger_id",nullable = false,foreignKey = @ForeignKey(name="fk_passenger_flight"))},
-            uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id","passenger_id"},name="uk_flight_passenger")},
-            indexes={@Index(columnList = "passenger_id",name="ix_flight_passenger")}
-            )
-    List<Passenger> passengerList= new ArrayList<>();
-
-    public FlightType getFlightType() {
-        return flightType;
-    }
-
-    public void setFlightType(FlightType flightType) {
-        this.flightType = flightType;
-    }
-
-    public List<Passenger> getPassengerList() {
-        return passengerList;
-    }
-
-    public void setPassengerList(List<Passenger> passengerList) {
-        this.passengerList = passengerList;
     }
 }

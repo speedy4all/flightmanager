@@ -18,8 +18,13 @@ public class FlightmanagerApplication {
 
 }
 
+//TODO: pe flight 1 plane (ManyToOne);
+//TODO: pe flight 2 airports (departure, destination);
+
 
 /*
+enum pt Flight (ce tip de flight este)
+
 
 {
     "firstName": "Narcis-Florin",
@@ -42,5 +47,15 @@ public class FlightmanagerApplication {
 }
 
 
+
+{
+	"id": "2e2bdfa7-3c63-4729-9dc6-95f2754925a0",
+	"name": "Hendri Cel mare",
+	"terminals": 4,
+	"city": "Bucuresti",
+	"country": "Romania",
+	"code": "OPT",
+	"timezoneOffset": 300
+}
 
  */

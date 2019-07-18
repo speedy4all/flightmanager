@@ -1,14 +1,23 @@
 package com.p5.flightmanager.service.dto;
 
+import com.p5.flightmanager.repository.models.Flight;
+
+import java.util.List;
+
 public class AirportDto {
 
     private String id;
     private String name;
-    private String location;
-    private String identificationCode;
-    private Integer numberOfTerminals;
+    private String city;
+    private String country;
+    private Integer terminals;
+    private String code;
     private Integer timezoneOffset;
-    private String fullDescription;
+    private List<FlightDto> flightList;
+
+    public List<FlightDto> getFlightList() { return flightList; }
+
+    public void setFlightList(List<FlightDto> flightList) { this.flightList = flightList; }
 
     public String getId() {
         return id;
@@ -26,28 +35,36 @@ public class AirportDto {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public String getCity() {
+        return city;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getIdentificationCode() {
-        return identificationCode;
+    public String getCountry() {
+        return country;
     }
 
-    public void setIdentificationCode(String identificationCode) {
-        this.identificationCode = identificationCode;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public Integer getNumberOfTerminals() {
-        return numberOfTerminals;
+    public Integer getTerminals() {
+        return terminals;
     }
 
-    public void setNumberOfTerminals(Integer numberOfTerminals) {
-        this.numberOfTerminals = numberOfTerminals;
+    public void setTerminals(Integer terminals) {
+        this.terminals = terminals;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Integer getTimezoneOffset() {
@@ -56,13 +73,5 @@ public class AirportDto {
 
     public void setTimezoneOffset(Integer timezoneOffset) {
         this.timezoneOffset = timezoneOffset;
-    }
-
-    public String getFullDescription() {
-        return fullDescription;
-    }
-
-    public void setFullDescription(String fullDescription) {
-        this.fullDescription = fullDescription;
     }
 }

@@ -1,7 +1,5 @@
 package com.p5.flightmanager.web;
 
-
-import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,6 @@ public class FlightsController {
 
     @GetMapping
     ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
-
         return ResponseEntity.ok(flightService.getAll(search));
     }
 
@@ -40,20 +37,17 @@ public class FlightsController {
     }
 
     @PutMapping("/update")
-    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
+    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto){
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
-        //return ResponseEntity.ok("Update flight");
-
     }
 
     @DeleteMapping("/{id}")
-    void deleteFlight(@PathVariable String id) {
+    void deleteFlight(@PathVariable String id){
         flightService.deleteFlight(id);
     }
 
-    @PutMapping("/{}flightId/add-passenger/{passengerId}")
+    @PutMapping("/{flightId}/add-passenger/{passengerId}")
     void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId){
-        flightService.addPassengerToFlight(flightId,passengerId);
+        flightService.addPassengerToFlight(flightId, passengerId);
     }
-
 }

@@ -7,14 +7,13 @@ import java.util.List;
 
 @Service
 public interface PassengerService {
-
     List<PassengerDto> getAll(String search);
 
-    PassengerDto createPassenger(PassengerDto passengerDto);
+    PassengerDto createPassager(PassengerDto passengerDto);
 
     PassengerDto getById(String id);
 
-    PassengerDto updatePassenger(PassengerDto passengerDto);
+    PassengerDto updatePassager(PassengerDto passengerDto);
 
-    void deletePassenger(String id);
+    void deletePassager(String id);
 }

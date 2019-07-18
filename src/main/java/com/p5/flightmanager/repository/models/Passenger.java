@@ -12,33 +12,6 @@ public class Passenger extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Passenger(){
-        //default constructor
-    }
-
-    public Passenger(BaseModel source, String firstName, String lastName, String gender, String email, String mobileNumber, Date dateOfBirth, String personalIdentificationCode, String language) {
-        super(source);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.email = email;
-        this.mobileNumber = mobileNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.personalIdentificationCode = personalIdentificationCode;
-        this.language = language;
-    }
-
-    public Passenger(String firstName, String lastName, String gender, String email, String mobileNumber, Date dateOfBirth, String personalIdentificationCode, String language) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.email = email;
-        this.mobileNumber = mobileNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.personalIdentificationCode = personalIdentificationCode;
-        this.language = language;
-    }
-
     @Column(name = "first_name")
     @Type(type = "string")
     private String firstName;
@@ -47,30 +20,34 @@ public class Passenger extends BaseModel implements Serializable {
     @Type(type = "string")
     private String lastName;
 
-    @Column(name = "gender")
+    @Column(name = "npc")
     @Type(type = "string")
-    private String gender;
+    private String npc;
 
-    @Column(name = "email")
-    @Type(type = "string")
-    private String email;
-
-    @Column(name = "mobile_number")
-    @Type(type = "string")
-    private String mobileNumber;
-
-    @Column(name = "date_of_birth")
+    @Column(name = "birth_date")
     @Type(type = "date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateOfBirth;
+    private Date birthDate;
 
-    @Column(name = "personal_identification_code")
-    @Type(type = "string")
-    private String personalIdentificationCode;
+    public Passenger() {
+        //default constructor
+    }
 
-    @Column(name = "language")
-    @Type(type = "string")
-    private String language;
+    public Passenger(String firstName, String lastName, String npc, Date birthdate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.npc = npc;
+        this.birthDate = birthDate;
+    }
+
+    public Passenger(Passenger source) {
+        super(source);
+        this.firstName = source.firstName;
+        this.lastName = source.lastName;
+        this.npc = source.npc;
+        this.birthDate = source.birthDate;
+    }
+
 
     public String getFirstName() {
         return firstName;
@@ -88,51 +65,19 @@ public class Passenger extends BaseModel implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getGender() {
-        return gender;
+    public String getNpc() {
+        return npc;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setNpc(String npc) {
+        this.npc = npc;
     }
 
-    public String getEmail() {
-        return email;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getPersonalIdentificationCode() {
-        return personalIdentificationCode;
-    }
-
-    public void setPersonalIdentifierCode(String personalIdentificationCode) {
-        this.personalIdentificationCode = personalIdentificationCode;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 }

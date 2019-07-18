@@ -1,10 +1,13 @@
 package com.p5.flightmanager.service;
 
 import com.p5.flightmanager.repository.AirportRepository;
+import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Airport;
+import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.api.AirportService;
-import com.p5.flightmanager.service.dto.adapter.AirportAdapter;
 import com.p5.flightmanager.service.dto.AirportDto;
+import com.p5.flightmanager.service.dto.adapter.AirportAdapter;
+import com.p5.flightmanager.service.dto.adapter.FlightAdapter;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoAirportException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,59 +23,91 @@ public class AirportServiceImpl implements AirportService {
     @Autowired
     private AirportRepository airportRepository;
 
+    @Autowired
+    private FlightsRepository flightsRepository;
+
     @Override
     public List<AirportDto> getAll(String search) {
+        if (search == null){
+            search = "";
+        }
+
         return AirportAdapter.toListDto(airportRepository.filterByName(search));
     }
 
     @Override
     public AirportDto createAirport(AirportDto airportDto) {
-        Airport airport = null;
-        if(isValidAirport(airportDto)) {
+        Airport airport;
+        if (isValidAirport(airportDto)){
             airport = airportRepository.save(AirportAdapter.fromDto(airportDto));
         } else {
             throw new EmptyFieldException();
-
         }
+
+
+        //TODO: implement api error here
         return AirportAdapter.toDto(airport);
     }
 
     @Override
     public AirportDto getById(String id) {
-        Optional<Airport> optionalAirport = airportRepository.findById(UUID.fromString(id));
-        if(optionalAirport.isPresent()) {
-            Airport airport = optionalAirport.get();
+        Optional<Airport> airportOptional = airportRepository.findById(UUID.fromString(id));
+        if (airportOptional.isPresent()){
+            Airport airport = airportOptional.get();
+
             return AirportAdapter.toDto(airport);
         }
+
         throw new NoAirportException();
     }
 
     @Override
     public AirportDto updateAirport(AirportDto airportDto) {
-        Optional<Airport> optionalAirport = airportRepository.findById(UUID.fromString(airportDto.getId()));
-        if(optionalAirport.isPresent()) {
-            Airport airport = optionalAirport.get();
-            airport = AirportAdapter.fromDto(airportDto, airport);
-            airportRepository.save(airport);
-            return AirportAdapter.toDto(airport);
+        Optional<Airport> airportOptional = airportRepository.findById(UUID.fromString(airportDto.getId()));
+        Airport airport;
+
+        if (airportOptional.isPresent()){
+            airport = airportRepository.save(AirportAdapter.fromDto(airportDto, airportOptional.get()));
+        } else {
+            throw new NoAirportException();
         }
-        throw new NoAirportException();
+
+        return AirportAdapter.toDto(airport);
     }
 
     @Override
     public void deleteAirport(String id) {
-        Optional<Airport> optionalAirport = airportRepository.findById(UUID.fromString(id));
-        if(optionalAirport.isPresent()) {
-            Airport airport = optionalAirport.get();
-            airportRepository.delete(airport);
+        Optional<Airport> airportOptional = airportRepository.findById(UUID.fromString(id));
+
+        if (airportOptional.isPresent()){
+            airportRepository.delete(airportOptional.get());
+        } else {
+            throw new NoAirportException();
+        }
+    }
+
+    @Override
+    public void addFlightToAirport(String airportId, String flightId) {
+        Optional<Airport> optionalAirport = airportRepository.findById(UUID.fromString(airportId));
+        if (optionalAirport.isPresent()){
+            Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
+            if (optionalFlight.isPresent()){
+                Airport airport = optionalAirport.get();
+                airport.getFlightList().add(optionalFlight.get());
+                airportRepository.save(airport);
+            } else {
+
+            }
+        } else {
+
         }
     }
 
     private boolean isValidAirport(AirportDto airportDto){
-        if(airportDto.getName() == null || airportDto.getName().isEmpty())
+        if (airportDto.getCode().chars().count() != 3){
             return false;
-        if(airportDto.getIdentificationCode() == null || airportDto.getIdentificationCode().isEmpty())
-            return false;
+        }
+
         return true;
     }
 }

@@ -1,5 +1,8 @@
 package com.p5.flightmanager.service.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AirportDto {
 
     private String id;
@@ -8,6 +11,15 @@ public class AirportDto {
     private String country;
     private Integer offSet;
     private String IATA;
+    private List<FlightDto> flights = new ArrayList<>();
+
+    public List<FlightDto> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(List<FlightDto> flights) {
+        this.flights = flights;
+    }
 
     public String getId() {
         return id;

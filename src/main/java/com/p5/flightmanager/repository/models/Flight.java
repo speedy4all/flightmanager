@@ -56,6 +56,18 @@ public class Flight extends BaseModel implements Serializable {
     )
     List<Passenger> passengerList = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
+    @JoinColumn(name = "plane_id")
+    Plane plane;
+
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Airport.class)
+    @JoinColumn(name = "destination_airport_id")
+    Airport destinationAirport;
+
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Airport.class)
+    @JoinColumn(name = "location_airport_id")
+    Airport locationAirport;
+
     public Flight() {
         //default constructor
     }
@@ -79,6 +91,29 @@ public class Flight extends BaseModel implements Serializable {
         this.destinationDate = source.destinationDate;
     }
 
+    public Plane getPlane() {
+        return plane;
+    }
+
+    public void setPlane(Plane plane) {
+        this.plane = plane;
+    }
+
+    public Airport getDestinationAirport() {
+        return destinationAirport;
+    }
+
+    public void setDestinationAirport(Airport destinationAirport) {
+        this.destinationAirport = destinationAirport;
+    }
+
+    public Airport getLocationAirport() {
+        return locationAirport;
+    }
+
+    public void setLocationAirport(Airport locationAirport) {
+        this.locationAirport = locationAirport;
+    }
 
     public String getName() {
         return name;

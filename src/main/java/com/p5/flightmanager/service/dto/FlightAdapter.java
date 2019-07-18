@@ -22,7 +22,17 @@ public class FlightAdapter {
         flightDto.setDepartureDate(flight.getDepartureDate());
         flightDto.setDestinationDate(flight.getDestinationDate());
 
-        flightDto.setPassengerDtos(PassengerAdapter.toListDto(flight.getPassengerList() ));
+        if(flight.getPlane() != null) {
+            flightDto.setPlane(PlaneAdapter.toDto(flight.getPlane()));
+        }
+        if(flight.getDestinationAirport() != null) {
+            flightDto.setDestinationAirport(AirportAdapter.toDto(flight.getDestinationAirport()));
+        }
+        if(flight.getLocationAirport() != null) {
+            flightDto.setLocationAirport(AirportAdapter.toDto(flight.getLocationAirport()));
+        }
+        flightDto.setPassengers(PassengerAdapter.toListDto(flight.getPassengerList()));
+
 
         return flightDto;
     }

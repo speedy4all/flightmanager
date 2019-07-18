@@ -18,4 +18,6 @@ public interface AirportService {
     AirportDto updateAirport(AirportDto airportDto);
 
     void deleteAirport(String id);
+
+    void addFlight(String airportId, String flightId);
 }

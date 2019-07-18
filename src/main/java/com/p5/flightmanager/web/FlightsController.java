@@ -55,4 +55,19 @@ public class FlightsController {
     void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId){
         flightService.addPassengerToFlight(flightId, passengerId);
     }
+
+    @PutMapping("/{flightId}/add-plane/{planeId}")
+    void addPlaneToFlight(@PathVariable String flightId, @PathVariable String planeId){
+        flightService.addPlaneToFlight(flightId,planeId);
+    }
+
+    @PutMapping("/{flightId}/add-destination/{planeId}")
+    void addDestinationAirport(@PathVariable String flightId, @PathVariable String planeId){
+        flightService.addDestinationAirport(flightId,planeId);
+    }
+
+    @PutMapping("/{flightId}/add-location/{planeId}")
+    void addLocationAirport(@PathVariable String flightId, @PathVariable String planeId){
+        flightService.addLocationAirport(flightId,planeId);
+    }
 }

@@ -15,6 +15,43 @@ public class FlightDto {
     private Date destinationDate;
     private String fullFlightDescription;
     private FlightType flightType;
+    private PlaneDto plane;
+    private AirportDto destinationAirport;
+    private AirportDto locationAirport;
+    private List<PassengerDto> passengers = new ArrayList<>();
+
+    public List<PassengerDto> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(List<PassengerDto> passengers) {
+        this.passengers = passengers;
+    }
+
+    public PlaneDto getPlane() {
+        return plane;
+    }
+
+    public void setPlane(PlaneDto plane) {
+        this.plane = plane;
+    }
+
+    public AirportDto getDestinationAirport() {
+        return destinationAirport;
+    }
+
+    public void setDestinationAirport(AirportDto destinationAirport) {
+        this.destinationAirport = destinationAirport;
+    }
+
+    public AirportDto getLocationAirport() {
+        return locationAirport;
+    }
+
+    public void setLocationAirport(AirportDto locationAirport) {
+        this.locationAirport = locationAirport;
+    }
+
     private List<PassengerDto> passengerDtos = new ArrayList<>();
 
     public List<PassengerDto> getPassengerDtos() {

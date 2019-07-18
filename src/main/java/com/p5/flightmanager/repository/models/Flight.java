@@ -34,6 +34,10 @@ public class Flight extends BaseModel implements Serializable {
     @JoinColumn(name = "destination_airport_id", foreignKey = @ForeignKey(name = "fk_flight_destination_airport"))
     private Airport destinationLocation;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "flight_plane")
+    private Plane plane;
+
     @Column(name = "duration_time")
     @Type(type = "double")
     private Double durationTime;

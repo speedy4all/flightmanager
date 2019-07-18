@@ -18,6 +18,10 @@ public class Airport extends BaseModel implements Serializable {
     int terminals;
 
     @Column
+    @Type(type = "String")
+    String name;
+
+    @Column
     @Type(type = "string")
     String code;
 
@@ -122,5 +126,13 @@ public class Airport extends BaseModel implements Serializable {
 
     public void setFlights(List<Flight> flights) {
         this.flights = flights;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

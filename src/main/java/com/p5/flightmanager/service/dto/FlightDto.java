@@ -20,6 +20,15 @@ public class FlightDto {
     private AirportDto locationAirport;
     private List<PassengerDto> passengers = new ArrayList<>();
 
+    public FlightDto() {
+    }
+
+    public FlightDto(String name, String departureLocation, String destinationLocation) {
+        this.name = name;
+        this.departureLocation = departureLocation;
+        this.destinationLocation = destinationLocation;
+    }
+
     public PlaneDto getPlane() {
         return plane;
     }
@@ -123,4 +132,5 @@ public class FlightDto {
     public void setLocationAirport(AirportDto locationAirport) {
         this.locationAirport = locationAirport;
     }
+
 }

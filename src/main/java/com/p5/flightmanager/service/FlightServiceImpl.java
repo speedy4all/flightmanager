@@ -11,18 +11,15 @@ import com.p5.flightmanager.repository.models.Plane;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
+import com.p5.flightmanager.service.dto.SearchParamFlightDto;
 import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -150,14 +147,19 @@ public class FlightServiceImpl implements FlightService {
         return FlightAdapter.toListDto(flights);
     }
 
-    private boolean isValidFlight(FlightDto flightDto) {
-        if(StringUtils.isEmpty(flightDto.getDepartureLocation())) {
-            return false;
-        }
+    @Override
+    public Iterable<FlightDto> getByDepDateAndDestDateAndLocation(SearchParamFlightDto searchParamDto) {
+        return flightsRepository.findByNameAndDAteSimple(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
+    }
 
-        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty()) {
-            return false;
-        }
+    private boolean isValidFlight(FlightDto flightDto) {
+//        if(StringUtils.isEmpty(flightDto.getDestinationAirport().getCode())) {
+//            return false;
+//        }
+
+//        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty()) {
+//            return false;
+//        }
         //TODO api error
         return true;
     }

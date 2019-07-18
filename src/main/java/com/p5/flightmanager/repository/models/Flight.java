@@ -21,9 +21,15 @@ public class Flight extends BaseModel implements Serializable {
 //pe aeroport o lsta de flight
 //pe flight un aeroport destination, unu location
     public static final long serialVersionUID = 1L;
-    //toate flighturile care au data de plecare o anumita data si locatia, o locatie
-
-
+    /*
+    toate flighturile care au data de plecare o anumita data si locatia, o locatie -
+    sa putem sa setam departure si destination location (airport) -
+    endpoint in airport care sa returneze o lista de dto-uri care sa contina din aeroport nume, city, id.
+    o lista de flighturi care sa contina id flight, departure date, destination date, duration time,
+     < departure location, destination location (city de pe airport)> dupa departureairport, destinationairport id cu searchParams class
+    atasare plane de flight -
+    AVAILABLE SEATS CALCULATA plane.capacity - count(passengers)
+    */
     @Column()
     @Enumerated(EnumType.STRING)
     private FlightType flightType;
@@ -66,26 +72,26 @@ public class Flight extends BaseModel implements Serializable {
             indexes = { @Index(columnList = "passenger_id", name = "ix_flight_passenger")})
     List<Passenger> passengerList = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
-    @JoinColumn(name = "plane_id", nullable = false)
+    //TODO nullable = false
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
+    @JoinColumn(name = "plane_id")
     Plane plane;
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Airport.class)
-    @JoinColumn(name = "destination_airport_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Airport.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "destination_airport_id", foreignKey = @ForeignKey(name = "fk_flight_destination"))
     Airport destinationAirport;
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Airport.class)
-    @JoinColumn(name = "location_airport_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Airport.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "location_airport_id", foreignKey = @ForeignKey(name = "fk_flight_location"))
     Airport locationAirport;
 
     public Flight() {
         //default constructor
     }
 
-    public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate, FlightType flightType) {
+    public Flight(String name, Double durationTime, Date departureDate, Date destinationDate, FlightType flightType) {
         this.name = name;
         this.departureLocation = departureLocation;
-        this.destinationLocation = destinationLocation;
         this.durationTime = durationTime;
         this.departureDate = departureDate;
         this.destinationDate = destinationDate;
@@ -151,7 +157,7 @@ public class Flight extends BaseModel implements Serializable {
 
     public void setDestinationLocation(String destinationLocation) {
         this.destinationLocation = destinationLocation;
-    }
+   }
 
     public Double getDurationTime() {
         return durationTime;

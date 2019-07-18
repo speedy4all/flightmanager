@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.xml.bind.ValidationException;
+
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -50,9 +52,8 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    //@ResponseStatus(HttpStatus.NOT_FOUND)
-    ResponseEntity<Object> handleBadArguments(MethodArgumentNotValidException ex) {
+    @ExceptionHandler(ValidationException.class)
+    protected ResponseEntity<Object> handleBadArguments(MethodArgumentNotValidException ex) {
         return buildResponseEntity(new ApiError((HttpStatus.BAD_REQUEST)));
     }
 }

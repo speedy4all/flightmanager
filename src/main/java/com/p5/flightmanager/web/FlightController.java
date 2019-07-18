@@ -2,11 +2,14 @@ package com.p5.flightmanager.web;
 
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightDto;
+import com.p5.flightmanager.service.dto.SearchParamFlightDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import java.util.Date;
@@ -63,18 +66,23 @@ public class FlightController {
         flightService.addPlaneToFlight(flightId,planeId);
     }
 
-    @PutMapping("/{flightId}/add-destination/{planeId}")
-    void addDestinationAirport(@PathVariable String flightId, @PathVariable String planeId){
-        flightService.addDestinationAirport(flightId,planeId);
+    @PutMapping("/{flightId}/add-destination/{airportId}")
+    void addDestinationAirport(@PathVariable String flightId, @PathVariable String airportId){
+        flightService.addDestinationAirport(flightId,airportId);
     }
 
-    @PutMapping("/{flightId}/add-location/{planeId}")
-    void addLocationAirport(@PathVariable String flightId, @PathVariable String planeId){
-        flightService.addLocationAirport(flightId,planeId);
+    @PutMapping("/{flightId}/add-location/{airportId}")
+    void addLocationAirport(@PathVariable String flightId, @PathVariable String airportId){
+        flightService.addLocationAirport(flightId,airportId);
     }
 
     @GetMapping("/search-by")
     ResponseEntity<List<FlightDto>> getBySearchParams(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date departureDate, @RequestParam String location) {
         return ResponseEntity.ok(flightService.getBySearchParams(departureDate, location));
     } //iso date e format an-luna-zi
+
+    @GetMapping("/search")
+    Iterable<FlightDto> getByDepDateAndDestDateAndLocation(@Valid SearchParamFlightDto searchParamDto) {
+        return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
+    }
 }

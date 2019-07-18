@@ -7,12 +7,22 @@ public class AirportDto  {
 
     private String id;
     private int terminals;
+    private String name;
     private String code;
     private String location;
     private int offset;
     private double length;
     private int altitude;
     private List<FlightDto> flights = new ArrayList<>();
+
+    public AirportDto() {
+    }
+
+    public AirportDto(String id, String name, String location) {
+        this.id = id;
+        this.location = location;
+        this.name = name;
+    }
 
     public String getId() {
         return id;
@@ -76,5 +86,13 @@ public class AirportDto  {
 
     public void setFlights(List<FlightDto> flights) {
         this.flights = flights;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

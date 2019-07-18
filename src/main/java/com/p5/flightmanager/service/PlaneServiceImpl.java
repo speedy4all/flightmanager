@@ -27,30 +27,29 @@ public class PlaneServiceImpl implements PlaneService {
 
     @Override
     public PlaneDto createPlane(PlaneDto planeDto) {
-       Plane plane = null;
-       if(isValidPlane(planeDto)) {
-           plane = planesRepository.save(PlaneAdapter.fromDto(planeDto));
-       }
-       else {
-           throw new EmptyFieldException();
-       }
-       return PlaneAdapter.toDto(plane);
+        Plane plane = null;
+        if (isValidPlane(planeDto)) {
+            plane = planesRepository.save(PlaneAdapter.fromDto(planeDto));
+        } else {
+            throw new EmptyFieldException();
+        }
+        return PlaneAdapter.toDto(plane);
     }
 
     @Override
     public PlaneDto getById(String id) {
-       Optional<Plane> optionalPlane = planesRepository.findById(UUID.fromString(id));
-       if(optionalPlane.isPresent()) {
-           Plane plane = optionalPlane.get();
-           return PlaneAdapter.toDto(plane);
-       }
-       throw new NoPlaneException();
+        Optional<Plane> optionalPlane = planesRepository.findById(UUID.fromString(id));
+        if (optionalPlane.isPresent()) {
+            Plane plane = optionalPlane.get();
+            return PlaneAdapter.toDto(plane);
+        }
+        throw new NoPlaneException();
     }
 
     @Override
     public PlaneDto updatePlane(PlaneDto planeDto) {
         Optional<Plane> optionalPlane = planesRepository.findById(UUID.fromString(planeDto.getId()));
-        if(optionalPlane.isPresent()) {
+        if (optionalPlane.isPresent()) {
             Plane plane = optionalPlane.get();
             plane = PlaneAdapter.fromDto(planeDto, plane);
             planesRepository.save(plane);
@@ -62,14 +61,14 @@ public class PlaneServiceImpl implements PlaneService {
     @Override
     public void deletePlane(String id) {
         Optional<Plane> optionalPlane = planesRepository.findById(UUID.fromString(id));
-        if(optionalPlane.isPresent()) {
+        if (optionalPlane.isPresent()) {
             Plane plane = optionalPlane.get();
             planesRepository.delete(plane);
         }
     }
 
     private boolean isValidPlane(PlaneDto planeDto) {
-        if(planeDto.getModel() == null || planeDto.getModel().isEmpty()) {
+        if (planeDto.getModel() == null || planeDto.getModel().isEmpty()) {
             return false;
         }
         return true;

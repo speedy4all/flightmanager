@@ -38,7 +38,7 @@ public class Airport extends BaseModel implements Serializable {
     private String location;
 
     @Column(name = "utc_offest")
-    @Type(type = "integer")
+    @Type(type = "int")
     private Integer utcOffset;
 
     public String getCode() {

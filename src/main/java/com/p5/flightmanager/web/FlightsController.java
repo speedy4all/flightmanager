@@ -1,7 +1,6 @@
 package com.p5.flightmanager.web;
 
 
-import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.List;
 
@@ -49,5 +49,10 @@ public class FlightsController {
     @DeleteMapping("/{id}")
     void deleteFlight(@PathVariable String id) {
         flightService.deleteFlight(id);
+    }
+
+    @PutMapping("/{flightId}/add-passenger/{passengerId}")
+    void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId) {
+        flightService.addPassengerToFlight(flightId, passengerId);
     }
 }

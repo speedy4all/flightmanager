@@ -1,6 +1,8 @@
 package com.p5.flightmanager.service.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class FlightDto {
 
@@ -13,6 +15,9 @@ public class FlightDto {
     private Date departureDate;
     private Date destinationDate;
     private String fullFlightDescription;
+    private FlightType flightType;
+
+    private List<PassengerDto> passengerDtos = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -76,5 +81,21 @@ public class FlightDto {
 
     public void setDestinationDate(Date destinationDate) {
         this.destinationDate = destinationDate;
+    }
+
+    public FlightType getFlightType() {
+        return flightType;
+    }
+
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
+    }
+
+    public List<PassengerDto> getPassengerDtos() {
+        return passengerDtos;
+    }
+
+    public void setPassengerDtos(List<PassengerDto> passengerDtos) {
+        this.passengerDtos = passengerDtos;
     }
 }

@@ -33,7 +33,7 @@ public class Plane extends BaseModel implements Serializable {
     private String model;
 
     @Column(name = "number_of_seats")
-    @Type(type = "integer")
+    @Type(type = "int")
     private Integer numberOfSeats;
 
     public String getModel() {

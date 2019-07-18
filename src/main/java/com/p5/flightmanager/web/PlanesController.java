@@ -8,9 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.xml.ws.Response;
 import java.util.List;
 
 @RestController

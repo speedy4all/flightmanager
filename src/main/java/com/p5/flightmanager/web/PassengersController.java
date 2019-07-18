@@ -1,9 +1,6 @@
 package com.p5.flightmanager.web;
 
 
-import com.p5.flightmanager.repository.models.Flight;
-import com.p5.flightmanager.repository.models.Passenger;
-import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.api.PassengerService;
 import com.p5.flightmanager.service.dto.PassengerDto;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -28,10 +28,9 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public AirportDto createAirport(AirportDto airportDto) {
         Airport airport = null;
-        if(isValidAirport(airportDto)){
+        if (isValidAirport(airportDto)) {
             airport = airportsRepository.save(AirportAdapter.fromDto(airportDto));
-        }
-        else {
+        } else {
             throw new EmptyFieldException();
         }
         return AirportAdapter.toDto(airport);
@@ -41,7 +40,7 @@ public class AirportServiceImpl implements AirportService {
     public AirportDto getById(String id) {
         Optional<Airport> optionalAirport = airportsRepository.findById(UUID.fromString(id));
 
-        if(optionalAirport.isPresent()) {
+        if (optionalAirport.isPresent()) {
             Airport airport = optionalAirport.get();
             return AirportAdapter.toDto(airport);
         }
@@ -51,7 +50,7 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public AirportDto updateAirport(AirportDto airportDto) {
         Optional<Airport> optionalAirport = airportsRepository.findById(UUID.fromString(airportDto.getId()));
-        if(optionalAirport.isPresent()) {
+        if (optionalAirport.isPresent()) {
             Airport airport = optionalAirport.get();
             airport = AirportAdapter.fromDto(airportDto, airport);
             airportsRepository.save(airport);
@@ -63,7 +62,7 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public void deleteAirport(String id) {
         Optional<Airport> optionalAirport = airportsRepository.findById(UUID.fromString(id));
-        if(optionalAirport.isPresent()) {
+        if (optionalAirport.isPresent()) {
             Airport airport = optionalAirport.get();
             airportsRepository.delete(airport);
         }
@@ -71,7 +70,7 @@ public class AirportServiceImpl implements AirportService {
 
     public Boolean isValidAirport(AirportDto airportDto) {
 
-        if(airportDto.getCode() == null || airportDto.getCode().isEmpty()) {
+        if (airportDto.getCode() == null || airportDto.getCode().isEmpty()) {
             return false;
         }
         return true;

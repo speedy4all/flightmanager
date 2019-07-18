@@ -1,14 +1,13 @@
 package com.p5.flightmanager.repository.models;
 
+import com.p5.flightmanager.service.dto.FlightType;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -16,29 +15,6 @@ import java.util.Date;
 public class Flight extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
-
-    public Flight() {
-        //default constructor
-    }
-
-    public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
-        this.name = name;
-        this.departureLocation = departureLocation;
-        this.destinationLocation = destinationLocation;
-        this.durationTime = durationTime;
-        this.departureDate = departureDate;
-        this.destinationDate = destinationDate;
-    }
-
-    public Flight(Flight source) {
-        super(source);
-        this.name = source.name;
-        this.departureLocation = source.departureLocation;
-        this.destinationLocation = source.destinationLocation;
-        this.durationTime = source.durationTime;
-        this.departureDate = source.departureDate;
-        this.destinationDate = source.destinationDate;
-    }
 
     @Column(name = "name")
     @Type(type = "string")
@@ -66,6 +42,41 @@ public class Flight extends BaseModel implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
 
+    @Column(name = "flight_type")
+    @Enumerated(EnumType.STRING)
+    private FlightType flightType;
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class)
+    @JoinTable(name = "t_flight_passenger",
+            joinColumns = {@JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_passenger"))},
+            inverseJoinColumns = {@JoinColumn(name = "passenger_id", nullable = false, foreignKey = @ForeignKey(name = "fk_passenger_flight"))},
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id", "passenger_id"}, name = "uk_flight_passenger")},
+            indexes = {@Index(columnList = "passenger_id", name = "ix_flight_passenger")}
+    )
+    List<Passenger> passengerList = new ArrayList<>();
+
+    public Flight() {
+        //default constructor
+    }
+
+    public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
+        this.name = name;
+        this.departureLocation = departureLocation;
+        this.destinationLocation = destinationLocation;
+        this.durationTime = durationTime;
+        this.departureDate = departureDate;
+        this.destinationDate = destinationDate;
+    }
+
+    public Flight(Flight source) {
+        super(source);
+        this.name = source.name;
+        this.departureLocation = source.departureLocation;
+        this.destinationLocation = source.destinationLocation;
+        this.durationTime = source.durationTime;
+        this.departureDate = source.departureDate;
+        this.destinationDate = source.destinationDate;
+    }
 
     public String getName() {
         return name;
@@ -113,5 +124,21 @@ public class Flight extends BaseModel implements Serializable {
 
     public void setDestinationDate(Date destinationDate) {
         this.destinationDate = destinationDate;
+    }
+
+    public FlightType getFlightType() {
+        return flightType;
+    }
+
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
+    }
+
+    public List<Passenger> getPassengerList() {
+        return passengerList;
+    }
+
+    public void setPassengerList(List<Passenger> passengerList) {
+        this.passengerList = passengerList;
     }
 }

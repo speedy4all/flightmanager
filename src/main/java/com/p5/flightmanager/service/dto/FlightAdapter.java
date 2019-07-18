@@ -13,17 +13,22 @@ public class FlightAdapter {
 
     public final static FlightDto toDto(Flight flight) {
         FlightDto flightDto = new FlightDto();
+
         Airport departureLocation = flight.getDepartureLocation();
+        Airport destinationLocation = flight.getDestinationLocation();
 
         flightDto.setFlightType(flight.getFlightType());
         flightDto.setId(flight.getId().toString());
         flightDto.setName(flight.getName());
 
         flightDto.setDepartureLocation(AirportAdapter.toDto(departureLocation));
-        flightDto.setDestinationLocation(flight.getDestinationLocation());
+
+        flightDto.setDestinationLocation(AirportAdapter.toDto(destinationLocation));
+
         if(departureLocation != null) {
-            flightDto.setFullFlightDescription(departureLocation.getIata().concat("-").concat(flight.getDestinationLocation()));
+            flightDto.setFullFlightDescription(departureLocation.getIata().concat("-").concat(destinationLocation.getIata()));
         }
+
         flightDto.setDurationTime(flight.getDurationTime());
         flightDto.setDepartureDate(flight.getDepartureDate());
         flightDto.setDestinationDate(flight.getDestinationDate());
@@ -54,7 +59,7 @@ public class FlightAdapter {
         flight.setName(flightDto.getName());
         flight.setFlightType(flightDto.getFlightType());
         //flight.setDepartureLocation(flightDto.getDepartureLocation());
-        flight.setDestinationLocation(flightDto.getDestinationLocation());
+        //flight.setDestinationLocation(flightDto.getDestinationLocation());
         flight.setDurationTime(flightDto.getDurationTime());
         flight.setDepartureDate(flightDto.getDepartureDate());
         flight.setDestinationDate(flightDto.getDestinationDate());

@@ -83,7 +83,7 @@ public class FlightServiceImpl implements FlightService {
     private boolean isValidFlight(FlightDto flightDto) {
         if (flightDto.getDepartureLocation() == null)
             return false;
-        if (flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty())
+        if (flightDto.getDestinationLocation() == null)
             return false;
         return true;
     }

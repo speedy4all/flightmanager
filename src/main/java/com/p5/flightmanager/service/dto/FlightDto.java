@@ -11,7 +11,7 @@ public class FlightDto {
     private String id;
     private String name;
     private AirportDto departureLocation;
-    private String destinationLocation;
+    private AirportDto destinationLocation;
     private Double durationTime;
     private Date departureDate;
     private Date destinationDate;
@@ -51,11 +51,11 @@ public class FlightDto {
         this.departureLocation = departureLocation;
     }
 
-    public String getDestinationLocation() {
+    public AirportDto getDestinationLocation() {
         return destinationLocation;
     }
 
-    public void setDestinationLocation(String destinationLocation) {
+    public void setDestinationLocation(AirportDto destinationLocation) {
         this.destinationLocation = destinationLocation;
     }
 

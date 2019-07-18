@@ -11,9 +11,12 @@ import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import com.p5.flightmanager.service.dto.SearchParamDto;
+import com.p5.flightmanager.service.exceptions.ApiError;
+import com.p5.flightmanager.service.exceptions.ApiSubError;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -110,5 +113,27 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(SearchParamDto searchParamDto) {
         return flightsRepository.findByNameAndDAteSimple(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
+    }
+
+    public void validateFlightDto(FlightDto flightDto){
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+
+        if (flightDto.getDestinationLocation() == null){
+            apiError.getSubErrors().add(new ApiSubError("destinationLocation", "Null received"));
+        }
+        if (flightDto.getFlightType() == null){
+            apiError.getSubErrors().add(new ApiSubError("flightType", "Null received", String.valueOf(flightDto.getFlightType())));
+
+        }
+        if (flightDto.getDurationTime()>60){
+            apiError.getSubErrors().add(new ApiSubError("flightType", String.valueOf(flightDto.getDurationTime(), "Should be less than 60")));
+
+        }
+
+
+
+        if (apiError.getSubErrors().size() > 0){
+            throw new NoFlightException(apiError);
+        }
     }
 }

@@ -30,9 +30,14 @@ public class Flight extends BaseModel implements Serializable {
     @JoinColumn(name = "departure_airport_id", foreignKey = @ForeignKey(name = "fk_flight_airport"))
     private Airport departureLocation;
 
-    @Column(name = "destination_location")
-    @Type(type = "string")
-    private String destinationLocation;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Airport.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "destination_airport_id", foreignKey = @ForeignKey(name = "fk_flight_airport"))
+    private Airport destinationLocation;
+
+    @OneToOne(cascade = CascadeType.ALL, targetEntity = Plane.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "flight_plane", foreignKey = @ForeignKey(name = "fk_flight_plane"))
+    private Plane plane;
+
 
     @Column(name = "duration_time")
     @Type(type = "double")
@@ -61,7 +66,7 @@ public class Flight extends BaseModel implements Serializable {
         //default constructor
     }
 
-    public Flight(String name, Airport departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
+    public Flight(String name, Airport departureLocation, Airport destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
         this.name = name;
         this.departureLocation = departureLocation;
         this.destinationLocation = destinationLocation;
@@ -97,11 +102,11 @@ public class Flight extends BaseModel implements Serializable {
         this.departureLocation = departureLocation;
     }
 
-    public String getDestinationLocation() {
+    public Airport getDestinationLocation() {
         return destinationLocation;
     }
 
-    public void setDestinationLocation(String destinationLocation) {
+    public void setDestinationLocation(Airport destinationLocation) {
         this.destinationLocation = destinationLocation;
     }
 
@@ -146,4 +151,11 @@ public class Flight extends BaseModel implements Serializable {
     }
 
 
+    public Plane getPlane() {
+        return plane;
+    }
+
+    public void setPlane(Plane plane) {
+        this.plane = plane;
+    }
 }

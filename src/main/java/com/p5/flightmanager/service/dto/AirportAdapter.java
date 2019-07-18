@@ -7,8 +7,8 @@ import java.util.List;
 
 public class AirportAdapter {
 
-    public final static AirportDto toDto(Airport airport){
-        AirportDto airportDto = new AirportDto();
+    public final static String toDto(Airport airport){
+        String airportDto = new AirportDto();
         airportDto.setId(airport.getId().toString());
         airportDto.setCity(airport.getCity());
         airportDto.setCountry(airport.getCountry());
@@ -20,8 +20,8 @@ public class AirportAdapter {
         return airportDto;
     }
 
-    public final static List<AirportDto> toListDto(Iterable<Airport> airportList){
-        List<AirportDto> listDto = new ArrayList<>();
+    public final static List<String> toListDto(Iterable<Airport> airportList){
+        List<String> listDto = new ArrayList<>();
         airportList.forEach(airport -> listDto.add(toDto(airport)));
 
         return listDto;

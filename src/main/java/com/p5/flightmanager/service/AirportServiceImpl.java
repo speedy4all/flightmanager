@@ -3,13 +3,10 @@ package com.p5.flightmanager.service;
 import com.p5.flightmanager.repository.AirportRepository;
 import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.service.api.AirportService;
-import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.AirportAdapter;
 import com.p5.flightmanager.service.dto.AirportDto;
-import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoAirportException;
-import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -25,12 +22,12 @@ public class AirportServiceImpl implements AirportService {
     private AirportRepository airportRepository;
 
     @Override
-    public List<AirportDto> getAll(String search) {
+    public List<String> getAll(String search) {
         return AirportAdapter.toListDto(airportRepository.filterByName(search));
     }
 
     @Override
-    public AirportDto createAirport(AirportDto airportDto) {
+    public String createAirport(AirportDto airportDto) {
         Airport airport = null;
         if(isValidAirport(airportDto)){
             airport = airportRepository.save(AirportAdapter.fromDto(airportDto));
@@ -43,7 +40,7 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public AirportDto getById(String id) {
+    public String getById(String id) {
         Optional<Airport> optionalAirport = airportRepository.findById(UUID.fromString(id));
         if(optionalAirport.isPresent()){
             Airport airport = optionalAirport.get();
@@ -53,7 +50,7 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public AirportDto updateAirport(AirportDto airportDto) {
+    public String updateAirport(AirportDto airportDto) {
         Optional<Airport> optionalAirport = airportRepository.findById(UUID.fromString(airportDto.getId()));
         if(optionalAirport.isPresent()){
             Airport airport = optionalAirport.get();

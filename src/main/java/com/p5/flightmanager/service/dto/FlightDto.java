@@ -1,7 +1,6 @@
 package com.p5.flightmanager.service.dto;
 
-import com.p5.flightmanager.repository.models.Airport;
-
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +9,7 @@ public class FlightDto {
 
     private String id;
     private String name;
-    private AirportDto departureLocation;
+    private String departureLocation;
     private String destinationLocation;
     private Double durationTime;
     private Date departureDate;
@@ -43,11 +42,11 @@ public class FlightDto {
         this.name = name;
     }
 
-    public AirportDto getDepartureLocation() {
+    public String getDepartureLocation() {
         return departureLocation;
     }
 
-    public void setDepartureLocation(AirportDto departureLocation) {
+    public void setDepartureLocation(String departureLocation) {
         this.departureLocation = departureLocation;
     }
 
@@ -98,4 +97,6 @@ public class FlightDto {
     public void setPassengerDtos(List<PassengerDto> passengerDtos) {
         this.passengerDtos = passengerDtos;
     }
+
+
 }

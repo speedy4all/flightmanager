@@ -2,37 +2,16 @@ package com.p5.flightmanager.repository.models;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "T_AIRPORT")
 public class Airport extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
-
-    public Airport(){
-        //default constructor
-    }
-
-    public Airport(String name, String city, String country, Integer offSet, String IATA) {
-        this.name = name;
-        this.city = city;
-        this.country = country;
-        this.offSet = offSet;
-        this.iata = IATA;
-    }
-
-    public Airport(Airport source) {
-        super(source);
-        this.name = source.name;
-        this.city = source.city;
-        this.country = source.country;
-        this.offSet = source.offSet;
-        this.iata = source.iata;
-    }
 
     @Column(name = "name")
     @Type(type = "string")
@@ -53,6 +32,45 @@ public class Airport extends BaseModel implements Serializable {
     @Column(name = "iata")
     @Type(type = "string")
     private String iata;
+
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Flight.class)
+    @JoinTable(name = "T_AIRPORT_FLIGHT",
+            joinColumns = {@JoinColumn(name = "airport_id", nullable = false, foreignKey = @ForeignKey(name = "fk_airport_flight"))},
+            inverseJoinColumns = {@JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_airport"))},
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id", "airport_id"}, name = "uk_airport_flight")},
+            indexes = {@Index(columnList = "flight_id", name = "ix_airport_flight")})
+    List<Flight> flights = new ArrayList();
+
+
+    public Airport() {
+        //default constructor
+    }
+
+    public Airport(String name, String city, String country, Integer offSet, String IATA) {
+        this.name = name;
+        this.city = city;
+        this.country = country;
+        this.offSet = offSet;
+        this.iata = IATA;
+    }
+
+    public Airport(Airport source) {
+        super(source);
+        this.name = source.name;
+        this.city = source.city;
+        this.country = source.country;
+        this.offSet = source.offSet;
+        this.iata = source.iata;
+    }
+
+    public List<Flight> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(List<Flight> flights) {
+        this.flights = flights;
+    }
 
     public String getName() {
         return name;

@@ -21,4 +21,6 @@ public interface AirportService {
     Optional<Airport> getByName(String name);
 
     void deleteAirport(String id);
+
+    void addFlight(String airportId, String flightId);
 }

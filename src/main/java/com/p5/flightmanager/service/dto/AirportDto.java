@@ -1,7 +1,6 @@
 package com.p5.flightmanager.service.dto;
 
-import com.p5.flightmanager.repository.models.Flight;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class AirportDto {
@@ -10,14 +9,17 @@ public class AirportDto {
     private String name;
     private String city;
     private String country;
-    private Integer terminals;
-    private String code;
-    private Integer timezoneOffset;
-    private List<FlightDto> flightList;
+    private Integer offSet;
+    private String IATA;
+    private List<FlightDto> flights = new ArrayList<>();
 
-    public List<FlightDto> getFlightList() { return flightList; }
+    public List<FlightDto> getFlights() {
+        return flights;
+    }
 
-    public void setFlightList(List<FlightDto> flightList) { this.flightList = flightList; }
+    public void setFlights(List<FlightDto> flights) {
+        this.flights = flights;
+    }
 
     public String getId() {
         return id;
@@ -51,27 +53,19 @@ public class AirportDto {
         this.country = country;
     }
 
-    public Integer getTerminals() {
-        return terminals;
+    public Integer getOffSet() {
+        return offSet;
     }
 
-    public void setTerminals(Integer terminals) {
-        this.terminals = terminals;
+    public void setOffSet(Integer offSet) {
+        this.offSet = offSet;
     }
 
-    public String getCode() {
-        return code;
+    public String getIATA() {
+        return IATA;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Integer getTimezoneOffset() {
-        return timezoneOffset;
-    }
-
-    public void setTimezoneOffset(Integer timezoneOffset) {
-        this.timezoneOffset = timezoneOffset;
+    public void setIATA(String IATA) {
+        this.IATA = IATA;
     }
 }

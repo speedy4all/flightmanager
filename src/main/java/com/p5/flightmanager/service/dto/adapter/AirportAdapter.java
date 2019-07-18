@@ -1,48 +1,45 @@
-package com.p5.flightmanager.service.dto.adapter;
+package com.p5.flightmanager.service.dto;
 
 import com.p5.flightmanager.repository.models.Airport;
-import com.p5.flightmanager.service.dto.AirportDto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class AirportAdapter {
+
     public final static AirportDto toDto(Airport airport){
         AirportDto airportDto = new AirportDto();
-
         airportDto.setId(airport.getId().toString());
-        airportDto.setName(airport.getName());
         airportDto.setCity(airport.getCity());
         airportDto.setCountry(airport.getCountry());
-        airportDto.setTerminals(airport.getTerminals());
-        airportDto.setCode(airport.getCode());
-        airportDto.setTimezoneOffset(airport.getTimezoneOffset());
-
-        airportDto.setFlightList(FlightAdapter.toListDto(airport.getFlightList()));
+        airportDto.setName(airport.getName());
+        airportDto.setIATA(airport.getIata());
+        airportDto.setOffSet(airport.getOffSet());
+        airportDto.setFlights(FlightAdapter.toListDto(airport.getFlights()));
 
         return airportDto;
     }
 
-    public final static List<AirportDto> toListDto(Iterable<Airport> airports){
-        List<AirportDto> airportDtos = new ArrayList<>();
-        airports.forEach(airport -> airportDtos.add(toDto(airport)));
+    public final static List<AirportDto> toListDto(Iterable<Airport> airportList){
+        List<AirportDto> listDto = new ArrayList<>();
+        airportList.forEach(airport -> listDto.add(toDto(airport)));
 
-        return airportDtos;
+        return listDto;
     }
 
     public final static Airport fromDto(AirportDto airportDto){
         Airport airport = new Airport();
-        return fromDto(airportDto, airport);
+        AirportAdapter.fromDto(airportDto, airport);
+
+        return airport;
     }
 
     public final static Airport fromDto(AirportDto airportDto, Airport airport){
-        airport.setName(airportDto.getName());
         airport.setCity(airportDto.getCity());
         airport.setCountry(airportDto.getCountry());
-        airport.setTerminals(airportDto.getTerminals());
-        airport.setCode(airportDto.getCode());
-        airport.setTimezoneOffset(airportDto.getTimezoneOffset());
+        airport.setIata(airportDto.getIATA());
+        airport.setName(airportDto.getName());
+        airport.setOffSet(airportDto.getOffSet());
 
         return airport;
     }

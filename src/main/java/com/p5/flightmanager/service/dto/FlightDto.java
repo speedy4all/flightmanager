@@ -1,6 +1,6 @@
 package com.p5.flightmanager.service.dto;
 
-import com.p5.flightmanager.repository.models.Passenger;
+import com.p5.flightmanager.repository.models.Airport;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,48 +10,22 @@ public class FlightDto {
 
     private String id;
     private String name;
-    private String departureLocation;
+    private AirportDto departureLocation;
     private String destinationLocation;
     private Double durationTime;
-    private String fullFlightDescription;
     private Date departureDate;
     private Date destinationDate;
+    private String fullFlightDescription;
     private FlightType flightType;
     private List<PassengerDto> passengerDtos = new ArrayList<>();
 
-    public List<PassengerDto> getPassengerDtos() {
-        return passengerDtos;
+    public FlightType getFlightType() {
+        return flightType;
     }
 
-    public void setPassengerDtos(List<PassengerDto> passengerDtos) {
-        this.passengerDtos = passengerDtos;
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
     }
-
-    public FlightType getFlightType() { return flightType; }
-
-    public void setFlightType(FlightType flightType) { this.flightType = flightType; }
-
-    public Date getDepartureDate() {
-        return departureDate;
-    }
-
-    public void setDepartureDate(Date departureDate) {
-        this.departureDate = departureDate;
-    }
-
-    public Date getDestinationDate() {
-        return destinationDate;
-    }
-
-    public void setDestinationDate(Date destinationDate) {
-        this.destinationDate = destinationDate;
-    }
-
-    public String getFullFlightDescription() {
-        return fullFlightDescription;
-    }
-
-    public void setFullFlightDescription(String fullFlightDescription) { this.fullFlightDescription = fullFlightDescription; }
 
     public String getId() {
         return id;
@@ -69,11 +43,11 @@ public class FlightDto {
         this.name = name;
     }
 
-    public String getDepartureLocation() {
+    public AirportDto getDepartureLocation() {
         return departureLocation;
     }
 
-    public void setDepartureLocation(String departureLocation) {
+    public void setDepartureLocation(AirportDto departureLocation) {
         this.departureLocation = departureLocation;
     }
 
@@ -85,11 +59,43 @@ public class FlightDto {
         this.destinationLocation = destinationLocation;
     }
 
+    public String getFullFlightDescription() {
+        return fullFlightDescription;
+    }
+
+    public void setFullFlightDescription(String fullFlightDescription) {
+        this.fullFlightDescription = fullFlightDescription;
+    }
+
     public Double getDurationTime() {
         return durationTime;
     }
 
     public void setDurationTime(Double durationTime) {
         this.durationTime = durationTime;
+    }
+
+    public Date getDepartureDate() {
+        return departureDate;
+    }
+
+    public void setDepartureDate(Date departureDate) {
+        this.departureDate = departureDate;
+    }
+
+    public Date getDestinationDate() {
+        return destinationDate;
+    }
+
+    public void setDestinationDate(Date destinationDate) {
+        this.destinationDate = destinationDate;
+    }
+
+    public List<PassengerDto> getPassengerDtos() {
+        return passengerDtos;
+    }
+
+    public void setPassengerDtos(List<PassengerDto> passengerDtos) {
+        this.passengerDtos = passengerDtos;
     }
 }

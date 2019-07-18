@@ -17,10 +17,6 @@ public class Airport extends BaseModel implements Serializable {
     @Type(type = "string")
     private String name;
 
-    @Column(name = "terminals")
-    @Type(type = "integer")
-    private Integer terminals;
-
     @Column(name = "city")
     @Type(type = "string")
     private String city;
@@ -29,51 +25,51 @@ public class Airport extends BaseModel implements Serializable {
     @Type(type = "string")
     private String country;
 
-    @Column(name = "code")
-    @Type(type = "string")
-    private String code;
+    @Column(name = "off_set")
+    @Type(type = "int")
+    private Integer offSet;
 
-    @Column(name = "timezone_offset")
-    @Type(type = "integer")
-    private Integer timezoneOffset;
+    @Column(name = "iata")
+    @Type(type = "string")
+    private String iata;
+
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Flight.class)
     @JoinTable(name = "T_AIRPORT_FLIGHT",
-            joinColumns = { @JoinColumn(name = "airport_id", nullable = false, foreignKey = @ForeignKey(name = "fk_airport_flight"))},
-            inverseJoinColumns = { @JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_airport"))},
-            uniqueConstraints = { @UniqueConstraint(columnNames = {"airport_id", "flight_id"}, name = "uk_airport_flight")},
-            indexes = { @Index(columnList = "flight_id", name = "ix_airport_flight")})
-    private List<Flight> flightList = new ArrayList<>();
+            joinColumns = {@JoinColumn(name = "airport_id", nullable = false, foreignKey = @ForeignKey(name = "fk_airport_flight"))},
+            inverseJoinColumns = {@JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_airport"))},
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id", "airport_id"}, name = "uk_airport_flight")},
+            indexes = {@Index(columnList = "flight_id", name = "ix_airport_flight")})
+    List<Flight> flights = new ArrayList();
+
 
     public Airport() {
-        // default constructor
+        //default constructor
     }
 
-    public Airport(String name, Integer terminals, String city, String country, String code, Integer timezoneOffset) {
+    public Airport(String name, String city, String country, Integer offSet, String IATA) {
         this.name = name;
-        this.terminals = terminals;
         this.city = city;
         this.country = country;
-        this.code = code;
-        this.timezoneOffset = timezoneOffset;
+        this.offSet = offSet;
+        this.iata = IATA;
     }
 
-    public Airport(Airport airport) {
-        super(airport);
-        this.name = airport.name;
-        this.terminals = airport.terminals;
-        this.city = airport.city;
-        this.country = airport.country;
-        this.code = airport.code;
-        this.timezoneOffset = airport.timezoneOffset;
+    public Airport(Airport source) {
+        super(source);
+        this.name = source.name;
+        this.city = source.city;
+        this.country = source.country;
+        this.offSet = source.offSet;
+        this.iata = source.iata;
     }
 
-    public List<Flight> getFlightList() {
-        return flightList;
+    public List<Flight> getFlights() {
+        return flights;
     }
 
-    public void setFlightList(List<Flight> flightList) {
-        this.flightList = flightList;
+    public void setFlights(List<Flight> flights) {
+        this.flights = flights;
     }
 
     public String getName() {
@@ -100,28 +96,20 @@ public class Airport extends BaseModel implements Serializable {
         this.country = country;
     }
 
-    public Integer getTerminals() {
-        return terminals;
+    public Integer getOffSet() {
+        return offSet;
     }
 
-    public void setTerminals(Integer terminal) {
-        this.terminals = terminal;
+    public void setOffSet(Integer offSet) {
+        this.offSet = offSet;
     }
 
-    public String getCode() {
-        return code;
+    public String getIata() {
+        return iata;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setIata(String iata) {
+        this.iata = iata;
     }
 
-    public Integer getTimezoneOffset() {
-        return timezoneOffset;
-    }
-
-    public void setTimezoneOffset(Integer timezoneOffset) {
-        this.timezoneOffset = timezoneOffset;
-    }
 }
-

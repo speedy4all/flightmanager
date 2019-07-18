@@ -3,13 +3,16 @@ package com.p5.flightmanager.service.dto;
 import com.p5.flightmanager.repository.models.Flight;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class FlightAdapter {
 
 
     public final static FlightDto toDto(Flight flight) {
         FlightDto flightDto = new FlightDto();
+        flightDto.setFlightType(flight.getFlightType());
         flightDto.setId(flight.getId().toString());
         flightDto.setName(flight.getName());
         flightDto.setDepartureLocation(flight.getDepartureLocation());
@@ -18,8 +21,19 @@ public class FlightAdapter {
         flightDto.setDurationTime(flight.getDurationTime());
         flightDto.setDepartureDate(flight.getDepartureDate());
         flightDto.setDestinationDate(flight.getDestinationDate());
-        flightDto.setFlightType(flight.getFlightType());
-        flightDto.setPassengerDtos(PassengerAdapter.toListDto(flight.getPassengerList()));
+
+        if(flight.getPlane() != null) {
+            flightDto.setPlane(PlaneAdapter.toDto(flight.getPlane()));
+        }
+        if(flight.getDestinationAirport() != null) {
+            flightDto.setDestinationAirport(AirportAdapter.toDto(flight.getDestinationAirport()));
+        }
+        if(flight.getLocationAirport() != null) {
+            flightDto.setLocationAirport(AirportAdapter.toDto(flight.getLocationAirport()));
+        }
+        flightDto.setPassengers(PassengerAdapter.toListDto(flight.getPassengerList()));
+
+
         return flightDto;
     }
 
@@ -42,12 +56,12 @@ public class FlightAdapter {
     public final static Flight fromDto(FlightDto flightDto, Flight flight) {
 
         flight.setName(flightDto.getName());
+        flight.setFlightType(flightDto.getFlightType());
         flight.setDepartureLocation(flightDto.getDepartureLocation());
         flight.setDestinationLocation(flightDto.getDestinationLocation());
         flight.setDurationTime(flightDto.getDurationTime());
         flight.setDepartureDate(flightDto.getDepartureDate());
         flight.setDestinationDate(flightDto.getDestinationDate());
-        flight.setFlightType(flightDto.getFlightType());
 
         return flight;
     }

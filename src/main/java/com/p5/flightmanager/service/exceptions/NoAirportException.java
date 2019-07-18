@@ -2,11 +2,12 @@ package com.p5.flightmanager.service.exceptions;
 
 public class NoAirportException extends RuntimeException {
 
-    public NoAirportException() {
+    public NoAirportException(){
+
     }
 
     @Override
-    public String getMessage() {
-        return "No airport found";
+    public String getMessage(){
+        return "No Airport found";
     }
 }

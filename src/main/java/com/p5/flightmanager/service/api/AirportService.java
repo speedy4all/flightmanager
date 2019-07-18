@@ -1,5 +1,6 @@
 package com.p5.flightmanager.service.api;
 
+import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.service.dto.AirportDto;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,6 @@ public interface AirportService {
     AirportDto updateAirport(AirportDto airportDto);
 
     void deleteAirport(String id);
+
+    void addFlight(String airportId, String flightId);
 }

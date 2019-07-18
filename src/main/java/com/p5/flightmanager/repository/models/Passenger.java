@@ -12,101 +12,111 @@ public class Passenger extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Passenger() {
-        // default constructor
-    }
-
-    public Passenger(String firstName, String lastName, String gender, String email, String mobileNumber, Date dateOfBirth, String identificationCardNumber, Date issueDate, String nationality, String language) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.email = email;
-        this.mobileNumber = mobileNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.identificationCardNumber = identificationCardNumber;
-        this.issueDate = issueDate;
-        this.nationality = nationality;
-        this.language = language;
-    }
-
-    public Passenger(Passenger source) {
-        super(source);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.email = email;
-        this.mobileNumber = mobileNumber;
-        this.dateOfBirth = dateOfBirth;
-        this.identificationCardNumber = identificationCardNumber;
-        this.issueDate = issueDate;
-        this.nationality = nationality;
-        this.language = language;
-    }
-
     @Column(name = "first_name")
     @Type(type = "string")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "second_name")
     @Type(type = "string")
-    private String lastName;
+    private String secondName;
 
-    @Column(name = "gender")
+    @Column(name = "age")
+    @Type(type = "integer")
+    private Integer age;
+
+    @Column(name = "sex")
     @Type(type = "string")
-    private String gender;
+    private String sex;
+
+    @Column(name = "identify_number")
+    @Type(type = "string")
+    private String identifyNumber;
+
+    @Column(name = "country")
+    @Type(type = "string")
+    private String country;
+
+    @Column(name = "birthday_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date birthdayDate;
 
     @Column(name = "email")
     @Type(type = "string")
+    @Temporal(TemporalType.TIMESTAMP)
     private String email;
 
-    @Column(name = "mobile_number")
+    @Column(name = "phone_number")
     @Type(type = "string")
-    private String mobileNumber;
+    private String phoneNumber;
 
-    @Column(name = "date_of_birth")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateOfBirth;
-
-    @Column(name = "identification_card_number")
-    @Type(type = "string")
-    private String identificationCardNumber;
-
-    @Column(name = "issue_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date issueDate;
-
-    @Column(name = "nationality")
-    @Type(type = "string")
-    private String nationality;
-
-    @Column(name = "language")
-    @Type(type = "string")
-    private String language;
-
-    public String getFirstName() {
-        return firstName;
+    public Passenger() {
+        //default constructor
     }
 
-    public void setFirstName(String firstName) {
+    public Passenger(String firstName, String secondName, Integer age, String sex, String identifyNumber, String country, Date birthdayDate, String email, String phoneNumber) {
         this.firstName = firstName;
+        this.secondName = secondName;
+        this.age = age;
+        this.sex = sex;
+        this.identifyNumber = identifyNumber;
+        this.country = country;
+        this.birthdayDate = birthdayDate;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Passenger(Passenger source) {
+        super(source);
+        this.firstName = source.firstName;
+        this.secondName = source.secondName;
+        this.age = source.age;
+        this.sex = source.sex;
+        this.identifyNumber = source.identifyNumber;
+        this.country = source.country;
+        this.birthdayDate = source.birthdayDate;
+        this.email = source.email;
+        this.phoneNumber = source.phoneNumber;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public Integer getAge() {
+        return age;
     }
 
-    public String getGender() {
-        return gender;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getIdentifyNumber() {
+        return identifyNumber;
+    }
+
+    public void setIdentifyNumber(String identifyNumber) {
+        this.identifyNumber = identifyNumber;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Date getBirthdayDate() {
+        return birthdayDate;
+    }
+
+    public void setBirthdayDate(Date birthdayDate) {
+        this.birthdayDate = birthdayDate;
     }
 
     public String getEmail() {
@@ -117,51 +127,28 @@ public class Passenger extends BaseModel implements Serializable {
         this.email = email;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getIdentificationCardNumber() {
-        return identificationCardNumber;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setIdentificationCardNumber(String identificationCardNumber) {
-        this.identificationCardNumber = identificationCardNumber;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
-    public Date getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
 }

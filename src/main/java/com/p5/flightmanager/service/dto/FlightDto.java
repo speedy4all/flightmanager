@@ -9,15 +9,66 @@ public class FlightDto {
     private String id;
     private String name;
     private String departureLocation;
-
     private String destinationLocation;
     private Double durationTime;
     private Date departureDate;
     private Date destinationDate;
     private String fullFlightDescription;
     private FlightType flightType;
+    private PlaneDto plane;
+    private AirportDto destinationAirport;
+    private AirportDto locationAirport;
+    private List<PassengerDto> passengers = new ArrayList<>();
+
+    public List<PassengerDto> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(List<PassengerDto> passengers) {
+        this.passengers = passengers;
+    }
+
+    public PlaneDto getPlane() {
+        return plane;
+    }
+
+    public void setPlane(PlaneDto plane) {
+        this.plane = plane;
+    }
+
+    public AirportDto getDestinationAirport() {
+        return destinationAirport;
+    }
+
+    public void setDestinationAirport(AirportDto destinationAirport) {
+        this.destinationAirport = destinationAirport;
+    }
+
+    public AirportDto getLocationAirport() {
+        return locationAirport;
+    }
+
+    public void setLocationAirport(AirportDto locationAirport) {
+        this.locationAirport = locationAirport;
+    }
 
     private List<PassengerDto> passengerDtos = new ArrayList<>();
+
+    public List<PassengerDto> getPassengerDtos() {
+        return passengerDtos;
+    }
+
+    public void setPassengerDtos(List<PassengerDto> passengerDtos) {
+        this.passengerDtos = passengerDtos;
+    }
+
+    public FlightType getFlightType() {
+        return flightType;
+    }
+
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
+    }
 
     public String getId() {
         return id;
@@ -81,21 +132,5 @@ public class FlightDto {
 
     public void setDestinationDate(Date destinationDate) {
         this.destinationDate = destinationDate;
-    }
-
-    public FlightType getFlightType() {
-        return flightType;
-    }
-
-    public void setFlightType(FlightType flightType) {
-        this.flightType = flightType;
-    }
-
-    public List<PassengerDto> getPassengerDtos() {
-        return passengerDtos;
-    }
-
-    public void setPassengerDtos(List<PassengerDto> passengerDtos) {
-        this.passengerDtos = passengerDtos;
     }
 }

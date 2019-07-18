@@ -13,28 +13,32 @@ public class Plane extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
+    @Column(name = "model")
+    @Type(type = "string")
+    private String model;
+
+    @Column(name = "seats")
+    @Type(type = "integer")
+    private Integer seats;
+
+    @Column(name = "company_name")
+    @Type(type = "string")
+    private String companyName;
+
+    @Column(name = "code")
+    @Type(type = "string")
+    private String code;
+
     public Plane() {
         //default constructor
     }
 
-    public Plane(String model, Integer numberOfSeats) {
+    public Plane(String model, int seats, String companyName, String code) {
         this.model = model;
-        this.numberOfSeats = numberOfSeats;
+        this.seats = seats;
+        this.companyName = companyName;
+        this.code = code;
     }
-
-    public Plane(Plane source) {
-        super(source);
-        this.model = source.model;
-        this.numberOfSeats = source.numberOfSeats;
-    }
-
-    @Column(name = "plane_model")
-    @Type(type = "string")
-    private String model;
-
-    @Column(name = "number_of_seats")
-    @Type(type = "int")
-    private Integer numberOfSeats;
 
     public String getModel() {
         return model;
@@ -44,11 +48,27 @@ public class Plane extends BaseModel implements Serializable {
         this.model = model;
     }
 
-    public Integer getNumberOfSeats() {
-        return numberOfSeats;
+    public Integer getSeats() {
+        return seats;
     }
 
-    public void setNumberOfSeats(Integer numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
+    public void setSeats(Integer seats) {
+        this.seats = seats;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

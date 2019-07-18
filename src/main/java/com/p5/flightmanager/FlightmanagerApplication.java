@@ -1,5 +1,7 @@
 package com.p5.flightmanager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -17,3 +19,7 @@ public class FlightmanagerApplication {
     }
 
 }
+
+//TODO: pe flight 1 plane (ManyToOne);
+//TODO: pe flight 2 airports (departure, destination);
+//TODO: pe airport ManyToMany : airport-flight; metoda de a asigna unui aeroport un flight (lista de flight-uri);

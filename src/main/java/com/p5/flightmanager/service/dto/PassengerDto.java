@@ -6,16 +6,15 @@ public class PassengerDto {
 
     private String id;
     private String firstName;
-    private String lastName;
-    private String gender;
+    private String secondName;
+    private Integer age;
+    private String sex;
+    private Date birthdayDate;
     private String email;
-    private String mobileNumber;
-    private Date dateOfBirth;
-    private String identificationCardNumber;
-    private Date issueDate;
-    private String nationality;
-    private String language;
-    private String fullPassengerName;
+    private String phoneNumber;
+    private String country;
+    private String identifyNumber;
+    private String fullName;
 
     public String getId() {
         return id;
@@ -33,20 +32,36 @@ public class PassengerDto {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
-    public String getGender() {
-        return gender;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public Date getBirthdayDate() {
+        return birthdayDate;
+    }
+
+    public void setBirthdayDate(Date birthDate) {
+        this.birthdayDate = birthDate;
     }
 
     public String getEmail() {
@@ -57,59 +72,36 @@ public class PassengerDto {
         this.email = email;
     }
 
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
+    public String getCountry() {
+        return country;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public String getIdentificationCardNumber() {
-        return identificationCardNumber;
+    public String getIdentifyNumber() {
+        return identifyNumber;
     }
 
-    public void setIdentificationCardNumber(String identificationCardNumber) {
-        this.identificationCardNumber = identificationCardNumber;
+    public void setIdentifyNumber(String identifyNumber) {
+        this.identifyNumber = identifyNumber;
     }
 
-    public Date getIssueDate() {
-        return issueDate;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public String getFullPassengerName() {
-        return fullPassengerName;
-    }
-
-    public void setFullPassengerName(String fullPassengerName) {
-        this.fullPassengerName = fullPassengerName;
-    }
 }

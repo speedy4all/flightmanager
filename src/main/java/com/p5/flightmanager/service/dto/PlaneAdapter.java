@@ -7,34 +7,41 @@ import java.util.List;
 
 public class PlaneAdapter {
 
-    public final static PlaneDto toDto(Plane plane) {
+    public final static PlaneDto toDto (Plane plane) {
+
         PlaneDto planeDto = new PlaneDto();
+
         planeDto.setId(plane.getId().toString());
+        planeDto.setCode(plane.getCode());
         planeDto.setModel(plane.getModel());
-        planeDto.setNumberOfSeats(plane.getNumberOfSeats());
-        planeDto.setFullPlaneDetails(plane.getModel().concat("-").concat(plane.getNumberOfSeats().toString()));
+        planeDto.setCompanyName(plane.getCompanyName());
+        planeDto.setSeats(plane.getSeats());
 
         return planeDto;
     }
 
-    public final static List<PlaneDto> toListDto(Iterable<Plane> planeList) {
-        List<PlaneDto> listDto = new ArrayList<>();
-        planeList.forEach(plane -> listDto.add(toDto(plane)));
-
-        return listDto;
-    }
-
     public final static Plane fromDto(PlaneDto planeDto) {
-        Plane plane = new Plane();
-        PlaneAdapter.fromDto(planeDto, plane);
 
+        Plane plane = new Plane();
+        fromDto(planeDto, plane);
         return plane;
     }
 
     public final static Plane fromDto(PlaneDto planeDto, Plane plane) {
+
+        plane.setCode(planeDto.getCode());
+        plane.setCompanyName(planeDto.getCompanyName());
         plane.setModel(planeDto.getModel());
-        plane.setNumberOfSeats(planeDto.getNumberOfSeats());
+        plane.setSeats(planeDto.getSeats());
 
         return plane;
     }
+
+    public final static List<PlaneDto> toListDto(Iterable<Plane> planes) {
+        List<PlaneDto> planeDto = new ArrayList<>();
+        planes.forEach(plane -> planeDto.add(toDto(plane)));
+
+        return planeDto;
+    }
+
 }

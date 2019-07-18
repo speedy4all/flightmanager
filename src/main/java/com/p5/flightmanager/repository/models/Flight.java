@@ -16,6 +16,10 @@ public class Flight extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private FlightType flightType;
+
     @Column(name = "name")
     @Type(type = "string")
     private String name;
@@ -42,9 +46,6 @@ public class Flight extends BaseModel implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
 
-    @Column(name = "flight_type")
-    @Enumerated(EnumType.STRING)
-    private FlightType flightType;
 
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class)
     @JoinTable(name = "t_flight_passenger",
@@ -54,6 +55,18 @@ public class Flight extends BaseModel implements Serializable {
             indexes = {@Index(columnList = "passenger_id", name = "ix_flight_passenger")}
     )
     List<Passenger> passengerList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
+    @JoinColumn(name = "plane_id")
+    Plane plane;
+
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Airport.class)
+    @JoinColumn(name = "destination_airport_id")
+    Airport destinationAirport;
+
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Airport.class)
+    @JoinColumn(name = "location_airport_id")
+    Airport locationAirport;
 
     public Flight() {
         //default constructor
@@ -76,6 +89,30 @@ public class Flight extends BaseModel implements Serializable {
         this.durationTime = source.durationTime;
         this.departureDate = source.departureDate;
         this.destinationDate = source.destinationDate;
+    }
+
+    public Plane getPlane() {
+        return plane;
+    }
+
+    public void setPlane(Plane plane) {
+        this.plane = plane;
+    }
+
+    public Airport getDestinationAirport() {
+        return destinationAirport;
+    }
+
+    public void setDestinationAirport(Airport destinationAirport) {
+        this.destinationAirport = destinationAirport;
+    }
+
+    public Airport getLocationAirport() {
+        return locationAirport;
+    }
+
+    public void setLocationAirport(Airport locationAirport) {
+        this.locationAirport = locationAirport;
     }
 
     public String getName() {
@@ -141,4 +178,5 @@ public class Flight extends BaseModel implements Serializable {
     public void setPassengerList(List<Passenger> passengerList) {
         this.passengerList = passengerList;
     }
+
 }

@@ -1,21 +1,18 @@
 package com.p5.flightmanager.service.api;
 
 import com.p5.flightmanager.service.dto.PlaneDto;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface PlaneService {
 
     List<PlaneDto> getAll(String search);
 
-    PlaneDto createPlane(PlaneDto planeDto);
+    PlaneDto createPlane(PlaneDto passengerDto);
 
     PlaneDto getById(String id);
 
-    PlaneDto updatePlane(PlaneDto planeDto);
+    PlaneDto updatePlane(PlaneDto passengerDto);
 
-    void deletePlane(String id);
-
+    void deletePlane(String passengerDtoID);
 }

@@ -10,11 +10,11 @@ public interface PassengerService {
 
     List<PassengerDto> getAll(String search);
 
-    PassengerDto createPassenger(PassengerDto passengerDto);
+    PassengerDto createPassenger(PassengerDto flightDto);
 
     PassengerDto getById(String id);
 
-    PassengerDto updatePassenger(PassengerDto passengerDto);
+    PassengerDto updatePassenger(PassengerDto flightDto);
 
     void deletePassenger(String id);
 }

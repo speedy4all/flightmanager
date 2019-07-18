@@ -4,8 +4,17 @@ public class PlaneDto {
 
     private String id;
     private String model;
-    private Integer numberOfSeats;
-    private String fullPlaneDetails;
+    private Integer seats;
+    private String companyName;
+    private String code;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getModel() {
         return model;
@@ -15,27 +24,27 @@ public class PlaneDto {
         this.model = model;
     }
 
-    public Integer getNumberOfSeats() {
-        return numberOfSeats;
+    public Integer getSeats() {
+        return seats;
     }
 
-    public void setNumberOfSeats(Integer numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
+    public void setSeats(Integer seats) {
+        this.seats = seats;
     }
 
-    public String getFullPlaneDetails() {
-        return fullPlaneDetails;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setFullPlaneDetails(String fullPlaneDetails) {
-        this.fullPlaneDetails = fullPlaneDetails;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getId() {
-        return id;
+    public String getCode() {
+        return code;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
     }
 }

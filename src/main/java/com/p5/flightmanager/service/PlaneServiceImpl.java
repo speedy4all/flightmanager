@@ -1,6 +1,6 @@
 package com.p5.flightmanager.service;
 
-import com.p5.flightmanager.repository.PlanesRepository;
+import com.p5.flightmanager.repository.PlaneRepository;
 import com.p5.flightmanager.repository.models.Plane;
 import com.p5.flightmanager.service.api.PlaneService;
 import com.p5.flightmanager.service.dto.PlaneAdapter;
@@ -18,60 +18,61 @@ import java.util.UUID;
 public class PlaneServiceImpl implements PlaneService {
 
     @Autowired
-    private PlanesRepository planesRepository;
+    private PlaneRepository planesRepository;
 
     @Override
     public List<PlaneDto> getAll(String search) {
-        return PlaneAdapter.toListDto(planesRepository.filterByModel(search));
+        return PlaneAdapter.toListDto(planesRepository.filterByName(search));
     }
 
     @Override
     public PlaneDto createPlane(PlaneDto planeDto) {
         Plane plane = null;
-        if (isValidPlane(planeDto)) {
+        if(isValidPlane(planeDto)){
             plane = planesRepository.save(PlaneAdapter.fromDto(planeDto));
         } else {
             throw new EmptyFieldException();
         }
+
         return PlaneAdapter.toDto(plane);
+    }
+
+    public boolean isValidPlane(PlaneDto planeDto){
+        if(planeDto.getCompanyName() == null || planeDto.getCompanyName().isEmpty())
+            return false;
+        throw new NoPlaneException();
     }
 
     @Override
     public PlaneDto getById(String id) {
-        Optional<Plane> optionalPlane = planesRepository.findById(UUID.fromString(id));
-        if (optionalPlane.isPresent()) {
-            Plane plane = optionalPlane.get();
-            return PlaneAdapter.toDto(plane);
+        Optional<Plane> optional = planesRepository.findById(UUID.fromString(id));
+        if(optional.isPresent())
+        {
+            return PlaneAdapter.toDto(optional.get());
         }
         throw new NoPlaneException();
     }
 
     @Override
-    public PlaneDto updatePlane(PlaneDto planeDto) {
-        Optional<Plane> optionalPlane = planesRepository.findById(UUID.fromString(planeDto.getId()));
-        if (optionalPlane.isPresent()) {
-            Plane plane = optionalPlane.get();
-            plane = PlaneAdapter.fromDto(planeDto, plane);
-            planesRepository.save(plane);
-            return PlaneAdapter.toDto(plane);
+    public PlaneDto updatePlane(PlaneDto passengerDto) {
+        Optional<Plane> optionalPassenger = planesRepository.findById(UUID.fromString(passengerDto.getId()));
+        if(optionalPassenger.isPresent()){
+            Plane plane = optionalPassenger.get();
+            planesRepository.save(PlaneAdapter.fromDto(passengerDto,plane));
+            return PlaneAdapter.toDto(PlaneAdapter.fromDto(passengerDto,plane));
         }
         throw new NoPlaneException();
     }
 
     @Override
-    public void deletePlane(String id) {
-        Optional<Plane> optionalPlane = planesRepository.findById(UUID.fromString(id));
-        if (optionalPlane.isPresent()) {
+    public void deletePlane(String planeID) {
+        Optional<Plane> optionalPlane = planesRepository.findById(UUID.fromString(planeID));
+        if(optionalPlane.isPresent()){
             Plane plane = optionalPlane.get();
             planesRepository.delete(plane);
+        } else
+        {
+            throw new NoPlaneException();
         }
     }
-
-    private boolean isValidPlane(PlaneDto planeDto) {
-        if (planeDto.getModel() == null || planeDto.getModel().isEmpty()) {
-            return false;
-        }
-        return true;
-    }
-
 }

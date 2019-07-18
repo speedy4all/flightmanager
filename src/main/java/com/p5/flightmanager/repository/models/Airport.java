@@ -2,67 +2,114 @@ package com.p5.flightmanager.repository.models;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "T_AIRPORT")
 public class Airport extends BaseModel implements Serializable {
+
     public static final long serialVersionUID = 1L;
+
+    @Column(name = "name")
+    @Type(type = "string")
+    private String name;
+
+    @Column(name = "city")
+    @Type(type = "string")
+    private String city;
+
+    @Column(name = "country")
+    @Type(type = "string")
+    private String country;
+
+    @Column(name = "off_set")
+    @Type(type = "int")
+    private Integer offSet;
+
+    @Column(name = "iata")
+    @Type(type = "string")
+    private String iata;
+
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Flight.class)
+    @JoinTable(name = "T_AIRPORT_FLIGHT",
+            joinColumns = {@JoinColumn(name = "airport_id", nullable = false, foreignKey = @ForeignKey(name = "fk_airport_flight"))},
+            inverseJoinColumns = {@JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_airport"))},
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id", "airport_id"}, name = "uk_airport_flight")},
+            indexes = {@Index(columnList = "flight_id", name = "ix_airport_flight")})
+    List<Flight> flights = new ArrayList();
+
 
     public Airport() {
         //default constructor
     }
 
-    public Airport(String code, String location, Integer utcOffset) {
-        this.code = code;
-        this.location = location;
-        this.utcOffset = utcOffset;
+    public Airport(String name, String city, String country, Integer offSet, String IATA) {
+        this.name = name;
+        this.city = city;
+        this.country = country;
+        this.offSet = offSet;
+        this.iata = IATA;
     }
 
     public Airport(Airport source) {
         super(source);
-        this.code = source.code;
-        this.location = source.location;
-        this.utcOffset = source.utcOffset;
+        this.name = source.name;
+        this.city = source.city;
+        this.country = source.country;
+        this.offSet = source.offSet;
+        this.iata = source.iata;
     }
 
-    @Column(name = "airport_code")
-    @Type(type = "string")
-    private String code;
-
-    @Column(name = "airport_location")
-    @Type(type = "string")
-    private String location;
-
-    @Column(name = "utc_offest")
-    @Type(type = "int")
-    private Integer utcOffset;
-
-    public String getCode() {
-
-        return code;
+    public List<Flight> getFlights() {
+        return flights;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setFlights(List<Flight> flights) {
+        this.flights = flights;
     }
 
-    public String getLocation() {
-        return location;
+    public String getName() {
+        return name;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getUtcOffset() {
-        return utcOffset;
+    public String getCity() {
+        return city;
     }
 
-    public void setUtcOffset(Integer utcOffset) {
-        this.utcOffset = utcOffset;
+    public void setCity(String city) {
+        this.city = city;
     }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Integer getOffSet() {
+        return offSet;
+    }
+
+    public void setOffSet(Integer offSet) {
+        this.offSet = offSet;
+    }
+
+    public String getIata() {
+        return iata;
+    }
+
+    public void setIata(String iata) {
+        this.iata = iata;
+    }
+
 }

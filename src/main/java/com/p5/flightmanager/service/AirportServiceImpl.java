@@ -86,4 +86,9 @@ public class AirportServiceImpl implements AirportService {
     public Optional<Airport> getByName(String name) {
         return airportRepository.findByCity(name);
     }
+
+    @Override
+    public void addFlight(String airportId, String flightId) {
+
+    }
 }

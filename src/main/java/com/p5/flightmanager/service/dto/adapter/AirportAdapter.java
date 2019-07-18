@@ -1,6 +1,7 @@
-package com.p5.flightmanager.service.dto;
+package com.p5.flightmanager.service.dto.adapter;
 
 import com.p5.flightmanager.repository.models.Airport;
+import com.p5.flightmanager.service.dto.AirportDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ public class AirportAdapter {
 
     public final static AirportDto toDto(Airport airport){
         AirportDto airportDto = new AirportDto();
+
         airportDto.setId(airport.getId().toString());
         airportDto.setCity(airport.getCity());
         airportDto.setCountry(airport.getCountry());

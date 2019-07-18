@@ -18,10 +18,8 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
     @Query("select f from Flight f where lower(name) like concat('%', lower(?1), '%')")
     Iterable<Flight> filterByName(String search);
 
-
     @Query("select f from Flight f where f.departureDate=:departureDate and f.departureLocation=:location and f.destinationLocation=:destination")
     Iterable<Flight> getBySearchParams(Date departureDate, String location, String destination);
-
 
     @Query("select f from Flight f " +
             "join f.departureLocation a " +
@@ -33,5 +31,7 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "join flight.departureLocation departureAirport " +
             "where flight.departureDate=:departureDate and departureAirport.city=:departureLocation")
     Iterable<FlightDtoSimple> findByNameAndDAteSimple(Date departureDate, String departureLocation);
+
+
 
 }

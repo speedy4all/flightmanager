@@ -23,8 +23,9 @@ public interface FlightService {
 
     void addPassengerToFlight(String flightId, String passengerId);
 
+    void associatePlaneToFlight(String flightId, String planeId);
+
     Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(SearchParamDto searchParamDto);
 
     List<FlightDto> getBySearchParams(Date departureDate, String location, String destination);
-
 }

@@ -18,6 +18,11 @@ public class FlightDto {
     private String fullFlightDescription;
     private FlightType flightType;
     private List<PassengerDto> passengerDtos = new ArrayList<>();
+    private PlaneDto planeDto;
+
+    public PlaneDto getPlaneDto() { return planeDto; }
+
+    public void setPlaneDto(PlaneDto planeDto) { this.planeDto = planeDto; }
 
     public FlightType getFlightType() {
         return flightType;

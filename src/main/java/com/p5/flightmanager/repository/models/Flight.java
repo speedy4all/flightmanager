@@ -25,7 +25,6 @@ public class Flight extends BaseModel implements Serializable {
     @Type(type = "string")
     private String name;
 
-
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Airport.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "departure_airport_id", foreignKey = @ForeignKey(name = "fk_flight_airport"))
     private Airport departureLocation;
@@ -48,7 +47,6 @@ public class Flight extends BaseModel implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
 
-
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class)
     @JoinTable(name = "t_flight_passenger",
             joinColumns = {@JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_passenger"))},
@@ -56,6 +54,10 @@ public class Flight extends BaseModel implements Serializable {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id", "passenger_id"}, name = "uk_flight_passenger")},
             indexes = {@Index(columnList = "passenger_id", name = "ix_flight_passenger")})
     List<Passenger> passengerList = new ArrayList<>();
+
+    @OneToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
+    @JoinColumn(name = "plane_id", foreignKey = @ForeignKey(name = "fk_flight_plane"))
+    private Plane plane;
 
     public Flight() {
         //default constructor
@@ -80,6 +82,9 @@ public class Flight extends BaseModel implements Serializable {
         this.destinationDate = source.destinationDate;
     }
 
+    public Plane getPlane() { return plane; }
+
+    public void setPlane(Plane plane) { this.plane = plane; }
 
     public String getName() {
         return name;

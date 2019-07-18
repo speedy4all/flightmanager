@@ -30,7 +30,6 @@ public class FlightsController extends RestExceptionHandler {
 
     @GetMapping
     ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
-
         return ResponseEntity.ok(flightService.getAll(search));
     }
 
@@ -42,6 +41,11 @@ public class FlightsController extends RestExceptionHandler {
     @GetMapping("/{id}")
     ResponseEntity<FlightDto> getById(@PathVariable String id) {
         return ResponseEntity.ok(flightService.getById(id));
+    }
+
+    @GetMapping("/search")
+    Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
+        return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
     }
 
     @PostMapping
@@ -66,8 +70,8 @@ public class FlightsController extends RestExceptionHandler {
         flightService.addPassengerToFlight(flightId, passengerId);
     }
 
-    @GetMapping("/search")
-    Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
-        return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
+    @PutMapping("/{flightId}/associate-plane/{planeId}")
+    void associatePlaneToFlight(@PathVariable String flightId, @PathVariable String planeId){
+        flightService.associatePlaneToFlight(flightId, planeId);
     }
 }

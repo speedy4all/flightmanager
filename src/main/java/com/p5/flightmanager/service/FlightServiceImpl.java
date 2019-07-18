@@ -1,13 +1,14 @@
 package com.p5.flightmanager.service;
 
 import com.p5.flightmanager.repository.PassengerRepository;
-import com.p5.flightmanager.repository.models.Airport;
+import com.p5.flightmanager.repository.PlaneRepository;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
+import com.p5.flightmanager.repository.models.Plane;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
-import com.p5.flightmanager.service.dto.FlightAdapter;
+import com.p5.flightmanager.service.dto.adapter.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import com.p5.flightmanager.service.dto.SearchParamDto;
@@ -32,6 +33,9 @@ public class FlightServiceImpl implements FlightService {
 
     @Autowired
     private AirportService airportService;
+
+    @Autowired
+    private PlaneRepository planeRepository;
 
     @Override
     public List<FlightDto> getAll(String search) {
@@ -102,6 +106,19 @@ public class FlightServiceImpl implements FlightService {
             if (optionalPassenger.isPresent()) {
                 Flight flight = optionalFlight.get();
                 flight.getPassengerList().add(optionalPassenger.get());
+                flightsRepository.save(flight);
+            }
+        }
+    }
+
+    @Override
+    public void associatePlaneToFlight(String flightId, String planeId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
+        if (optionalFlight.isPresent()) {
+            Optional<Plane> optionalPlane = planeRepository.findById(UUID.fromString(planeId));
+            if (optionalPlane.isPresent()) {
+                Flight flight = optionalFlight.get();
+                flight.setPlane(optionalPlane.get());
                 flightsRepository.save(flight);
             }
         }

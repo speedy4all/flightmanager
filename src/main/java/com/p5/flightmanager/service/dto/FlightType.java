@@ -5,6 +5,6 @@ public enum FlightType {
     LOCAL,
     INTERNATIONAL,
     CARGO,
-    CHARTER
-
+    CHARTER,
+    COMMERCIAL
 }

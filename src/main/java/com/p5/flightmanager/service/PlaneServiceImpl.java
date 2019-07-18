@@ -3,7 +3,7 @@ package com.p5.flightmanager.service;
 import com.p5.flightmanager.repository.PlaneRepository;
 import com.p5.flightmanager.repository.models.Plane;
 import com.p5.flightmanager.service.api.PlaneService;
-import com.p5.flightmanager.service.dto.PlaneAdapter;
+import com.p5.flightmanager.service.dto.adapter.PlaneAdapter;
 import com.p5.flightmanager.service.dto.PlaneDto;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoPlaneException;

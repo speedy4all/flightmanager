@@ -1,6 +1,5 @@
 package com.p5.flightmanager.repository;
 
-import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import org.springframework.data.jpa.repository.Query;

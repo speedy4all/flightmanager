@@ -1,13 +1,12 @@
 package com.p5.flightmanager.service;
 
 import com.p5.flightmanager.repository.PassengerRepository;
-import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
-import com.p5.flightmanager.service.dto.FlightAdapter;
+import com.p5.flightmanager.service.dto.adapter.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import com.p5.flightmanager.service.dto.SearchParamDto;

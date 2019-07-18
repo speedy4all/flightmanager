@@ -81,4 +81,9 @@ public class AirportServiceImpl implements AirportService {
         return true;
         //TODO: api error
     }
+
+    @Override
+    public Optional<Airport> getByName(String name) {
+        return airportRepository.findByCity(name);
+    }
 }

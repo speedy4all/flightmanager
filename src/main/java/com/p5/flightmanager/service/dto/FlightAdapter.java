@@ -1,5 +1,6 @@
 package com.p5.flightmanager.service.dto;
 
+import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 
 import java.util.ArrayList;
@@ -12,15 +13,22 @@ public class FlightAdapter {
 
     public final static FlightDto toDto(Flight flight) {
         FlightDto flightDto = new FlightDto();
+        Airport departureLocation = flight.getDepartureLocation();
+
         flightDto.setFlightType(flight.getFlightType());
         flightDto.setId(flight.getId().toString());
         flightDto.setName(flight.getName());
-        flightDto.setDepartureLocation(flight.getDepartureLocation());
+
+        flightDto.setDepartureLocation(AirportAdapter.toDto(departureLocation));
         flightDto.setDestinationLocation(flight.getDestinationLocation());
-        flightDto.setFullFlightDescription(flight.getDepartureLocation().concat("-").concat(flight.getDestinationLocation()));
+        if(departureLocation != null) {
+            flightDto.setFullFlightDescription(departureLocation.getIata().concat("-").concat(flight.getDestinationLocation()));
+        }
         flightDto.setDurationTime(flight.getDurationTime());
         flightDto.setDepartureDate(flight.getDepartureDate());
         flightDto.setDestinationDate(flight.getDestinationDate());
+
+        flightDto.setPassengerDtos(PassengerAdapter.toListDto(flight.getPassengerList()));
 
         return flightDto;
     }
@@ -45,7 +53,7 @@ public class FlightAdapter {
 
         flight.setName(flightDto.getName());
         flight.setFlightType(flightDto.getFlightType());
-        flight.setDepartureLocation(flightDto.getDepartureLocation());
+        //flight.setDepartureLocation(flightDto.getDepartureLocation());
         flight.setDestinationLocation(flightDto.getDestinationLocation());
         flight.setDurationTime(flightDto.getDurationTime());
         flight.setDepartureDate(flightDto.getDepartureDate());

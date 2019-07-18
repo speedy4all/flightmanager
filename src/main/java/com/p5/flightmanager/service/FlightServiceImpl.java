@@ -1,25 +1,37 @@
 package com.p5.flightmanager.service;
 
+import com.p5.flightmanager.repository.PassengerRepository;
+import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
+import com.p5.flightmanager.repository.models.Passenger;
+import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
+import com.p5.flightmanager.service.dto.FlightDtoSimple;
+import com.p5.flightmanager.service.dto.SearchParamDto;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 public class FlightServiceImpl implements FlightService {
 
     @Autowired
     private FlightsRepository flightsRepository;
+
+    @Autowired
+    private PassengerRepository passengerRepository;
+
+    @Autowired
+    private AirportService airportService;
 
     @Override
     public List<FlightDto> getAll(String search) {
@@ -30,27 +42,21 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public FlightDto createFlight(FlightDto flightDto) {
 
-        Flight flight = null;
-        //Flight newFlight = new Flight("First flight", "BUH", "CN", 8d, new Date(), new Date());
-        if(isValidFlight(flightDto)) {
+        if (isValidFlight(flightDto)) {
 
-             flight = flightsRepository.save(FlightAdapter.fromDto(flightDto));
+            return FlightAdapter.toDto(flightsRepository.save(FlightAdapter.fromDto(flightDto)));
         } else {
             throw new EmptyFieldException();
 
         }
-        return FlightAdapter.toDto(flight);
     }
 
     @Override
     public FlightDto updateFlight(FlightDto flightDto) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
-        if(optionalFlight.isPresent()) {
+        if (optionalFlight.isPresent()) {
 
-            Flight flight = optionalFlight.get();
-            flight = FlightAdapter.fromDto(flightDto, flight);
-            flightsRepository.save(flight);
-            return FlightAdapter.toDto(flight);
+            return FlightAdapter.toDto(flightsRepository.save(FlightAdapter.fromDto(flightDto, optionalFlight.get())));
         }
         throw new NoFlightException();
     }
@@ -58,7 +64,7 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public FlightDto getById(String id) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
-        if(optionalFlight.isPresent()) {
+        if (optionalFlight.isPresent()) {
             Flight flight = optionalFlight.get();
             return FlightAdapter.toDto(flight);
         }
@@ -68,17 +74,41 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public void deleteFlight(String id) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
-        if(optionalFlight.isPresent()) {
+        if (optionalFlight.isPresent()) {
             Flight flight = optionalFlight.get();
             flightsRepository.delete(flight);
         }
     }
 
-    private  boolean isValidFlight(FlightDto flightDto) {
-        if(flightDto.getDepartureLocation()== null || flightDto.getDepartureLocation().isEmpty())
+    private boolean isValidFlight(FlightDto flightDto) {
+        if (flightDto.getDepartureLocation() == null)
             return false;
-        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty())
+        if (flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty())
             return false;
         return true;
+    }
+
+    @Override
+    public List<FlightDto> getBySearchParams(Date departureDate, String location, String destination) {
+        Iterable<Flight> flights = flightsRepository.getBySearchParams(departureDate, location, destination);
+        return FlightAdapter.toListDto(flights);
+    }
+
+    @Override
+    public void addPassengerToFlight(String flightId, String passengerId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
+        if (optionalFlight.isPresent()) {
+            Optional<Passenger> optionalPassenger = passengerRepository.findById(UUID.fromString(passengerId));
+            if (optionalPassenger.isPresent()) {
+                Flight flight = optionalFlight.get();
+                flight.getPassengerList().add(optionalPassenger.get());
+                flightsRepository.save(flight);
+            }
+        }
+    }
+
+    @Override
+    public Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(SearchParamDto searchParamDto) {
+        return flightsRepository.findByNameAndDAteSimple(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
     }
 }

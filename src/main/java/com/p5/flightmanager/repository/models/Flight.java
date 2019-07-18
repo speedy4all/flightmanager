@@ -5,7 +5,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -14,11 +16,52 @@ public class Flight extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private FlightType flightType;
+
+    @Column(name = "name")
+    @Type(type = "string")
+    private String name;
+
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Airport.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "departure_airport_id", foreignKey = @ForeignKey(name = "fk_flight_airport"))
+    private Airport departureLocation;
+
+    @Column(name = "destination_location")
+    @Type(type = "string")
+    private String destinationLocation;
+
+    @Column(name = "duration_time")
+    @Type(type = "double")
+    private Double durationTime;
+
+    @Column(name = "departure_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date departureDate;
+
+    @Column(name = "destination_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date destinationDate;
+
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class)
+    @JoinTable(name = "t_flight_passenger",
+            joinColumns = {@JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_passenger"))},
+            inverseJoinColumns = {@JoinColumn(name = "passenger_id", nullable = false, foreignKey = @ForeignKey(name = "fk_passenger_flight"))},
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id", "passenger_id"}, name = "uk_flight_passenger")},
+            indexes = {@Index(columnList = "passenger_id", name = "ix_flight_passenger")})
+    List<Passenger> passengerList = new ArrayList<>();
+
     public Flight() {
         //default constructor
     }
 
-    public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
+    public Flight(String name, Airport departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
         this.name = name;
         this.departureLocation = departureLocation;
         this.destinationLocation = destinationLocation;
@@ -38,8 +81,7 @@ public class Flight extends BaseModel implements Serializable {
     }
 
 
-
-   public String getName() {
+    public String getName() {
         return name;
     }
 
@@ -47,11 +89,11 @@ public class Flight extends BaseModel implements Serializable {
         this.name = name;
     }
 
-    public String getDepartureLocation() {
+    public Airport getDepartureLocation() {
         return departureLocation;
     }
 
-    public void setDepartureLocation(String departureLocation) {
+    public void setDepartureLocation(Airport departureLocation) {
         this.departureLocation = departureLocation;
     }
 
@@ -87,36 +129,6 @@ public class Flight extends BaseModel implements Serializable {
         this.destinationDate = destinationDate;
     }
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private FlightType flightType;
-
-    @Column(name = "name")
-    @Type(type = "string")
-    private String name;
-
-    @Column(name = "departure_location")
-    @Type(type = "string")
-    private String departureLocation;
-
-    @Column(name = "destination_location")
-    @Type(type = "string")
-    private String destinationLocation;
-
-    @Column(name = "duration_time")
-    @Type(type = "double")
-    private Double durationTime;
-
-    @Column(name = "departure_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date departureDate;
-
-    @Column(name = "destination_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date destinationDate;
-
     public FlightType getFlightType() {
         return flightType;
     }
@@ -124,5 +136,14 @@ public class Flight extends BaseModel implements Serializable {
     public void setFlightType(FlightType flightType) {
         this.flightType = flightType;
     }
+
+    public List<Passenger> getPassengerList() {
+        return passengerList;
+    }
+
+    public void setPassengerList(List<Passenger> passengerList) {
+        this.passengerList = passengerList;
+    }
+
 
 }

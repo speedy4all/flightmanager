@@ -5,6 +5,7 @@ import com.p5.flightmanager.service.dto.AirportDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface AirportService {
@@ -16,6 +17,8 @@ public interface AirportService {
     AirportDto getById(String id);
 
     AirportDto updateAirport(AirportDto airportDto);
+
+    Optional<Airport> getByName(String name);
 
     void deleteAirport(String id);
 }

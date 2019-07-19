@@ -16,21 +16,9 @@ public class Passenger extends BaseModel implements Serializable {
     @Type(type = "string")
     private String firstName;
 
-    @Column(name = "second_name")
+    @Column(name = "last_name")
     @Type(type = "string")
-    private String secondName;
-
-    @Column(name = "age")
-    @Type(type = "integer")
-    private Integer age;
-
-    @Column(name = "sex")
-    @Type(type = "string")
-    private String sex;
-
-    @Column(name = "identify_number")
-    @Type(type = "string")
-    private String identifyNumber;
+    private String lastName;
 
     @Column(name = "country")
     @Type(type = "string")
@@ -40,6 +28,14 @@ public class Passenger extends BaseModel implements Serializable {
     @Type(type = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthdayDate;
+
+    @Column(name = "sex")
+    @Type(type = "string")
+    private String sex;
+
+    @Column(name = "identify_number")
+    @Type(type = "string")
+    private String identifyNumber;
 
     @Column(name = "email")
     @Type(type = "string")
@@ -54,10 +50,9 @@ public class Passenger extends BaseModel implements Serializable {
         //default constructor
     }
 
-    public Passenger(String firstName, String secondName, Integer age, String sex, String identifyNumber, String country, Date birthdayDate, String email, String phoneNumber) {
+    public Passenger(String firstName, String lastName, String sex, String identifyNumber, String country, Date birthdayDate, String email, String phoneNumber) {
         this.firstName = firstName;
-        this.secondName = secondName;
-        this.age = age;
+        this.lastName = lastName;
         this.sex = sex;
         this.identifyNumber = identifyNumber;
         this.country = country;
@@ -69,22 +64,13 @@ public class Passenger extends BaseModel implements Serializable {
     public Passenger(Passenger source) {
         super(source);
         this.firstName = source.firstName;
-        this.secondName = source.secondName;
-        this.age = source.age;
+        this.lastName = source.lastName;
         this.sex = source.sex;
         this.identifyNumber = source.identifyNumber;
         this.country = source.country;
         this.birthdayDate = source.birthdayDate;
         this.email = source.email;
         this.phoneNumber = source.phoneNumber;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
     }
 
     public String getSex() {
@@ -143,12 +129,7 @@ public class Passenger extends BaseModel implements Serializable {
         this.firstName = firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
-    }
+    public String getLastName() { return lastName; }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
+    public void setLastName(String lastName) { this.lastName = lastName; }
 }

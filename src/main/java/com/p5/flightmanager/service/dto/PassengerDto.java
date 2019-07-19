@@ -6,15 +6,14 @@ public class PassengerDto {
 
     private String id;
     private String firstName;
-    private String secondName;
-    private Integer age;
-    private String sex;
+    private String lastName;
     private Date birthdayDate;
+    private Integer age;
+    private String identifyNumber;
+    private String sex;
     private String email;
     private String phoneNumber;
     private String country;
-    private String identifyNumber;
-    private String fullName;
 
     public String getId() {
         return id;
@@ -32,13 +31,9 @@ public class PassengerDto {
         this.firstName = firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
-    }
+    public String getLastName() { return lastName; }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
     public Integer getAge() {
         return age;
@@ -95,13 +90,4 @@ public class PassengerDto {
     public void setIdentifyNumber(String identifyNumber) {
         this.identifyNumber = identifyNumber;
     }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
 }

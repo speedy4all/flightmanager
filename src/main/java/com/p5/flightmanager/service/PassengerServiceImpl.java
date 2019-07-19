@@ -10,6 +10,9 @@ import com.p5.flightmanager.service.exceptions.NoPassengerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -72,9 +75,18 @@ public class PassengerServiceImpl implements PassengerService {
     public boolean isValidPassenger(PassengerDto passengerDto){
         if(passengerDto.getFirstName() == null || passengerDto.getFirstName().isEmpty())
             return false;
-        if(passengerDto.getSecondName() == null || passengerDto.getSecondName().isEmpty())
+        if(passengerDto.getLastName() == null || passengerDto.getLastName().isEmpty())
             return false;
 
         return true;
+    }
+
+    public static final Integer calculateAge(Date birthDate){
+        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Date currentDate = new Date();
+        int d1 = Integer.parseInt(formatter.format(birthDate));
+        int d2 = Integer.parseInt(formatter.format(currentDate));
+        int age = (d2 - d1) / 10000;
+        return age;
     }
 }

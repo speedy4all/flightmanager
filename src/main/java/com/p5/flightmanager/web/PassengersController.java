@@ -40,7 +40,6 @@ public class PassengersController {
     @PutMapping()
     ResponseEntity<PassengerDto> updatePassenger(@RequestBody PassengerDto passengerDto) {
         return ResponseEntity.ok(passengerService.updatePassenger(passengerDto));
-        //return ResponseEntity.ok("Update passenger");
     }
 
     @DeleteMapping("/{id}")

@@ -2,6 +2,7 @@ package com.p5.flightmanager.service.api;
 
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
+import com.p5.flightmanager.service.dto.FlightDtoView;
 import com.p5.flightmanager.service.dto.SearchParamDto;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,8 @@ import java.util.List;
 @Service
 public interface FlightService {
 
-    List<FlightDto> getAll(String search);
+    //List<FlightDto> getAll(String search);
+    List<FlightDtoView> getAll(String search);
 
     FlightDto createFlight(FlightDto flightDto);
 

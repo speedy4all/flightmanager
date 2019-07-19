@@ -8,10 +8,7 @@ import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
-import com.p5.flightmanager.service.dto.FlightAdapter;
-import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.FlightDtoSimple;
-import com.p5.flightmanager.service.dto.SearchParamDto;
+import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.ApiError;
 import com.p5.flightmanager.service.exceptions.ApiSubError;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
@@ -40,10 +37,15 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private AirportService airportService;
 
+    //    @Override
+//    public List<FlightDto> getAll(String search) {
+//
+//        return FlightAdapter.toListDto(flightsRepository.filterByName(search));
+//    }
     @Override
-    public List<FlightDto> getAll(String search) {
+    public List<FlightDtoView> getAll(String search) {
 
-        return FlightAdapter.toListDto(flightsRepository.filterByName(search));
+        return FlightAdapter.toListDtoView(flightsRepository.filterByName(search));
     }
 
     @Override

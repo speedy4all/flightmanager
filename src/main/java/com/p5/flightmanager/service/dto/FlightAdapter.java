@@ -21,6 +21,8 @@ public class FlightAdapter {
 
         flightDto.setDepartureLocation(flight.getDepartureLocation().getId().toString());
 
+        flightDto.setFullFlightDescription(flight.getDepartureLocation().getCity().concat("-").concat(flight.getDestinationLocation().getCity()));
+
         flightDto.setDestinationLocation(flight.getDestinationLocation().getId().toString());
 
         flightDto.setDurationTime(flight.getDurationTime());
@@ -32,12 +34,44 @@ public class FlightAdapter {
         return flightDto;
     }
 
+    //
+    public final static FlightDtoView toDtoView(Flight flight) {
+        FlightDtoView flightDtoView = new FlightDtoView();
+
+
+        flightDtoView.setFlightType(flight.getFlightType());
+        flightDtoView.setName(flight.getName());
+
+        //flightDtoView.setDepartureLocation(flight.getDepartureLocation().getId().toString());
+        flightDtoView.setDepartureLocation(flight.getDepartureLocation().getCity());
+
+        flightDtoView.setFullFlightDescription(flight.getDepartureLocation().getCity().concat("-").concat(flight.getDestinationLocation().getCity()));
+
+        //flightDtoView.setDestinationLocation(flight.getDestinationLocation().getId().toString());
+        flightDtoView.setDestinationLocation(flight.getDestinationLocation().getCity());
+
+        flightDtoView.setDurationTime(flight.getDurationTime());
+        flightDtoView.setDepartureDate(flight.getDepartureDate());
+        flightDtoView.setDestinationDate(flight.getDestinationDate());
+
+        flightDtoView.setPassengerDtos(PassengerAdapter.toListDto(flight.getPassengerList()));
+
+        return flightDtoView;
+    }
+
 
     public final static List<FlightDto> toListDto(Iterable<Flight> flightList) {
         List<FlightDto> listDto = new ArrayList<>();
         flightList.forEach(flight -> listDto.add(toDto(flight)));
 
         return listDto;
+    }
+    //
+    public final static List<FlightDtoView> toListDtoView(Iterable<Flight> flightList) {
+        List<FlightDtoView> listDtoView = new ArrayList<>();
+        flightList.forEach(flight -> listDtoView.add(toDtoView(flight)));
+
+        return listDtoView;
     }
 
     public final static Flight fromDto(FlightDto flightDto) {

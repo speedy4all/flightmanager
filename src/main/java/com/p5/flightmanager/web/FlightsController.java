@@ -4,6 +4,7 @@ package com.p5.flightmanager.web;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
+import com.p5.flightmanager.service.dto.FlightDtoView;
 import com.p5.flightmanager.service.dto.SearchParamDto;
 import com.p5.flightmanager.service.exceptions.RestExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,14 @@ public class FlightsController extends RestExceptionHandler {
     @Autowired
     private FlightService flightService;
 
+//    @GetMapping
+//    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
+//
+//        return ResponseEntity.ok(flightService.getAll(search));
+//    }
+
     @GetMapping
-    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
+    ResponseEntity<List<FlightDtoView>> getAll(@RequestParam String search) {
 
         return ResponseEntity.ok(flightService.getAll(search));
     }

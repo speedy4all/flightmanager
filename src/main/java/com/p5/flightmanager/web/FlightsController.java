@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping("/flights")
 // /flights?search=test&...
 //search e o coloana sau o conventie (alias-uri)
+
 @Consumes("application/json")
 @Produces("application/json")
 @Transactional

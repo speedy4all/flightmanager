@@ -7,6 +7,7 @@ import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.dto.AirportAdapter;
 import com.p5.flightmanager.service.dto.AirportDto;
+import com.p5.flightmanager.service.dto.AirportDtoView;
 import com.p5.flightmanager.service.dto.SearchParamAirportDto;
 import com.p5.flightmanager.service.exceptions.NoAirportException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,8 +88,8 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public Iterable<AirportDto> getAirportsByIdAndNameAndCity(SearchParamAirportDto searchParamAirportDto) {
-        return null;
+    public List<AirportDtoView> getAllDtos() {
+        return AirportAdapter.toListDtoView(airportsRepository.findAll());
     }
 
 }

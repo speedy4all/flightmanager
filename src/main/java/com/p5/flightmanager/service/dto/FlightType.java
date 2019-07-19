@@ -1,7 +1,7 @@
 package com.p5.flightmanager.service.dto;
 
 public enum FlightType {
-    NONE,
+    DEFAULT,
     LOCAL,
     INTERNATIONAL,
     CARGO,

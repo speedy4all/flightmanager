@@ -3,11 +3,8 @@ package com.p5.flightmanager.service.dto;
 import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.models.Plane;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 public class FlightAdapter {
 

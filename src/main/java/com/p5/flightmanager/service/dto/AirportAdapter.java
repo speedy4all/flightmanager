@@ -22,6 +22,16 @@ public class AirportAdapter {
         return airportDto;
     }
 
+    public final static AirportDtoView toDtoView(Airport airport) {
+        AirportDtoView airportDtoView = new AirportDtoView();
+
+        airportDtoView.setId(airport.getId().toString());
+        airportDtoView.setName(airport.getName());
+        airportDtoView.setLocation(airport.getLocation());
+
+        return airportDtoView;
+    }
+
     public final static Airport fromDto(AirportDto airportDto)
     {
         Airport airport = new Airport();
@@ -46,6 +56,13 @@ public class AirportAdapter {
     {
         List<AirportDto> airportDtos = new ArrayList<>();
         airports.forEach(airport -> airportDtos.add(toDto(airport)));
+        return airportDtos;
+    }
+
+    public final static List<AirportDtoView> toListDtoView(Iterable<Airport> airports)
+    {
+        List<AirportDtoView> airportDtos = new ArrayList<>();
+        airports.forEach(airport -> airportDtos.add(toDtoView(airport)));
         return airportDtos;
     }
 }

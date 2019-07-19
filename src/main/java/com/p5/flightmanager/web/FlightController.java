@@ -1,9 +1,7 @@
 package com.p5.flightmanager.web;
 
 import com.p5.flightmanager.service.api.FlightService;
-import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.PostFlightDto;
-import com.p5.flightmanager.service.dto.SearchParamFlightDto;
+import com.p5.flightmanager.service.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,7 @@ import java.util.List;
 @RequestMapping("/flights")
 @Consumes("application/json")
 @Produces("application/json")
-@Transactional //im momentul in care s-a mappat metodele din clasa vor primi o tranzactie noua de fiecare data cand o metoda este apelata
+@Transactional //im momentul in care s-a mapat metodele din clasa vor primi o tranzactie noua de fiecare data cand o metoda este apelata
 //la fiecare metoda se dechide cate o tranzactie
 public class FlightController {
 
@@ -85,4 +83,10 @@ public class FlightController {
     Iterable<FlightDto> getByDepDateAndDestDateAndLocation(@Valid SearchParamFlightDto searchParamDto) {
         return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
     }
+
+    @GetMapping("/find")
+    Iterable<FlightDtoView> getByDestinationIdAndLocationIdAirport(@Valid SearchParamsFlightDtoView searchParamDto) {
+        return flightService.getByLocationIdAndDestinationIdAirport(searchParamDto);
+    }
+
 }

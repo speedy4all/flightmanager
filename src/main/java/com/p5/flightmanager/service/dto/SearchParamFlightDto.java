@@ -20,39 +20,26 @@ public class SearchParamFlightDto {
     private String destinationLocation;
 
     public Date getDepartureDate() {
-
         return departureDate;
-
     }
 
     public void setDepartureDate(Date departureDate) {
-
         this.departureDate = departureDate;
-
     }
 
     public String getLocation() {
-
         return location;
-
     }
 
     public void setLocation(String location) {
-
         this.location = location;
-
     }
 
-
     public String getDestinationLocation() {
-
         return destinationLocation;
-
     }
 
     public void setDestinationLocation(String destinationLocation) {
-
         this.destinationLocation = destinationLocation;
-
     }
 }

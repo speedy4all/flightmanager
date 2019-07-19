@@ -9,10 +9,7 @@ import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.repository.models.Plane;
 import com.p5.flightmanager.service.api.FlightService;
-import com.p5.flightmanager.service.dto.FlightAdapter;
-import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.PostFlightDto;
-import com.p5.flightmanager.service.dto.SearchParamFlightDto;
+import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -158,6 +155,12 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public Iterable<FlightDto> getByDepDateAndDestDateAndLocation(SearchParamFlightDto searchParamDto) {
         return flightsRepository.findByNameAndDAte(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
+    }
+
+    @Override
+    public Iterable<FlightDtoView> getByLocationIdAndDestinationIdAirport(SearchParamsFlightDtoView searchParamDto) {
+        return flightsRepository.findByLocationIdAndDestinationIdAirport(UUID.fromString(searchParamDto.getLocationAirportId())
+                , UUID.fromString(searchParamDto.getDestinationAirportId()));
     }
 
     private boolean isValidFlight(FlightDto flightDto) {

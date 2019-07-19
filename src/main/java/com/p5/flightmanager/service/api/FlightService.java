@@ -1,8 +1,6 @@
 package com.p5.flightmanager.service.api;
 
-import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.PostFlightDto;
-import com.p5.flightmanager.service.dto.SearchParamFlightDto;
+import com.p5.flightmanager.service.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -32,4 +30,6 @@ public interface FlightService {
     List<FlightDto> getBySearchParams(Date departureDate, String location);
 
     Iterable<FlightDto> getByDepDateAndDestDateAndLocation(SearchParamFlightDto searchParamDto);
+
+    Iterable<FlightDtoView> getByLocationIdAndDestinationIdAirport(SearchParamsFlightDtoView searchParamDto);
 }

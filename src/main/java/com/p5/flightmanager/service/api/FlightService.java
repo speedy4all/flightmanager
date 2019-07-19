@@ -28,4 +28,6 @@ public interface FlightService {
     Iterable<FlightDtoSimple> getByDepartureAndDestinationDateAndLocation(FlightParamsDto searchParamDto);
 
     List<FlightDto> getBySearchParams(Date departureDate, String location, String destination);
+
+    void setDepartureAndDestinationAirport(String flightId, String departureAirportId, String destinationAirportId);
 }

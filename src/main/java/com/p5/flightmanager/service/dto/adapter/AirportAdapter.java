@@ -17,7 +17,7 @@ public class AirportAdapter {
         airportDto.setName(airport.getName());
         airportDto.setIATA(airport.getIata());
         airportDto.setOffSet(airport.getOffSet());
-        airportDto.setFlights(FlightAdapter.toListDto(airport.getFlights()));
+        airportDto.setFlightsList(FlightAdapter.toListDto(airport.getFlightsList()));
 
         return airportDto;
     }

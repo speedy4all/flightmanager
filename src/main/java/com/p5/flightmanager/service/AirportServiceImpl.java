@@ -1,7 +1,9 @@
 package com.p5.flightmanager.service;
 
 import com.p5.flightmanager.repository.AirportRepository;
+import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Airport;
+import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.dto.AirportDtoSimple;
 import com.p5.flightmanager.service.dto.adapter.AirportAdapter;
@@ -21,6 +23,9 @@ public class AirportServiceImpl implements AirportService {
 
     @Autowired
     private AirportRepository airportRepository;
+
+    @Autowired
+    private FlightsRepository flightsRepository;
 
     @Override
     public List<AirportDto> getAll(String search) {
@@ -81,8 +86,16 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public void addFlight(String airportId, String flightId) {
-
+    public void addFlightToAirport(String airportId, String flightId) {
+        Optional<Airport> optionalAirport = airportRepository.findById(UUID.fromString(airportId));
+        if (optionalAirport.isPresent()) {
+            Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
+             if (optionalFlight.isPresent()) {
+                Airport airport = optionalAirport.get();
+                airport.getFlightsList().add(optionalFlight.get());
+                airportRepository.save(airport);
+            }
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ public class PassengerAdapter {
 
     public final static PassengerDto toDto (Passenger passenger){
         PassengerDto passengerDto = new PassengerDto();
+
         passengerDto.setId(passenger.getId().toString());
         passengerDto.setAge(passenger.getAge());
         passengerDto.setBirthdayDate(passenger.getBirthdayDate());

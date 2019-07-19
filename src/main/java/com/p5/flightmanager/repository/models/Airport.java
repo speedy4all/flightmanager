@@ -39,18 +39,18 @@ public class Airport extends BaseModel implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_airport"))},
             uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id", "airport_id"}, name = "uk_airport_flight")},
             indexes = {@Index(columnList = "flight_id", name = "ix_airport_flight")})
-    List<Flight> flights = new ArrayList();
+    List<Flight> flightsList = new ArrayList();
 
     public Airport() {
         //default constructor
     }
 
-    public Airport(String name, String city, String country, Integer offSet, String IATA) {
+    public Airport(String name, String city, String country, Integer offSet, String iata) {
         this.name = name;
         this.city = city;
         this.country = country;
         this.offSet = offSet;
-        this.iata = IATA;
+        this.iata = iata;
     }
 
     public Airport(Airport source) {
@@ -62,12 +62,12 @@ public class Airport extends BaseModel implements Serializable {
         this.iata = source.iata;
     }
 
-    public List<Flight> getFlights() {
-        return flights;
+    public List<Flight> getFlightsList() {
+        return flightsList;
     }
 
-    public void setFlights(List<Flight> flights) {
-        this.flights = flights;
+    public void setFlightsList(List<Flight> flightsList) {
+        this.flightsList = flightsList;
     }
 
     public String getName() {

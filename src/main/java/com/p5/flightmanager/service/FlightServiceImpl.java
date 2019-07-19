@@ -1,7 +1,9 @@
 package com.p5.flightmanager.service;
 
+import com.p5.flightmanager.repository.AirportRepository;
 import com.p5.flightmanager.repository.PassengerRepository;
 import com.p5.flightmanager.repository.PlaneRepository;
+import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
@@ -32,7 +34,7 @@ public class FlightServiceImpl implements FlightService {
     private PassengerRepository passengerRepository;
 
     @Autowired
-    private AirportService airportService;
+    private AirportRepository airportRepository;
 
     @Autowired
     private PlaneRepository planeRepository;
@@ -127,5 +129,20 @@ public class FlightServiceImpl implements FlightService {
     public Iterable<FlightDtoSimple> getByDepartureAndDestinationDateAndLocation(FlightParamsDto flightParamDto) {
         return flightsRepository.findByDepartureAndDestinationDateAndLocation(flightParamDto.getDepartureLocation(), flightParamDto.getDepartureDate(),
                 flightParamDto.getDestinationLocation(), flightParamDto.getDestinationDate());
+    }
+
+    @Override
+    public void setDepartureAndDestinationAirport(String flightId, String departureAirportId, String destinationAirportId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
+        if (optionalFlight.isPresent()){
+            Optional<Airport> departureAirportOptional = airportRepository.findById(UUID.fromString(departureAirportId));
+            Optional<Airport> destinationAirportOptional = airportRepository.findById(UUID.fromString(destinationAirportId));
+            if (departureAirportOptional.isPresent() && destinationAirportOptional.isPresent()){
+                Flight flight = optionalFlight.get();
+                flight.setDepartureAirport(departureAirportOptional.get());
+                flight.setDestinationAirport(destinationAirportOptional.get());
+                flightsRepository.save(flight);
+            }
+        }
     }
 }

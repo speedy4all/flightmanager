@@ -11,14 +11,14 @@ public class AirportDto {
     private String country;
     private Integer offSet;
     private String IATA;
-    private List<FlightDto> flights = new ArrayList<>();
+    private List<FlightDto> flightsList = new ArrayList<>();
 
-    public List<FlightDto> getFlights() {
-        return flights;
+    public List<FlightDto> getFlightsList() {
+        return flightsList;
     }
 
-    public void setFlights(List<FlightDto> flights) {
-        this.flights = flights;
+    public void setFlightsList(List<FlightDto> flightsList) {
+        this.flightsList = flightsList;
     }
 
     public String getId() {

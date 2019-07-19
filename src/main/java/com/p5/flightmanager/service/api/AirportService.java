@@ -21,7 +21,7 @@ public interface AirportService {
 
     void deleteAirport(String id);
 
-    void addFlight(String airportId, String flightId);
+    void addFlightToAirport(String airportId, String flightId);
 
     Iterable<AirportDtoSimple> getAirportNameIataAndCity();
 }

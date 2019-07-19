@@ -72,4 +72,10 @@ public class FlightsController extends RestExceptionHandler {
     void associatePlaneToFlight(@PathVariable String flightId, @PathVariable String planeId){
         flightService.associatePlaneToFlight(flightId, planeId);
     }
+
+    //TODO: endpoint pentru a seta departure si destination; DONE
+    @PutMapping("/{flightId}/set-departure-destination/{departureAirportId}/{destinationAirportId}")
+    void setDepartureAndDestinationAirport(@PathVariable String flightId, @PathVariable String departureAirportId, @PathVariable String destinationAirportId ){
+        flightService.setDepartureAndDestinationAirport(flightId, departureAirportId, destinationAirportId);
+    }
 }

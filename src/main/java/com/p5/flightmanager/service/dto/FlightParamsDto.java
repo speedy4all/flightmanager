@@ -6,7 +6,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class SearchParamDto {
+public class FlightParamsDto {
+
+    @NotNull
+    @NotBlank
+    private String departureLocation;
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -14,10 +18,12 @@ public class SearchParamDto {
 
     @NotNull
     @NotBlank
-    private String location;
+    private String destinationLocation;
 
     @NotNull
-    private String destinationLocation;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private Date destinationDate;
+
 
     public Date getDepartureDate() {
         return departureDate;
@@ -27,13 +33,13 @@ public class SearchParamDto {
         this.departureDate = departureDate;
     }
 
-    public String getLocation() {
-        return location;
-    }
+    public Date getDestinationDate() { return destinationDate; }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
+    public void setDestinationDate(Date destinationDate) { this.destinationDate = destinationDate; }
+
+    public String getDepartureLocation() { return departureLocation; }
+
+    public void setDepartureLocation(String departureLocation) { this.departureLocation = departureLocation; }
 
     public String getDestinationLocation() {
         return destinationLocation;

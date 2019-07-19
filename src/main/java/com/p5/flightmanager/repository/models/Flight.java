@@ -16,7 +16,6 @@ public class Flight extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-
     @Column
     @Enumerated(EnumType.STRING)
     private FlightType flightType;
@@ -26,12 +25,12 @@ public class Flight extends BaseModel implements Serializable {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Airport.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "departure_airport_id", foreignKey = @ForeignKey(name = "fk_flight_airport"))
-    private Airport departureLocation;
+    @JoinColumn(name = "departure_airport_id", foreignKey = @ForeignKey(name = "fk_flight_departure_airport"))
+    private Airport departureAirport;
 
-    @Column(name = "destination_location")
-    @Type(type = "string")
-    private String destinationLocation;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Airport.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "destination_airport_id", foreignKey = @ForeignKey(name = "fk_flight_destination_airport"))
+    private Airport destinationAirport;
 
     @Column(name = "duration_time")
     @Type(type = "double")
@@ -63,10 +62,10 @@ public class Flight extends BaseModel implements Serializable {
         //default constructor
     }
 
-    public Flight(String name, Airport departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
+    public Flight(String name, Airport departureAirport, Airport destinationAirport, Double durationTime, Date departureDate, Date destinationDate) {
         this.name = name;
-        this.departureLocation = departureLocation;
-        this.destinationLocation = destinationLocation;
+        this.departureAirport = departureAirport;
+        this.destinationAirport = destinationAirport;
         this.durationTime = durationTime;
         this.departureDate = departureDate;
         this.destinationDate = destinationDate;
@@ -75,8 +74,8 @@ public class Flight extends BaseModel implements Serializable {
     public Flight(Flight source) {
         super(source);
         this.name = source.name;
-        this.departureLocation = source.departureLocation;
-        this.destinationLocation = source.destinationLocation;
+        this.departureAirport = source.departureAirport;
+        this.destinationAirport = source.destinationAirport;
         this.durationTime = source.durationTime;
         this.departureDate = source.departureDate;
         this.destinationDate = source.destinationDate;
@@ -94,21 +93,13 @@ public class Flight extends BaseModel implements Serializable {
         this.name = name;
     }
 
-    public Airport getDepartureLocation() {
-        return departureLocation;
-    }
+    public Airport getDepartureAirport() { return departureAirport; }
 
-    public void setDepartureLocation(Airport departureLocation) {
-        this.departureLocation = departureLocation;
-    }
+    public void setDepartureAirport(Airport departureAirport) { this.departureAirport = departureAirport; }
 
-    public String getDestinationLocation() {
-        return destinationLocation;
-    }
+    public Airport getDestinationAirport() { return destinationAirport; }
 
-    public void setDestinationLocation(String destinationLocation) {
-        this.destinationLocation = destinationLocation;
-    }
+    public void setDestinationAirport(Airport destinationAirport) { this.destinationAirport = destinationAirport; }
 
     public Double getDurationTime() {
         return durationTime;
@@ -149,6 +140,4 @@ public class Flight extends BaseModel implements Serializable {
     public void setPassengerList(List<Passenger> passengerList) {
         this.passengerList = passengerList;
     }
-
-
 }

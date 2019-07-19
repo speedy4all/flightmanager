@@ -33,7 +33,6 @@ public class Airport extends BaseModel implements Serializable {
     @Type(type = "string")
     private String iata;
 
-
     @ManyToMany(fetch = FetchType.LAZY, targetEntity = Flight.class)
     @JoinTable(name = "T_AIRPORT_FLIGHT",
             joinColumns = {@JoinColumn(name = "airport_id", nullable = false, foreignKey = @ForeignKey(name = "fk_airport_flight"))},
@@ -41,7 +40,6 @@ public class Airport extends BaseModel implements Serializable {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id", "airport_id"}, name = "uk_airport_flight")},
             indexes = {@Index(columnList = "flight_id", name = "ix_airport_flight")})
     List<Flight> flights = new ArrayList();
-
 
     public Airport() {
         //default constructor

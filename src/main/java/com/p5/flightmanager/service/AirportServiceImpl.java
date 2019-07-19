@@ -3,6 +3,7 @@ package com.p5.flightmanager.service;
 import com.p5.flightmanager.repository.AirportRepository;
 import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.service.api.AirportService;
+import com.p5.flightmanager.service.dto.AirportDtoSimple;
 import com.p5.flightmanager.service.dto.adapter.AirportAdapter;
 import com.p5.flightmanager.service.dto.AirportDto;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
@@ -80,12 +81,12 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public Optional<Airport> getByName(String name) {
-        return airportRepository.findByCity(name);
+    public void addFlight(String airportId, String flightId) {
+
     }
 
     @Override
-    public void addFlight(String airportId, String flightId) {
-
+    public Iterable<AirportDtoSimple> getAirportNameIataAndCity() {
+        return airportRepository.findAirportNameIataAndCity();
     }
 }

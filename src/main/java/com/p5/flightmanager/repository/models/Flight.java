@@ -28,6 +28,7 @@ public class Flight extends BaseModel implements Serializable {
     @JoinColumn(name = "departure_airport_id", foreignKey = @ForeignKey(name = "fk_flight_departure_airport"))
     private Airport departureAirport;
 
+    //TODO: destination-location ManyToOne; DONE
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Airport.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "destination_airport_id", foreignKey = @ForeignKey(name = "fk_flight_destination_airport"))
     private Airport destinationAirport;
@@ -54,6 +55,7 @@ public class Flight extends BaseModel implements Serializable {
             indexes = {@Index(columnList = "passenger_id", name = "ix_flight_passenger")})
     List<Passenger> passengerList = new ArrayList<>();
 
+    //TODO: legatura plane-flight OneToOne; DONE
     @OneToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
     @JoinColumn(name = "plane_id", foreignKey = @ForeignKey(name = "fk_flight_plane"))
     private Plane plane;

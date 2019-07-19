@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class FlightDtoSimple {
 
-    private UUID id;
+    private String id;
     private String name;
     private String departureLocation;
     private Date departureDate;
@@ -19,7 +19,7 @@ public class FlightDtoSimple {
     }
 
     public FlightDtoSimple(UUID id, String name, Date departureDate, String departureLocation, Date destinationDate, String destinationLocation) {
-        this.id = id;
+        this.id = id.toString();
         this.name = name;
         this.departureDate = departureDate;
         this.departureLocation = departureLocation;
@@ -27,9 +27,9 @@ public class FlightDtoSimple {
         this.destinationLocation = destinationLocation;
     }
 
-    public UUID getId() { return id; }
+    public String getId() { return id; }
 
-    public void setId(UUID id) { this.id = id; }
+    public void setId(String id) { this.id = id; }
 
     public Date getDepartureDate() { return departureDate; }
 

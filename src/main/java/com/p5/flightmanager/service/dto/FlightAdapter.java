@@ -21,6 +21,8 @@ public class FlightAdapter {
 
         flightDto.setDepartureLocation(flight.getDepartureLocation().getId().toString());
 
+        flightDto.setFullFlightDescription(flight.getDepartureLocation().getCity().concat("-").concat(flight.getDestinationLocation().getCity()));
+
         flightDto.setDestinationLocation(flight.getDestinationLocation().getId().toString());
 
         flightDto.setDurationTime(flight.getDurationTime());

@@ -54,9 +54,9 @@ public class AirportController {
         airportService.addFlight(airportId, flightId);
     }
 
-    @GetMapping
-    Iterable<AirportDto> getDto(@Valid SearchParamAirportDto searchParamAirportDto) {
-        return airportService.getAirportsByIdAndNameAndCity(searchParamAirportDto);
-    }
+//    @GetMapping
+//    Iterable<AirportDto> getDto(@Valid SearchParamAirportDto searchParamAirportDto) {
+//        return airportService.getAirportsByIdAndNameAndCity(searchParamAirportDto);
+//    }
 
 }

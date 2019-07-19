@@ -10,6 +10,7 @@ public class AirportAdapter {
         AirportDto airportDto = new AirportDto();
 
         airportDto.setId(airport.getId().toString());
+        airportDto.setName(airport.getName());
         airportDto.setAltitude(airport.getAltitude());
         airportDto.setCode(airport.getCode());
         airportDto.setLength(airport.getLength());
@@ -36,6 +37,7 @@ public class AirportAdapter {
         airport.setLength(airportDto.getLength());
         airport.setOffset(airportDto.getOffset());
         airport.setTerminals(airportDto.getTerminals());
+        airport.setName(airportDto.getName());
 
         return airport;
     }

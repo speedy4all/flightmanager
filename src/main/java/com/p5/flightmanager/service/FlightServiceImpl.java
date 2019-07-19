@@ -11,6 +11,7 @@ import com.p5.flightmanager.repository.models.Plane;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
+import com.p5.flightmanager.service.dto.PostFlightDto;
 import com.p5.flightmanager.service.dto.SearchParamFlightDto;
 import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +43,21 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public FlightDto createFlight(FlightDto flightDto) {
+    public FlightDto createFlight(PostFlightDto postFlightDto) {
 
-        if(!isValidFlight(flightDto))
-        {
-            throw new EmptyFieldException();
+        Optional<Plane> optionalPlane = planeRepository.findById(UUID.fromString(postFlightDto.getPlaneId()));
+        if(!optionalPlane.isPresent()) {
+           throw new NoAirportException(); //TODO NoPlaneException
         }
-
-        return FlightAdapter.toDto(flightsRepository.save(FlightAdapter.fromDto(flightDto)));
+        Optional<Airport> optionalLocation = airportsRepository.findById(UUID.fromString(postFlightDto.getLocationAirportId()));
+        if(!optionalLocation.isPresent()) {
+            throw  new NoAirportException();
+        }
+        Optional<Airport> optionalDestination = airportsRepository.findById(UUID.fromString(postFlightDto.getDestinationAirportId()));
+        if(!optionalDestination.isPresent()) {
+            throw new NoAirportException();
+        }
+        return FlightAdapter.toDto(flightsRepository.save(FlightAdapter.fromPostDto(postFlightDto, optionalPlane.get(), optionalLocation.get(), optionalDestination.get())));
     }
 
     @Override
@@ -149,7 +157,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public Iterable<FlightDto> getByDepDateAndDestDateAndLocation(SearchParamFlightDto searchParamDto) {
-        return flightsRepository.findByNameAndDAteSimple(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
+        return flightsRepository.findByNameAndDAte(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
     }
 
     private boolean isValidFlight(FlightDto flightDto) {
@@ -163,5 +171,7 @@ public class FlightServiceImpl implements FlightService {
         //TODO api error
         return true;
     }
+
+
 
 }

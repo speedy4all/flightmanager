@@ -1,9 +1,13 @@
 package com.p5.flightmanager.service.dto;
 
+import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
+import com.p5.flightmanager.repository.models.Plane;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class FlightAdapter {
 
@@ -15,9 +19,7 @@ public class FlightAdapter {
         flightDto.setName(flight.getName());
         flightDto.setDepartureDate(flight.getDepartureDate());
         flightDto.setDestinationDate(flight.getDestinationDate());
-        flightDto.setFullFlightDescription(flight.getDepartureLocation().concat("-").concat(flight.getDestinationLocation()));
-        flightDto.setDepartureLocation(flight.getDepartureLocation());
-        flightDto.setDestinationLocation(flight.getDestinationLocation());
+        flightDto.setFullFlightDescription(flight.getLocationAirport().getLocation().concat("-").concat(flight.getDestinationAirport().getLocation()));
         flightDto.setDurationTime(flight.getDurationTime());
         if(flight.getPlane() != null) {
             flightDto.setPlane(PlaneAdapter.toDto(flight.getPlane()));
@@ -41,12 +43,23 @@ public class FlightAdapter {
         return flight;
     }
 
+    public final static Flight fromPostDto(PostFlightDto postFlightDto, Plane plane, Airport location, Airport destination) {
+        Flight flight = new Flight();
+        flight.setName(postFlightDto.getName());
+        flight.setFlightType(postFlightDto.getFlightType());
+        flight.setDepartureDate(postFlightDto.getDepartureDate());
+        flight.setDestinationDate(postFlightDto.getDestinationDate());
+        flight.setDurationTime(postFlightDto.getDurationTime());
+        flight.setPlane(plane);
+        flight.setLocationAirport(location);
+        flight.setDestinationAirport(destination);
+        return flight;
+    }
+
     public final static Flight fromDto(FlightDto flightDto, Flight flight)
     {
         flight.setName(flightDto.getName());
         flight.setFlightType(flightDto.getFlightType());
-        flight.setDepartureLocation(flightDto.getDepartureLocation());
-        flight.setDestinationLocation(flightDto.getDestinationLocation());
         flight.setDepartureDate(flightDto.getDepartureDate());
         flight.setDestinationDate(flightDto.getDestinationDate());
         flight.setDurationTime(flightDto.getDurationTime());

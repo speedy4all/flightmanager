@@ -8,11 +8,10 @@ public class FlightDto {
 
     private String id;
     private String name;
-    private String departureLocation;
     private Date departureDate;
     private Date destinationDate;
+    private String departureLocation;
     private Double durationTime;
-    private String destinationLocation;
     private String fullFlightDescription;
     private FlightType flightType;
     private PlaneDto plane;
@@ -23,10 +22,10 @@ public class FlightDto {
     public FlightDto() {
     }
 
-    public FlightDto(String name, String departureLocation, String destinationLocation) {
+    public FlightDto(String name, String departureLocation, Date departureDate) {
         this.name = name;
         this.departureLocation = departureLocation;
-        this.destinationLocation = destinationLocation;
+        this.departureDate = departureDate;
     }
 
     public PlaneDto getPlane() {
@@ -83,22 +82,6 @@ public class FlightDto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDepartureLocation() {
-        return departureLocation;
-    }
-
-    public void setDepartureLocation(String departureLocation) {
-        this.departureLocation = departureLocation;
-    }
-
-    public String getDestinationLocation() {
-        return destinationLocation;
-    }
-
-    public void setDestinationLocation(String destinationLocation) {
-        this.destinationLocation = destinationLocation;
     }
 
     public String getFullFlightDescription() {

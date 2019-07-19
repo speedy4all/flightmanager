@@ -2,6 +2,7 @@ package com.p5.flightmanager.web;
 
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightDto;
+import com.p5.flightmanager.service.dto.PostFlightDto;
 import com.p5.flightmanager.service.dto.SearchParamFlightDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,9 +40,8 @@ public class FlightController {
     }
 
     @PostMapping
-    ResponseEntity<FlightDto> createFlight(@RequestBody FlightDto flightDto) {
-
-        return ResponseEntity.ok(flightService.createFlight(flightDto));
+    ResponseEntity<FlightDto> createFlight(@RequestBody PostFlightDto postFlightDto) {
+        return ResponseEntity.ok(flightService.createFlight(postFlightDto));
     }
 
     @PutMapping

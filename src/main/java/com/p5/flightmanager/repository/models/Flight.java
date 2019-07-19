@@ -38,14 +38,6 @@ public class Flight extends BaseModel implements Serializable {
     @Type(type = "string")
     private String name;
 
-    @Column(name = "departure_location")
-    @Type(type = "string")
-    private String departureLocation;
-
-    @Column(name = "destination_location")
-    @Type(type = "string")
-    private String destinationLocation;
-
     @Column(name = "duration_time")
     @Type(type = "double")
     private Double durationTime;
@@ -72,7 +64,6 @@ public class Flight extends BaseModel implements Serializable {
             indexes = { @Index(columnList = "passenger_id", name = "ix_flight_passenger")})
     List<Passenger> passengerList = new ArrayList<>();
 
-    //TODO nullable = false
     @OneToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
     @JoinColumn(name = "plane_id")
     Plane plane;
@@ -91,7 +82,6 @@ public class Flight extends BaseModel implements Serializable {
 
     public Flight(String name, Double durationTime, Date departureDate, Date destinationDate, FlightType flightType) {
         this.name = name;
-        this.departureLocation = departureLocation;
         this.durationTime = durationTime;
         this.departureDate = departureDate;
         this.destinationDate = destinationDate;
@@ -101,8 +91,6 @@ public class Flight extends BaseModel implements Serializable {
     public Flight(Flight source) {
         super(source);
         this.name = source.name;
-        this.departureLocation = source.departureLocation;
-        this.destinationLocation = source.destinationLocation;
         this.durationTime = source.durationTime;
         this.departureDate = source.departureDate;
         this.destinationDate = source.destinationDate;
@@ -142,22 +130,6 @@ public class Flight extends BaseModel implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getDepartureLocation() {
-        return departureLocation;
-    }
-
-    public void setDepartureLocation(String departureLocation) {
-        this.departureLocation = departureLocation;
-    }
-
-    public String getDestinationLocation() {
-        return destinationLocation;
-    }
-
-    public void setDestinationLocation(String destinationLocation) {
-        this.destinationLocation = destinationLocation;
-   }
 
     public Double getDurationTime() {
         return durationTime;

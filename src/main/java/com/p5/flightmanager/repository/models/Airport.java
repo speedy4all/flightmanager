@@ -18,7 +18,7 @@ public class Airport extends BaseModel implements Serializable {
     int terminals;
 
     @Column
-    @Type(type = "String")
+    @Type(type = "string")
     String name;
 
     @Column

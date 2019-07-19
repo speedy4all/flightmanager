@@ -16,5 +16,5 @@ public interface AirportsRepository extends CrudRepository<Airport, UUID> {
 
 //    @Query("select new p5.flightmanager.service.dto.AirportDto(airport.id, airport.name, airport.city) from Airport airport where airport.id=:id and" +
 //            "airport.name=:name and airport.city=:city")
-    Iterable<AirportDto> filterByIdAndNameAndCity(String id, String name, String city);
+//    Iterable<AirportDto> filterByIdAndNameAndCity(String id, String name, String city);
 }

@@ -15,7 +15,7 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
     @Query("select f from Flight f where lower(name) like concat('%',lower(?1),'%') order by f.departureDate")
     Iterable<Flight> filterByName(String search);
 
-    @Query("select f from Flight f where f.departureDate=:departureDate and f.departureLocation=:location")
+    @Query("select f from Flight f where f.departureDate=:departureDate and f.locationAirport.location=:location")
     Iterable<Flight> getBySearchparams(Date departureDate, String location);
 
     @Query("select f from Flight f " +
@@ -23,8 +23,8 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "where f.departureDate=:departureDate and a.location=:departureLocation")
     Iterable<Flight> findByDateAndName(Date departureDate, String departureLocation);
 
-    @Query("select new com.p5.flightmanager.service.dto.FlightDto(flight.name, locationAirport.location, flight.destinationLocation) from Flight flight " +
+    @Query("select new com.p5.flightmanager.service.dto.FlightDto(flight.name, locationAirport.location, flight.departureDate) from Flight flight " +
             "join flight.locationAirport locationAirport " +
             "where flight.departureDate=:departureDate and locationAirport.location=:departureLocation")
-    Iterable<FlightDto> findByNameAndDAteSimple(Date departureDate, String departureLocation);
+    Iterable<FlightDto> findByNameAndDAte(Date departureDate, String departureLocation);
 }

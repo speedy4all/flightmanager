@@ -33,6 +33,11 @@ public class AirportController {
         return ResponseEntity.ok(airportService.getById(id));
     }
 
+    @GetMapping("/iata/{iata}")
+    ResponseEntity<AirportDto> getByIata(@PathVariable String iata){
+        return ResponseEntity.ok(airportService.getByIata(iata));
+    }
+
     //TODO: endpoint care returneaza o lista de dto-uri care contine din aeroport numele, id-ul(iata), city; DONE
     @GetMapping("/details")
     Iterable<AirportDtoSimple> getAirportNameIataAndCity(){

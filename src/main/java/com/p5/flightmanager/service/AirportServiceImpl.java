@@ -56,6 +56,15 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
+    public AirportDto getByIata(String iata) {
+        Optional<Airport> optionalAirport = airportRepository.findByIata(iata);
+        if (optionalAirport.isPresent()){
+            return AirportAdapter.toDto(optionalAirport.get());
+        }
+        throw new NoAirportException();
+    }
+
+    @Override
     public AirportDto updateAirport(AirportDto airportDto) {
         Optional<Airport> optionalAirport = airportRepository.findById(UUID.fromString(airportDto.getId()));
         if(optionalAirport.isPresent()){

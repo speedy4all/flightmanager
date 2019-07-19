@@ -73,9 +73,9 @@ public class FlightsController extends RestExceptionHandler {
         flightService.associatePlaneToFlight(flightId, planeId);
     }
 
-    //TODO: endpoint pentru a seta departure si destination; DONE
-    @PutMapping("/{flightId}/set-departure-destination/{departureAirportId}/{destinationAirportId}")
-    void setDepartureAndDestinationAirport(@PathVariable String flightId, @PathVariable String departureAirportId, @PathVariable String destinationAirportId ){
-        flightService.setDepartureAndDestinationAirport(flightId, departureAirportId, destinationAirportId);
+    //TODO: endpoint pentru a seta departure si destination (in functie de IATA aeroportului); DONE
+    @PutMapping("/{flightId}/set-departure-destination/{departureAirportIata}/{destinationAirportIata}")
+    void setDepartureAndDestinationAirport(@PathVariable String flightId, @PathVariable String departureAirportIata, @PathVariable String destinationAirportIata ){
+        flightService.setDepartureAndDestinationAirport(flightId, departureAirportIata, destinationAirportIata);
     }
 }

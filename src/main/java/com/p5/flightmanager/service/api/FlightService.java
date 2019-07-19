@@ -29,5 +29,5 @@ public interface FlightService {
 
     List<FlightDto> getBySearchParams(Date departureDate, String location, String destination);
 
-    void setDepartureAndDestinationAirport(String flightId, String departureAirportId, String destinationAirportId);
+    void setDepartureAndDestinationAirport(String flightId, String departureAirportIata, String destinationAirportIata);
 }

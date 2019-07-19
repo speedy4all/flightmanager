@@ -19,4 +19,7 @@ public interface AirportRepository extends CrudRepository<Airport, UUID> {
 
     @Query("select new com.p5.flightmanager.service.dto.AirportDtoSimple(airport.name, airport.iata, airport.city) from Airport airport")
     Iterable<AirportDtoSimple> findAirportNameIataAndCity();
+
+    @Query("select a from Airport a where lower(iata) like concat('%', lower(?1), '%')")
+    Optional<Airport> findByIata(String iata);
 }

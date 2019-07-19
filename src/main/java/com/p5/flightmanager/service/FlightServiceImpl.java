@@ -132,11 +132,11 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void setDepartureAndDestinationAirport(String flightId, String departureAirportId, String destinationAirportId) {
+    public void setDepartureAndDestinationAirport(String flightId, String departureAirportIata, String destinationAirportIata) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if (optionalFlight.isPresent()){
-            Optional<Airport> departureAirportOptional = airportRepository.findById(UUID.fromString(departureAirportId));
-            Optional<Airport> destinationAirportOptional = airportRepository.findById(UUID.fromString(destinationAirportId));
+            Optional<Airport> departureAirportOptional = airportRepository.findByIata(departureAirportIata);
+            Optional<Airport> destinationAirportOptional = airportRepository.findByIata(destinationAirportIata);
             if (departureAirportOptional.isPresent() && destinationAirportOptional.isPresent()){
                 Flight flight = optionalFlight.get();
                 flight.setDepartureAirport(departureAirportOptional.get());

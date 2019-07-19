@@ -15,11 +15,11 @@ import java.util.List;
 @Transactional
 @Consumes("application/json")
 @Produces("application/json")
-@RequestMapping("/planes")
+@RequestMapping("/plane")
 public class PlaneController {
 
     @Autowired
-    PlaneService planeService;
+    private PlaneService planeService;
 
     @GetMapping
     ResponseEntity<List<PlaneDto>> getAll(@RequestParam String search) {
@@ -45,9 +45,9 @@ public class PlaneController {
         return ResponseEntity.ok(planeService.updatePlane(airportDto));
     }
 
-    @DeleteMapping("/{iddelete}")
-    void deleteAirport(@PathVariable String iddelete) {
-        planeService.deletePlane(iddelete);
+    @DeleteMapping("/{id}")
+    void deleteAirport(@PathVariable String id) {
+        planeService.deletePlane(id);
     }
 
 

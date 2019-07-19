@@ -1,18 +1,25 @@
 package com.p5.flightmanager.service.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AirportDto {
 
-    private  String id;
-
+    private String id;
     private String name;
+    private String city;
+    private String country;
+    private Integer offSet;
+    private String IATA;
+    private List<FlightDto> flights = new ArrayList<>();
 
-    private String code;
+    public List<FlightDto> getFlights() {
+        return flights;
+    }
 
-    private String location;
-
-    private String type;
-
-    private int offset;
+    public void setFlights(List<FlightDto> flights) {
+        this.flights = flights;
+    }
 
     public String getId() {
         return id;
@@ -30,36 +37,35 @@ public class AirportDto {
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
+    public String getCity() {
+        return city;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getLocation() {
-        return location;
+    public String getCountry() {
+        return country;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-
-    public int getOffset() {
-        return offset;
+    public Integer getOffSet() {
+        return offSet;
     }
 
-    public void setOffset(int offset) {
-        this.offset = offset;
+    public void setOffSet(Integer offSet) {
+        this.offSet = offSet;
     }
 
-    public String getType() {
-        return type;
+    public String getIATA() {
+        return IATA;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setIATA(String IATA) {
+        this.IATA = IATA;
     }
 }

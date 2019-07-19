@@ -6,40 +6,63 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@Order(Ordered.HIGHEST_PRECEDENCE) //ordinea cea mai importanta
-@ControllerAdvice //->o clasa in care am o implementare care se aplica tuturor controlurilor
-//poate sa se ocupe si de requesturi, etc.
+import javax.xml.bind.ValidationException;
+
+@Order(Ordered.HIGHEST_PRECEDENCE)
+@ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
-                                                                  HttpHeaders headers, HttpStatus status, WebRequest request) {
-        String error = "Malformed JSON request.";
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        String error = "Malformed JSON request";
+
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
     }
 
-    @ExceptionHandler(NoFlightException.class) //oriunde aruncam o exceptie de tipul NoFlightEx va ajunge aici si dupa se duce la client
+    @ExceptionHandler(NoFlightException.class)
     protected ResponseEntity<Object> handleNoFlightException(NoFlightException ex) {
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
-        apiError.setMessage(ex.getMessage());
-        return buildResponseEntity(apiError);
+
+        return buildResponseEntity(ex.getApiError());
     }
 
     @ExceptionHandler(NoPassengerException.class)
-    ResponseEntity<Object> handleNoPassengerException(NoPassengerException ex) {
+    protected  ResponseEntity<Object> handleNoPassengerException(NoPassengerException ex){
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
         apiError.setMessage(ex.getMessage());
+
         return buildResponseEntity(apiError);
     }
 
-    //constrruieste un nou obiect ResponseEntity care se va duce catre client, cu eroarea noastra si statusul ei
-    private ResponseEntity<Object> buildResponseEntity(ApiError apiError)
-    {
+    @ExceptionHandler(NoAirportException.class)
+    protected ResponseEntity<Object> handleNoAirportException(NoAirportException ex){
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(NoPlaneException.class)
+    protected ResponseEntity<Object> handleNoPlaneException(NoPlaneException ex){
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+
+        return buildResponseEntity(apiError);
+    }
+
+    private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
         return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+
+    @ExceptionHandler(ValidationException.class)
+    protected ResponseEntity<Object> handleValidationError(ValidationException ex) {
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "Missing arguments", ex));
     }
 }

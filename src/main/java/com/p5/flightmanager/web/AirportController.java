@@ -1,6 +1,7 @@
 package com.p5.flightmanager.web;
 
-import com.p5.flightmanager.repository.AirportsRepository;
+import com.p5.flightmanager.repository.AirportRepository;
+import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.dto.AirportDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,42 +14,46 @@ import javax.ws.rs.Produces;
 import java.util.List;
 
 @RestController
-@Transactional
-@RequestMapping("/airports")
+@RequestMapping("/airport")
 @Consumes("application/json")
 @Produces("application/json")
+@Transactional
 public class AirportController {
 
     @Autowired
-    AirportService airportService;
+    private AirportService airportService;
 
     @GetMapping
-    ResponseEntity<List<AirportDto>> getAll(@RequestParam String search) {
+    ResponseEntity<List<AirportDto>> getAll(@RequestParam String search){
 
         return ResponseEntity.ok(airportService.getAll(search));
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<AirportDto> getById(@PathVariable String id)
-    {
+    ResponseEntity<AirportDto> getById(@PathVariable String id){
+
         return ResponseEntity.ok(airportService.getById(id));
     }
 
     @PostMapping
-    ResponseEntity<AirportDto> createAirport(@RequestBody AirportDto airportDto) {
+    ResponseEntity<AirportDto> createAirport(@RequestBody AirportDto airportDto){
 
         return ResponseEntity.ok(airportService.createAirport(airportDto));
     }
 
-    @PutMapping
-    ResponseEntity<AirportDto> updateAirport (@RequestBody AirportDto airportDto) {
+    @PutMapping()
+    ResponseEntity<AirportDto> updateAirport(@RequestBody AirportDto airportDto) {
 
         return ResponseEntity.ok(airportService.updateAirport(airportDto));
     }
 
-    @DeleteMapping("/{iddelete}")
-    void deleteAirport(@PathVariable String iddelete) {
-        airportService.deleteAirport(iddelete);
+    @DeleteMapping("/{id}")
+    void deleteAirport(@PathVariable String id) {
+        airportService.deleteAirport(id);
     }
 
+    @PutMapping("/{airportId}/add-flight/{flightId}")
+    void addFlight(@PathVariable String airportId, @PathVariable String flightId) {
+        airportService.addFlight(airportId, flightId);
+    }
 }

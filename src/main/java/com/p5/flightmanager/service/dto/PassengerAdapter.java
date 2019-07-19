@@ -1,57 +1,54 @@
 package com.p5.flightmanager.service.dto;
 
 import com.p5.flightmanager.repository.models.Passenger;
-import com.p5.flightmanager.service.dto.PassengerDto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class PassengerAdapter {
 
-    public final static PassengerDto toDto(Passenger passenger) {
+    public final static PassengerDto toDto (Passenger passenger){
         PassengerDto passengerDto = new PassengerDto();
-
         passengerDto.setId(passenger.getId().toString());
-        passengerDto.setFirstName(passenger.getFirstName());
-        passengerDto.setLastName(passenger.getLastName());
-        passengerDto.setBornDate(passenger.getBornDate());
-        passengerDto.setPersonalID(passenger.getpersonalID());
+        passengerDto.setAge(passenger.getAge());
+        passengerDto.setBirthdayDate(passenger.getBirthdayDate());
+        passengerDto.setCountry(passenger.getCountry());
         passengerDto.setEmail(passenger.getEmail());
-        passengerDto.setNationality(passenger.getNationality());
+        passengerDto.setFirstName(passenger.getFirstName());
+        passengerDto.setSecondName(passenger.getSecondName());
+        passengerDto.setFullName(passenger.getFirstName().concat("-").concat(passenger.getSecondName()));
+        passengerDto.setIdentifyNumber(passenger.getIdentifyNumber());
         passengerDto.setPhoneNumber(passenger.getPhoneNumber());
-        passengerDto.setTitle(passenger.getTitle());
-        passengerDto.setFullName(passenger.getFirstName().concat("-").concat(passenger.getLastName()));
+        passengerDto.setSex(passenger.getSex());
+
         return passengerDto;
     }
 
-    public final static Passenger fromDto(PassengerDto passengerDto)
-    {
-        Passenger passenger = new Passenger();
-        fromDto(passengerDto,passenger);
-
-        return passenger;
-    }
-
-    public final static Passenger fromDto(PassengerDto passengerDto, Passenger passenger)
-    {
-        passenger.setFirstName(passengerDto.getFirstName());
-        passenger.setLastName(passengerDto.getLastName());
-        passenger.setBornDate(passengerDto.getBornDate());
-        passenger.setpersonalID(passengerDto.getPersonalID());
-        passenger.setEmail(passengerDto.getEmail());
-        passenger.setNationality(passengerDto.getNationality());
-        passenger.setPhoneNumber(passengerDto.getPhoneNumber());
-        passenger.setTitle(passengerDto.getTitle());
-
-
-        return passenger;
-    }
-
-    public final static List<PassengerDto> toListDto(Iterable<Passenger> passengerList) {
+    public final static List<PassengerDto> toListDto(Iterable<Passenger> passengerList){
         List<PassengerDto> listDto = new ArrayList<>();
         passengerList.forEach(passenger -> listDto.add(toDto(passenger)));
 
         return listDto;
+    }
+
+    public final static Passenger fromDto(PassengerDto passengerDto){
+        Passenger passenger = new Passenger();
+        PassengerAdapter.fromDto(passengerDto, passenger);
+
+        return passenger;
+    }
+
+    public final static Passenger fromDto(PassengerDto passengerDto, Passenger passenger){
+        passenger.setAge(passengerDto.getAge());
+        passenger.setBirthdayDate(passengerDto.getBirthdayDate());
+        passenger.setCountry(passengerDto.getCountry());
+        passenger.setEmail(passengerDto.getEmail());
+        passenger.setFirstName(passengerDto.getFirstName());
+        passenger.setSecondName(passengerDto.getSecondName());
+        passenger.setIdentifyNumber(passengerDto.getIdentifyNumber());
+        passenger.setPhoneNumber(passengerDto.getPhoneNumber());
+        passenger.setSex(passengerDto.getSex());
+
+        return passenger;
     }
 }

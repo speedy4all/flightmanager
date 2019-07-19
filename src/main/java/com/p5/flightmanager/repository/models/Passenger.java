@@ -12,99 +12,111 @@ public class Passenger extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public Passenger() {
-        //default constructor
-    }
-
-    public Passenger(String firstName, String lastName, String personalID, String email, String phoneNumber, String nationality, Date bornDate, Date destinationDate, String title) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.personalID = personalID;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.nationality = nationality;
-        this.bornDate = bornDate;
-        this.destinationDate = destinationDate;
-        this.title = title;
-    }
-
-    public Passenger(Passenger source) {
-        super(source);
-        this.firstName = source.firstName;
-        this.lastName = source.lastName;
-        this.personalID = source.personalID;
-        this.email = source.email;
-        this.phoneNumber = source.phoneNumber;
-        this.nationality = source.nationality;
-        this.bornDate = source.bornDate;
-        this.destinationDate = source.destinationDate;
-        this.title = source.title;
-    }
-
     @Column(name = "first_name")
     @Type(type = "string")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "second_name")
     @Type(type = "string")
-    private String lastName;
+    private String secondName;
 
-    @Column(name = "personal_ID")
+    @Column(name = "age")
+    @Type(type = "integer")
+    private Integer age;
+
+    @Column(name = "sex")
     @Type(type = "string")
-    private String personalID;
+    private String sex;
+
+    @Column(name = "identify_number")
+    @Type(type = "string")
+    private String identifyNumber;
+
+    @Column(name = "country")
+    @Type(type = "string")
+    private String country;
+
+    @Column(name = "birthday_date")
+    @Type(type = "date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date birthdayDate;
 
     @Column(name = "email")
     @Type(type = "string")
+    @Temporal(TemporalType.TIMESTAMP)
     private String email;
 
     @Column(name = "phone_number")
     @Type(type = "string")
     private String phoneNumber;
 
-    @Column(name = "nationality")
-    @Type(type = "string")
-    private String nationality;
-
-    @Column(name = "date_Born")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date bornDate;
-
-    @Column(name = "destination_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date destinationDate;
-
-    @Column(name = "title")
-    @Type(type = "string")
-    private String title;
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public Passenger() {
+        //default constructor
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
+    public Passenger(String firstName, String secondName, Integer age, String sex, String identifyNumber, String country, Date birthdayDate, String email, String phoneNumber) {
         this.firstName = firstName;
+        this.secondName = secondName;
+        this.age = age;
+        this.sex = sex;
+        this.identifyNumber = identifyNumber;
+        this.country = country;
+        this.birthdayDate = birthdayDate;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Passenger(Passenger source) {
+        super(source);
+        this.firstName = source.firstName;
+        this.secondName = source.secondName;
+        this.age = source.age;
+        this.sex = source.sex;
+        this.identifyNumber = source.identifyNumber;
+        this.country = source.country;
+        this.birthdayDate = source.birthdayDate;
+        this.email = source.email;
+        this.phoneNumber = source.phoneNumber;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public Integer getAge() {
+        return age;
     }
 
-    public String getpersonalID() {
-        return personalID;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
-    public void setpersonalID(String personalID) {
-        this.personalID = personalID;
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getIdentifyNumber() {
+        return identifyNumber;
+    }
+
+    public void setIdentifyNumber(String identifyNumber) {
+        this.identifyNumber = identifyNumber;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Date getBirthdayDate() {
+        return birthdayDate;
+    }
+
+    public void setBirthdayDate(Date birthdayDate) {
+        this.birthdayDate = birthdayDate;
     }
 
     public String getEmail() {
@@ -123,39 +135,20 @@ public class Passenger extends BaseModel implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getNationality() {
-        return nationality;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public Date getBornDate() {
-        return bornDate;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setBornDate(Date bornDate) {
-        this.bornDate = bornDate;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
-    public Date getDestinationDate() {
-        return destinationDate;
-    }
-
-    public void setDestinationDate(Date destinationDate) {
-        this.destinationDate = destinationDate;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
 }
-
-
-

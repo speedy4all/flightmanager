@@ -1,21 +1,19 @@
 package com.p5.flightmanager.service.dto;
 
-import com.p5.flightmanager.repository.models.MyTitle;
-import com.p5.flightmanager.repository.models.Passenger;
-
 import java.util.Date;
 
 public class PassengerDto {
 
     private String id;
     private String firstName;
-    private String lastName;
-    private String personalID;
+    private String secondName;
+    private Integer age;
+    private String sex;
+    private Date birthdayDate;
     private String email;
     private String phoneNumber;
-    private String nationality;
-    private Date bornDate;
-    private String title;
+    private String country;
+    private String identifyNumber;
     private String fullName;
 
     public String getId() {
@@ -26,14 +24,6 @@ public class PassengerDto {
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -42,20 +32,36 @@ public class PassengerDto {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
-    public String getPersonalID() {
-        return personalID;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setPersonalID(String personalID) {
-        this.personalID = personalID;
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public Date getBirthdayDate() {
+        return birthdayDate;
+    }
+
+    public void setBirthdayDate(Date birthDate) {
+        this.birthdayDate = birthDate;
     }
 
     public String getEmail() {
@@ -74,27 +80,28 @@ public class PassengerDto {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getNationality() {
-        return nationality;
+    public String getCountry() {
+        return country;
     }
 
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public Date getBornDate() {
-        return bornDate;
+    public String getIdentifyNumber() {
+        return identifyNumber;
     }
 
-    public void setBornDate(Date bornDate) {
-        this.bornDate = bornDate;
+    public void setIdentifyNumber(String identifyNumber) {
+        this.identifyNumber = identifyNumber;
     }
 
-    public String getTitle() {
-        return title;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
+
 }

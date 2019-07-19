@@ -3,18 +3,10 @@ package com.p5.flightmanager.service.dto;
 public class PlaneDto {
 
     private String id;
-
-    private String name;
-
     private String model;
-
-    private int passengersCapacity;
-
+    private Integer seats;
+    private String companyName;
     private String code;
-
-    private double altitude;
-
-    private double fuelCapacity;
 
     public String getId() {
         return id;
@@ -22,14 +14,6 @@ public class PlaneDto {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getModel() {
@@ -40,12 +24,20 @@ public class PlaneDto {
         this.model = model;
     }
 
-    public int getPassengersCapacity() {
-        return passengersCapacity;
+    public Integer getSeats() {
+        return seats;
     }
 
-    public void setPassengersCapacity(int passengersCapacity) {
-        this.passengersCapacity = passengersCapacity;
+    public void setSeats(Integer seats) {
+        this.seats = seats;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getCode() {
@@ -54,21 +46,5 @@ public class PlaneDto {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public double getAltitude() {
-        return altitude;
-    }
-
-    public void setAltitude(double altitude) {
-        this.altitude = altitude;
-    }
-
-    public double getFuelCapacity() {
-        return fuelCapacity;
-    }
-
-    public void setFuelCapacity(double fuelCapacity) {
-        this.fuelCapacity = fuelCapacity;
     }
 }

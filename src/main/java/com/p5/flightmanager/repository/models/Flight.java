@@ -8,15 +8,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-//many to one -> flight,plane
-//many to many -> airport,flight
-//airport <-> flight(metoda)
+
 
 @Entity
 @Table(name = "T_FLIGHT")
 public class Flight extends BaseModel implements Serializable {
 
     public static final long serialVersionUID = 1L;
+
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -26,13 +25,18 @@ public class Flight extends BaseModel implements Serializable {
     @Type(type = "string")
     private String name;
 
-    @Column(name = "departure_location")
-    @Type(type = "string")
-    private String departureLocation;
 
-    @Column(name = "destination_location")
-    @Type(type = "string")
-    private String destinationLocation;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Airport.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "departure_airport_id", foreignKey = @ForeignKey(name = "fk_flight_airport"))
+    private Airport departureLocation;
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Airport.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "destination_airport_id", foreignKey = @ForeignKey(name = "fk_flight_destination_airport"))
+    private Airport destinationLocation;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "flight_plane")
+    private Plane plane;
 
     @Column(name = "duration_time")
     @Type(type = "double")
@@ -48,20 +52,20 @@ public class Flight extends BaseModel implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
 
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class) // default e lazy -> doar cand apelam get
-            @JoinTable(name = "t_flight_passenger",
-                    joinColumns = { @JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_passenger"))},
-                    inverseJoinColumns = {@JoinColumn(name = "passenger_id", nullable = false, foreignKey = @ForeignKey(name = "fk_passenger_flight" ))},
-                    uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id", "passenger_id"}, name = "uk_flight_passenger")},
-                    indexes = { @Index(columnList = "passenger_id", name = "ix_flight_passenger")}
-            )
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Passenger.class)
+    @JoinTable(name = "t_flight_passenger",
+            joinColumns = {@JoinColumn(name = "flight_id", nullable = false, foreignKey = @ForeignKey(name = "fk_flight_passenger"))},
+            inverseJoinColumns = {@JoinColumn(name = "passenger_id", nullable = false, foreignKey = @ForeignKey(name = "fk_passenger_flight"))},
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"flight_id", "passenger_id"}, name = "uk_flight_passenger")},
+            indexes = {@Index(columnList = "passenger_id", name = "ix_flight_passenger")})
     List<Passenger> passengerList = new ArrayList<>();
 
     public Flight() {
         //default constructor
     }
 
-    public Flight(String name, String departureLocation, String destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
+    public Flight(String name, Airport departureLocation, Airport destinationLocation, Double durationTime, Date departureDate, Date destinationDate) {
         this.name = name;
         this.departureLocation = departureLocation;
         this.destinationLocation = destinationLocation;
@@ -80,6 +84,7 @@ public class Flight extends BaseModel implements Serializable {
         this.destinationDate = source.destinationDate;
     }
 
+
     public String getName() {
         return name;
     }
@@ -88,19 +93,19 @@ public class Flight extends BaseModel implements Serializable {
         this.name = name;
     }
 
-    public String getDepartureLocation() {
+    public Airport getDepartureLocation() {
         return departureLocation;
     }
 
-    public void setDepartureLocation(String departureLocation) {
+    public void setDepartureLocation(Airport departureLocation) {
         this.departureLocation = departureLocation;
     }
 
-    public String getDestinationLocation() {
+    public Airport getDestinationLocation() {
         return destinationLocation;
     }
 
-    public void setDestinationLocation(String destinationLocation) {
+    public void setDestinationLocation(Airport destinationLocation) {
         this.destinationLocation = destinationLocation;
     }
 
@@ -128,6 +133,14 @@ public class Flight extends BaseModel implements Serializable {
         this.destinationDate = destinationDate;
     }
 
+    public FlightType getFlightType() {
+        return flightType;
+    }
+
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
+    }
+
     public List<Passenger> getPassengerList() {
         return passengerList;
     }
@@ -136,11 +149,5 @@ public class Flight extends BaseModel implements Serializable {
         this.passengerList = passengerList;
     }
 
-    public FlightType getFlightType() {
-        return flightType;
-    }
 
-    public void setFlightType(FlightType flightType) {
-        this.flightType = flightType;
-    }
 }

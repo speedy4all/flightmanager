@@ -8,39 +8,20 @@ public class FlightDtoView {
 
     private String id;
     private String name;
+    private Double durationTime;
     private String departureLocation;
     private String destinationLocation;
-    private Double durationTime;
+    private Integer freeSeats;
     private Date departureDate;
     private Date destinationDate;
-    private String fullFlightDescription;
-    private FlightType flightType;
-    private List<PassengerDto> passengerDtos = new ArrayList<>();
-    private String planeModel;
-    private String planeName;
 
-    public String getPlaneModel() {
-        return planeModel;
+
+    public String getId() {
+        return id;
     }
 
-    public void setPlaneModel(String planeModel) {
-        this.planeModel = planeModel;
-    }
-
-    public String getPlaneName() {
-        return planeName;
-    }
-
-    public void setPlaneName(String planeName) {
-        this.planeName = planeName;
-    }
-
-    public FlightType getFlightType() {
-        return flightType;
-    }
-
-    public void setFlightType(FlightType flightType) {
-        this.flightType = flightType;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -49,6 +30,14 @@ public class FlightDtoView {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Double getDurationTime() {
+        return durationTime;
+    }
+
+    public void setDurationTime(Double durationTime) {
+        this.durationTime = durationTime;
     }
 
     public String getDepartureLocation() {
@@ -67,20 +56,12 @@ public class FlightDtoView {
         this.destinationLocation = destinationLocation;
     }
 
-    public String getFullFlightDescription() {
-        return fullFlightDescription;
+    public Integer getFreeSeats() {
+        return freeSeats;
     }
 
-    public void setFullFlightDescription(String fullFlightDescription) {
-        this.fullFlightDescription = fullFlightDescription;
-    }
-
-    public Double getDurationTime() {
-        return durationTime;
-    }
-
-    public void setDurationTime(Double durationTime) {
-        this.durationTime = durationTime;
+    public void setFreeSeats(Integer freeSeats) {
+        this.freeSeats = freeSeats;
     }
 
     public Date getDepartureDate() {
@@ -97,13 +78,5 @@ public class FlightDtoView {
 
     public void setDestinationDate(Date destinationDate) {
         this.destinationDate = destinationDate;
-    }
-
-    public List<PassengerDto> getPassengerDtos() {
-        return passengerDtos;
-    }
-
-    public void setPassengerDtos(List<PassengerDto> passengerDtos) {
-        this.passengerDtos = passengerDtos;
     }
 }

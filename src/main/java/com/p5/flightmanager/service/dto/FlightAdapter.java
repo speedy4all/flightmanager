@@ -34,27 +34,18 @@ public class FlightAdapter {
         return flightDto;
     }
 
-    //
     public final static FlightDtoView toDtoView(Flight flight) {
+
         FlightDtoView flightDtoView = new FlightDtoView();
 
-
-        flightDtoView.setFlightType(flight.getFlightType());
+        flightDtoView.setId(flight.getId().toString());
         flightDtoView.setName(flight.getName());
-
-        //flightDtoView.setDepartureLocation(flight.getDepartureLocation().getId().toString());
         flightDtoView.setDepartureLocation(flight.getDepartureLocation().getCity());
-
-        flightDtoView.setFullFlightDescription(flight.getDepartureLocation().getCity().concat("-").concat(flight.getDestinationLocation().getCity()));
-
-        //flightDtoView.setDestinationLocation(flight.getDestinationLocation().getId().toString());
         flightDtoView.setDestinationLocation(flight.getDestinationLocation().getCity());
-
         flightDtoView.setDurationTime(flight.getDurationTime());
         flightDtoView.setDepartureDate(flight.getDepartureDate());
+        flightDtoView.setFreeSeats(flight.getPlane().getSeats());
         flightDtoView.setDestinationDate(flight.getDestinationDate());
-
-        flightDtoView.setPassengerDtos(PassengerAdapter.toListDto(flight.getPassengerList()));
 
         return flightDtoView;
     }
@@ -66,6 +57,7 @@ public class FlightAdapter {
 
         return listDto;
     }
+
     //
     public final static List<FlightDtoView> toListDtoView(Iterable<Flight> flightList) {
         List<FlightDtoView> listDtoView = new ArrayList<>();

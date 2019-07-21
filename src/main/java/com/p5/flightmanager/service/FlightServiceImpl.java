@@ -11,7 +11,6 @@ import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.ApiError;
 import com.p5.flightmanager.service.exceptions.ApiSubError;
-import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -116,14 +115,6 @@ public class FlightServiceImpl implements FlightService {
         }
     }
 
-    private boolean isValidFlight(FlightDto flightDto) {
-        if (flightDto.getDepartureLocation() == null)
-            return false;
-        if (flightDto.getDestinationLocation() == null)
-            return false;
-        return true;
-    }
-
     @Override
     public List<FlightDto> getBySearchParams(Date departureDate, String location, String destination) {
         Iterable<Flight> flights = flightsRepository.getBySearchParams(departureDate, location, destination);
@@ -135,16 +126,18 @@ public class FlightServiceImpl implements FlightService {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if (optionalFlight.isPresent()) {
             Optional<Passenger> optionalPassenger = passengerRepository.findById(UUID.fromString(passengerId));
-            if (optionalPassenger.isPresent()) {
-                Flight flight = optionalFlight.get();
-                flight.getPassengerList().add(optionalPassenger.get());
-                flightsRepository.save(flight);
+            if(optionalFlight.get().getPassengerList().size() <= optionalFlight.get().getPlane().getSeats()){
+                if (optionalPassenger.isPresent()) {
+                    Flight flight = optionalFlight.get();
+                    flight.getPassengerList().add(optionalPassenger.get());
+                    flightsRepository.save(flight);
+                }
             }
         }
     }
 
     @Override
-    public Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(SearchParamDto searchParamDto) {
+    public Iterable<FlightDtoSearch> getByDepDateAndDestDateAndLocation(SearchParamDto searchParamDto) {
         return flightsRepository.findByNameAndDAteSimple(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
     }
 }

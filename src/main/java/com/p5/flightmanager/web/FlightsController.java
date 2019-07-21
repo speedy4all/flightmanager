@@ -1,9 +1,8 @@
 package com.p5.flightmanager.web;
 
-
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.FlightDtoSimple;
+import com.p5.flightmanager.service.dto.FlightDtoSearch;
 import com.p5.flightmanager.service.dto.FlightDtoView;
 import com.p5.flightmanager.service.dto.SearchParamDto;
 import com.p5.flightmanager.service.exceptions.RestExceptionHandler;
@@ -56,7 +55,7 @@ public class FlightsController extends RestExceptionHandler {
         return ResponseEntity.ok(flightService.createFlight(flightDto));
     }
 
-    @PutMapping()
+    @PutMapping
     ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
         //return ResponseEntity.ok("Update flight");
@@ -74,7 +73,7 @@ public class FlightsController extends RestExceptionHandler {
     }
 
     @GetMapping("/search")
-    Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
+    Iterable<FlightDtoSearch> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
         return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
     }
 }

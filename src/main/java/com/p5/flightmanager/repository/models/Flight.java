@@ -1,5 +1,6 @@
 package com.p5.flightmanager.repository.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.p5.flightmanager.service.dto.FlightType;
 import org.hibernate.annotations.Type;
 
@@ -34,6 +35,14 @@ public class Flight extends BaseModel implements Serializable {
     @JoinColumn(name = "destination_airport_id", foreignKey = @ForeignKey(name = "fk_flight_destination_airport"))
     private Airport destinationLocation;
 
+    public Plane getPlane() {
+        return plane;
+    }
+
+    public void setPlane(Plane plane) {
+        this.plane = plane;
+    }
+
     @OneToOne(fetch = FetchType.LAZY, targetEntity = Plane.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "flight_plane", foreignKey = @ForeignKey(name = "fk_flight_plane"))
     private Plane plane;
@@ -44,11 +53,13 @@ public class Flight extends BaseModel implements Serializable {
 
     @Column(name = "departure_date")
     @Type(type = "date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date departureDate;
 
     @Column(name = "destination_date")
     @Type(type = "date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date destinationDate;
 

@@ -1,7 +1,8 @@
 package com.p5.flightmanager.repository;
 
 import com.p5.flightmanager.repository.models.Flight;
-import com.p5.flightmanager.service.dto.FlightDtoSearch;
+import com.p5.flightmanager.service.dto.FlightDtoParamSearch;
+import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -28,10 +29,15 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
     Iterable<Flight> findByDateAndName(Date departureDate, String departureLocation);
 
 
-    @Query("select new com.p5.flightmanager.service.dto.FlightDtoSearch(flight.name, departureAirport.city, destinationLocation.city) from Flight flight " +
+    @Query("select new com.p5.flightmanager.service.dto.FlightDtoSimple(flight.name, departureAirport.city, destinationLocation.city) from Flight flight " +
             "join flight.departureLocation departureAirport " +
             "join flight.destinationLocation destinationLocation " +
             "where flight.departureDate=:departureDate and departureAirport.city=:departureLocation")
-    Iterable<FlightDtoSearch> findByNameAndDAteSimple(Date departureDate, String departureLocation);
+    Iterable<FlightDtoSimple> findByNameAndDAteSimple(Date departureDate, String departureLocation);
 
+    @Query("select new com.p5.flightmanager.service.dto.FlightDtoParamSearch(flight.name, departureAirport.id, destinationAirport.id) from Flight flight " +
+            "join flight.departureLocation departureAirport " +
+            "join flight.destinationLocation destinationAirport " +
+            "where flight.departureDate=:departureDate and departureAirport.city=:departureLocation")
+    Iterable<FlightDtoParamSearch> findByIdAndDate(Date departureDate, String departureId, String destinationId);
 }

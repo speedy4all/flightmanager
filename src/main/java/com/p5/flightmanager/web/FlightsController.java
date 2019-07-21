@@ -1,10 +1,7 @@
 package com.p5.flightmanager.web;
 
 import com.p5.flightmanager.service.api.FlightService;
-import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.FlightDtoSearch;
-import com.p5.flightmanager.service.dto.FlightDtoView;
-import com.p5.flightmanager.service.dto.SearchParamDto;
+import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.RestExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -73,7 +70,12 @@ public class FlightsController extends RestExceptionHandler {
     }
 
     @GetMapping("/search")
-    Iterable<FlightDtoSearch> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
+    Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
         return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
+    }
+
+    @GetMapping("/search1")
+    Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(@Valid SearchParamDtoFlight searchParamDtoFlight){
+        return flightService.getByDepIdAndDestIdAndDepDate(searchParamDtoFlight);
     }
 }

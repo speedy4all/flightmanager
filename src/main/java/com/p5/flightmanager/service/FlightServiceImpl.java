@@ -126,7 +126,7 @@ public class FlightServiceImpl implements FlightService {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if (optionalFlight.isPresent()) {
             Optional<Passenger> optionalPassenger = passengerRepository.findById(UUID.fromString(passengerId));
-            if(optionalFlight.get().getPassengerList().size() <= optionalFlight.get().getPlane().getSeats()){
+            if (optionalFlight.get().getPassengerList().size() <= optionalFlight.get().getPlane().getSeats()) {
                 if (optionalPassenger.isPresent()) {
                     Flight flight = optionalFlight.get();
                     flight.getPassengerList().add(optionalPassenger.get());
@@ -137,7 +137,12 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Iterable<FlightDtoSearch> getByDepDateAndDestDateAndLocation(SearchParamDto searchParamDto) {
+    public Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(SearchParamDto searchParamDto) {
         return flightsRepository.findByNameAndDAteSimple(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
+    }
+
+    @Override
+    public Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight) {
+        return flightsRepository.findByIdAndDate(searchParamDtoFlight.getDepartureDate(), searchParamDtoFlight.getDepartureId(), searchParamDtoFlight.getDestinationId());
     }
 }

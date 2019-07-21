@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class FlightDtoSearch {
+public class FlightDtoSimple {
 
 
     private String name;
     private String departureLocation;
     private String destinationLocation;
 
-    public FlightDtoSearch() {
+    public FlightDtoSimple() {
     }
 
-    public FlightDtoSearch(String name, String departureLocation, String destinationLocation) {
+    public FlightDtoSimple(String name, String departureLocation, String destinationLocation) {
         this.name = name;
         this.departureLocation = departureLocation;
         this.destinationLocation = destinationLocation;

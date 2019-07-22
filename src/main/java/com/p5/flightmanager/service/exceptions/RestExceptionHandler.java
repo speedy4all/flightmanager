@@ -56,4 +56,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleBadArguments(MethodArgumentNotValidException ex) {
         return buildResponseEntity(new ApiError((HttpStatus.BAD_REQUEST)));
     }
+
+    @ExceptionHandler(FlightValidationException.class)
+    protected ResponseEntity<Object> handlerFlightValidationError(FlightValidationException ex) {
+        return buildResponseEntity(ex.getApiError());
+    }
 }

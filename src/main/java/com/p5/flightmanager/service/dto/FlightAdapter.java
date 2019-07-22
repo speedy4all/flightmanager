@@ -58,6 +58,7 @@ public class FlightAdapter {
         flightDto.setSeatsAvailable(flight.getPlane().getSeats() - flight.getPassengerList().size());
         flightDto.setCodePlane(flight.getPlane().getCode());
         flightDto.setIdPlane(flight.getPlane().getId());
+
         return flightDto;
     }
 
@@ -82,6 +83,7 @@ public class FlightAdapter {
         flight.setDepartureDate(flightDto.getDepartureDate());
         flight.setDestinationDate(flightDto.getDestinationDate());
         flight.setDurationTime(flightDto.getDurationTime());
+        flight.setDestinationAirport(AirportAdapter.fromDto(flightDto.getDestinationAirport()));
 
         return flight;
     }

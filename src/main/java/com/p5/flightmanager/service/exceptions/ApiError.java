@@ -18,9 +18,9 @@ public class ApiError {
     private String debugMessage;
     private List<ApiSubError> subErrors = new ArrayList<>();
 
-    private ApiError() {timestamp = LocalDateTime.now();}
+    public ApiError() {timestamp = LocalDateTime.now();}
 
-    ApiError(HttpStatus status) {
+    public ApiError(HttpStatus status) {
         this();
         this.status = status;
     }

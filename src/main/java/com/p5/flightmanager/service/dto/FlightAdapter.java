@@ -13,17 +13,17 @@ public class FlightAdapter {
 
     public final static FlightDto toDto(Flight flight) {
         FlightDto flightDto = new FlightDto();
+        flightDto.setId(flight.getId().toString());
         Airport departureLocation = flight.getDepartureLocation();
 
-        flightDto.setFlightType(flight.getFlightType());
-        flightDto.setId(flight.getId().toString());
-        flightDto.setName(flight.getName());
 
-        flightDto.setDepartureLocation(AirportAdapter.toDto(departureLocation));
-        flightDto.setDestinationLocation(flight.getDestinationLocation());
+        flightDto.setFlightType(flight.getFlightType());
         if(departureLocation != null) {
+            flightDto.setDepartureLocation(AirportAdapter.toDto(departureLocation));
             flightDto.setFullFlightDescription(departureLocation.getIata().concat("-").concat(flight.getDestinationLocation()));
         }
+        flightDto.setName(flight.getName());
+        flightDto.setDestinationLocation(flight.getDestinationLocation());
         flightDto.setDurationTime(flight.getDurationTime());
         flightDto.setDepartureDate(flight.getDepartureDate());
         flightDto.setDestinationDate(flight.getDestinationDate());

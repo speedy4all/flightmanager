@@ -11,6 +11,7 @@ import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.ApiError;
 import com.p5.flightmanager.service.exceptions.ApiSubError;
+import com.p5.flightmanager.service.exceptions.FlightValidationException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -76,13 +77,13 @@ public class FlightServiceImpl implements FlightService {
         if (flightDto.getFlightType() == null) {
             apiError.getSubErrors().add(new ApiSubError("flightType", "Null received", String.valueOf(flightDto.getFlightType())));
         }
-        if (flightDto.getDurationTime() > 60) {
-            apiError.getSubErrors().add(new ApiSubError("flightType", String.valueOf(flightDto.getDurationTime()), "Should be less then 60"));
+        if (flightDto.getDurationTime() > 180) {
+            apiError.getSubErrors().add(new ApiSubError("flightType", String.valueOf(flightDto.getDurationTime()), "Should be less then 180"));
         }
 
 
         if (apiError.getSubErrors().size() > 0) {
-            throw new NoFlightException(apiError);
+            throw new FlightValidationException(apiError);
         }
     }
 

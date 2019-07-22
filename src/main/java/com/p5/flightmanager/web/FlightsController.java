@@ -3,8 +3,9 @@ package com.p5.flightmanager.web;
 
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightDto;
+import com.p5.flightmanager.service.dto.FlightSearchDto;
 import com.p5.flightmanager.service.dto.FlightSimpleDto;
-import com.p5.flightmanager.service.dto.FlightParamsDto;
+import com.p5.flightmanager.service.dto.FlightUpdateDto;
 import com.p5.flightmanager.service.exceptions.RestExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import java.util.Date;
@@ -28,9 +28,10 @@ public class FlightsController extends RestExceptionHandler {
     @Autowired
     private FlightService flightService;
 
+    // departureId, destinationId, departureDate
     @GetMapping
-    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
-        return ResponseEntity.ok(flightService.getAll(search));
+    ResponseEntity<List<FlightSimpleDto>> getAll(FlightSearchDto search) {
+        return ResponseEntity.ok(flightService.searchBy(search));
     }
 
     @GetMapping("/search-by")
@@ -54,8 +55,8 @@ public class FlightsController extends RestExceptionHandler {
     }
 
     @PutMapping()
-    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
-        return ResponseEntity.ok(flightService.updateFlight(flightDto));
+    void updateFlight(@RequestBody FlightUpdateDto flightUpdateDto) {
+        flightService.addPassenger(flightUpdateDto);
     }
 
     @DeleteMapping("/{id}")

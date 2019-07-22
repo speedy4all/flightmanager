@@ -9,11 +9,12 @@ import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.repository.models.Plane;
 import com.p5.flightmanager.service.api.FlightService;
+import com.p5.flightmanager.service.dto.FlightSearchDto;
+import com.p5.flightmanager.service.dto.FlightUpdateDto;
 import com.p5.flightmanager.service.dto.adapter.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightSimpleDto;
 import com.p5.flightmanager.service.exceptions.*;
-import javassist.compiler.NoFieldException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -153,4 +154,36 @@ public class FlightServiceImpl implements FlightService {
     public Iterable<FlightSimpleDto> getSimpleFlightDto() {
         return flightsRepository.findSimpleFlightDto();
     }
+
+    @Override
+    public List<FlightSimpleDto> searchBy(FlightSearchDto search) {
+        Iterable<Flight> flights = flightsRepository.getByDepartureIdAndDestinationIdAndDepartureDate(UUID.fromString(search.getIdDeparture()),
+                UUID.fromString(search.getIdDestination()), search.getDepartureDate());
+
+        return FlightAdapter.toListSimpleDto(flights);
+    }
+
+    @Override
+    public void addPassenger(FlightUpdateDto flightUpdateDto) {
+        validateUpdateFlightDto(flightUpdateDto);
+
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightUpdateDto.getFlightId()));
+        if (optionalFlight.isPresent()){
+            Flight flight = optionalFlight.get();
+            Passenger passenger = passengerRepository.getByIdentifyNumber(flightUpdateDto.getUniqueIdentifier());
+            if (passenger == null){
+                Passenger newPassenger = new Passenger();
+                newPassenger.setFirstName(flightUpdateDto.getPassengerName());
+                newPassenger.setIdentifyNumber(flightUpdateDto.getUniqueIdentifier());
+                passenger = passengerRepository.save(newPassenger);
+            }
+            flight.getPassengerList().add(passenger);
+            flightsRepository.save(flight);
+        }
+    }
+
+    private void validateUpdateFlightDto(FlightUpdateDto flightUpdateDto){
+        //todo implement validation
+    }
+
 }

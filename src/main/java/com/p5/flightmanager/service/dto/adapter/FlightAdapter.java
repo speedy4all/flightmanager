@@ -4,6 +4,8 @@ import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.models.Plane;
 import com.p5.flightmanager.service.dto.FlightDto;
+import com.p5.flightmanager.service.dto.FlightSearchDto;
+import com.p5.flightmanager.service.dto.FlightSimpleDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,29 @@ public class FlightAdapter {
         flightList.forEach(flight -> listDto.add(toDto(flight)));
 
         return listDto;
+    }
+
+    public final static List<FlightSimpleDto> toListSimpleDto(Iterable<Flight> flightList){
+        List<FlightSimpleDto> flightSimpleDtos = new ArrayList<>();
+        flightList.forEach(flight -> flightSimpleDtos.add(toSimpleDto(flight)));
+
+        return flightSimpleDtos;
+    }
+
+    public final static FlightSimpleDto toSimpleDto(Flight flight){
+        FlightSimpleDto flightSimpleDto = new FlightSimpleDto();
+
+        flightSimpleDto.setFlightType(flight.getFlightType());
+        flightSimpleDto.setDestinationDate(flight.getDestinationDate());
+        flightSimpleDto.setDepartureAirportCode(flight.getDepartureAirport().getIata());
+        flightSimpleDto.setDepartureAirportName(flight.getDepartureAirport().getName());
+        flightSimpleDto.setDepartureDate(flight.getDepartureDate());
+        flightSimpleDto.setDepartureId(flight.getDepartureAirport().getId());
+        flightSimpleDto.setDestinationId(flight.getDestinationAirport().getId());
+        flightSimpleDto.setDestinationAirportCode(flight.getDestinationAirport().getIata());
+        flightSimpleDto.setDestinationAirportName(flight.getDestinationAirport().getName());
+
+        return flightSimpleDto;
     }
 
     public final static Flight fromDto(FlightDto flightDto) {

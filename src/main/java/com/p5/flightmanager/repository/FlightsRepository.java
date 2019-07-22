@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -32,7 +33,11 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "inner join flight.departureAirport depAirport " +
             "inner join flight.destinationAirport desAirport  ")
     Iterable<FlightSimpleDto> findSimpleFlightDto();
-}
 
-//    public FlightSimpleDto(String departureAirportCode, String destinationAirportCode, String departureAirportName,
-//                           String destinationAirportName, Date departureDate, Date destinationDate, String flightType) {
+    @Query("select f from Flight f " +
+            "join f.departureAirport departure " +
+            "join f.destinationAirport destination " +
+            "join f.plane plane where " +
+            "departure.id=:departureId and destination.id=:destinationId and f.departureDate=:departureDate")
+    Iterable<Flight> getByDepartureIdAndDestinationIdAndDepartureDate(UUID departureId, UUID destinationId, Date departureDate);
+}

@@ -44,8 +44,13 @@ public class FlightController {
 
     @PutMapping
     ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
-
         return ResponseEntity.ok(flightService.updateFlight(flightDto));
+    }
+
+    //2
+    @PutMapping
+    void updateFlight(@RequestBody FlightUpdateDto flightDto) {
+        flightService.addPassenger(flightDto);
     }
 
     @DeleteMapping("/{iddelete}")
@@ -53,6 +58,7 @@ public class FlightController {
 
         flightService.deleteFlight(iddelete);
     }
+
 
     @PutMapping("/{flightId}/add-passenger/{passengerId}")
     void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId) {

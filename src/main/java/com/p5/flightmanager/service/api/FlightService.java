@@ -19,6 +19,8 @@ public interface FlightService {
 
     void deleteFlight(String flightDtoID);
 
+    void addPassenger(FlightUpdateDto flightDto);
+
     void addPassengerToFlight(String flightId, String passengerId);
 
     void addPlaneToFlight(String flightId, String planeId);
@@ -34,4 +36,5 @@ public interface FlightService {
     Iterable<FlightDtoView> getByLocationIdAndDestinationIdAirport(SearchParamsFlightDtoView searchParamDto);
 
     Iterable<FlightDtoSimple> getAllFlights();
+
 }

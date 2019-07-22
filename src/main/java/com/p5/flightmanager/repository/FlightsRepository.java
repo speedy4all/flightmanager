@@ -2,6 +2,7 @@ package com.p5.flightmanager.repository;
 
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.dto.FlightDto;
+import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import com.p5.flightmanager.service.dto.FlightDtoView;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -35,4 +36,12 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "join flight.destinationAirport destinationAirport " +
             "where destinationAirport.id=:destinationAirportId and locationAirport.id=:locationAirportId")
     Iterable<FlightDtoView> findByLocationIdAndDestinationIdAirport(UUID locationAirportId, UUID destinationAirportId);
+
+    //TODO:
+//    @Query("select new com.p5.flightmanager.service.dto.FlightDtoSimple(flight.name, locationAirport.location, destinationAirport.location, " +
+//            "flight.durationTime, destinationAirport.location, locationAirport.location, flight.plane.seats - flight.passengerList.size) from Flight flight " +
+//            "join flight.locationAirport locationAirport " +
+//            "join flight.destinationAirport destinationAirport " +
+//            "where locationAirport.departureDate=:departureDate and locationAirport.location=:departureLocation")
+//    Iterable<FlightDtoSimple> findByNameAndDateSimple(Date departureDate, String departureLocation);
 }

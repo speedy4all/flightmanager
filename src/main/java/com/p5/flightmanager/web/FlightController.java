@@ -89,4 +89,8 @@ public class FlightController {
         return flightService.getByLocationIdAndDestinationIdAirport(searchParamDto);
     }
 
+    @GetMapping("/all")
+    Iterable<FlightDtoSimple> getAllFlights() {
+        return flightService.getAllFlights();
+    }
 }

@@ -5,10 +5,7 @@ import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.api.AirportService;
-import com.p5.flightmanager.service.dto.AirportAdapter;
-import com.p5.flightmanager.service.dto.AirportDto;
-import com.p5.flightmanager.service.dto.AirportDtoView;
-import com.p5.flightmanager.service.dto.SearchParamAirportDto;
+import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.NoAirportException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -90,6 +87,11 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public List<AirportDtoView> getAllDtos() {
         return AirportAdapter.toListDtoView(airportsRepository.findAll());
+    }
+
+    @Override
+    public Iterable<AirportSimpleDto> getAllSimpleForm() {
+        return airportsRepository.getAllSimpleAirports();
     }
 
 }

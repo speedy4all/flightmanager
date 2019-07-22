@@ -32,4 +32,6 @@ public interface FlightService {
     Iterable<FlightDto> getByDepDateAndDestDateAndLocation(SearchParamFlightDto searchParamDto);
 
     Iterable<FlightDtoView> getByLocationIdAndDestinationIdAirport(SearchParamsFlightDtoView searchParamDto);
+
+    Iterable<FlightDtoSimple> getAllFlights();
 }

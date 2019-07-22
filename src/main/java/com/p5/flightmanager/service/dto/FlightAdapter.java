@@ -40,6 +40,30 @@ public class FlightAdapter {
         return flight;
     }
 
+    public final static FlightDtoSimple toSimpleDto(Flight flight) {
+        FlightDtoSimple flightDto = new FlightDtoSimple();
+
+        flightDto.setId(flight.getId());
+        flightDto.setFlightType(flight.getFlightType());
+        flightDto.setName(flight.getName());
+        flightDto.setDepartureDate(flight.getDepartureDate());
+        flightDto.setDestinationDate(flight.getDestinationDate());
+        flightDto.setDurationTime(flight.getDurationTime());
+        flightDto.setDepartureAirportCode(flight.getLocationAirport().getCode());
+        flightDto.setDepartureAirportName(flight.getLocationAirport().getName());
+        flightDto.setIdDepartureAirport(flight.getLocationAirport().getId());
+        flightDto.setDestinationAirportCode(flight.getDestinationAirport().getCode());
+        flightDto.setDestinationAirportName(flight.getDestinationAirport().getName());
+        flightDto.setIdDestinationAirport(flight.getDestinationAirport().getId());
+        flightDto.setSeatsAvailable(flight.getPlane().getSeats() - flight.getPassengerList().size());
+        flightDto.setPlaneId(flight.getPlane().getId());
+        flightDto.setPlaneCode(flight.getPlane().getCode());
+        flightDto.setDepartureDate(flight.getDepartureDate());
+        flightDto.setDestinationDate(flight.getDestinationDate());
+        return flightDto;
+    }
+
+
     public final static Flight fromPostDto(PostFlightDto postFlightDto, Plane plane, Airport location, Airport destination) {
         Flight flight = new Flight();
         flight.setName(postFlightDto.getName());
@@ -68,6 +92,13 @@ public class FlightAdapter {
     public final static List<FlightDto> toListDto(Iterable<Flight> flightList) {
         List<FlightDto> listDto = new ArrayList<>();
         flightList.forEach(flight -> listDto.add(toDto(flight)));
+
+        return listDto;
+    }
+
+    public final static List<FlightDtoSimple> toListSimpleDto(Iterable<Flight> flightList) {
+        List<FlightDtoSimple> listDto = new ArrayList<>();
+        flightList.forEach(flight -> listDto.add(toSimpleDto(flight)));
 
         return listDto;
     }

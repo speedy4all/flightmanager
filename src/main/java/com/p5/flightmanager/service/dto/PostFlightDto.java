@@ -13,6 +13,7 @@ public class PostFlightDto {
     private Double durationTime;
     private String fullFlightDescription;
     private FlightType flightType;
+
     @NotNull
     @NotBlank
     private String planeId;

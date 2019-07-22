@@ -12,6 +12,7 @@ import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -49,6 +50,8 @@ public class FlightServiceImpl implements FlightService {
     public FlightDto createFlight(PostFlightDto postFlightDto) {
 
         Optional<Plane> optionalPlane = planeRepository.findById(UUID.fromString(postFlightDto.getPlaneId()));
+        validateFlightDto(postFlightDto);
+
         if(!optionalPlane.isPresent()) {
            throw new NoAirportException(); //TODO NoPlaneException
         }
@@ -174,18 +177,27 @@ public class FlightServiceImpl implements FlightService {
 
 
 
-    private boolean isValidFlight(FlightDto flightDto) {
-//        if(StringUtils.isEmpty(flightDto.getDestinationAirport().getCode())) {
-//            return false;
-//        }
+    private void validateFlightDto(PostFlightDto flightDto) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
 
-//        if(flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty()) {
-//            return false;
-//        }
-        //TODO api error
-        return true;
+        if(flightDto.getDepartureDate() == null) {
+            apiError.getSubErrors().add(new ApiSubError("departureDate", "Can not be null"));
+        }
+
+        if(flightDto.getDestinationAirportId() == null) {
+            apiError.getSubErrors().add(new ApiSubError("destinationAirportId", "Can not be null"));
+        }
+
+        if(flightDto.getDurationTime() > 180) {
+            apiError.getSubErrors().add(new ApiSubError("durationTime", "Value must be under 180", String.valueOf(flightDto.getDurationTime())));
+            //cu value of nu crapa
+            //to string, crapa
+
+        }
+
+        if(apiError.getSubErrors().size() > 0) {
+            throw new FlightValidationException(apiError);
+        }
     }
-
-
 
 }

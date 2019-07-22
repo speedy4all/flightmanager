@@ -2,6 +2,7 @@ package com.p5.flightmanager.service.api;
 
 import com.p5.flightmanager.service.dto.AirportDto;
 import com.p5.flightmanager.service.dto.AirportDtoView;
+import com.p5.flightmanager.service.dto.AirportSimpleDto;
 import com.p5.flightmanager.service.dto.SearchParamAirportDto;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +24,6 @@ public interface AirportService {
     void addFlight(String airportId, String flightId);
 
     List<AirportDtoView> getAllDtos();
+
+    Iterable<AirportSimpleDto>  getAllSimpleForm();
 }

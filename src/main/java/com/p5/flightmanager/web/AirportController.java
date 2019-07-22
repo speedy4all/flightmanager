@@ -3,6 +3,7 @@ package com.p5.flightmanager.web;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.dto.AirportDto;
 import com.p5.flightmanager.service.dto.AirportDtoView;
+import com.p5.flightmanager.service.dto.AirportSimpleDto;
 import com.p5.flightmanager.service.dto.SearchParamAirportDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +59,11 @@ public class AirportController {
     @GetMapping("/all")
     ResponseEntity<List<AirportDtoView>> getAllDtos() {
         return ResponseEntity.ok(airportService.getAllDtos());
+    }
+
+    @GetMapping("/simple-list")
+    ResponseEntity<Iterable<AirportSimpleDto>> getAllSimpleAirports() {
+        return ResponseEntity.ok(airportService.getAllSimpleForm());
     }
 
 }

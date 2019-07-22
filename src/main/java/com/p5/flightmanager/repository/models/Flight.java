@@ -171,3 +171,4 @@ public class Flight extends BaseModel implements Serializable {
         this.locationAirport = locationAirport;
     }
 }
+//si locurile libere

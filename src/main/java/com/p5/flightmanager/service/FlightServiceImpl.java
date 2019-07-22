@@ -34,9 +34,15 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private AirportsRepository airportsRepository;
 
+
     public List<FlightDto> getAll(String search) {
 
         return FlightAdapter.toListDto(flightsRepository.filterByName(search));
+    }
+
+    @Override
+    public Iterable<FlightDtoSimple> getAllFlights() {
+        return FlightAdapter.toListSimpleDto(flightsRepository.findAll());
     }
 
     @Override
@@ -95,11 +101,14 @@ public class FlightServiceImpl implements FlightService {
     public void addPassengerToFlight(String flightId, String passengerId) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if(optionalFlight.isPresent()) {
-            Optional<Passenger> optionalPassenger = passengerRepository.findById(UUID.fromString(passengerId));
-            if(optionalPassenger.isPresent()) {
-                Flight flight = optionalFlight.get();
-                optionalFlight.get().getPassengerList().add(optionalPassenger.get());
-                flightsRepository.save(flight);
+            if(optionalFlight.get().getPassengerList().size() <= optionalFlight.get().getPlane().getSeats())
+            {
+                Optional<Passenger> optionalPassenger = passengerRepository.findById(UUID.fromString(passengerId));
+                if(optionalPassenger.isPresent()) {
+                    Flight flight = optionalFlight.get();
+                    optionalFlight.get().getPassengerList().add(optionalPassenger.get());
+                    flightsRepository.save(flight);
+                }
             }
         }
     }
@@ -162,6 +171,8 @@ public class FlightServiceImpl implements FlightService {
         return flightsRepository.findByLocationIdAndDestinationIdAirport(UUID.fromString(searchParamDto.getLocationAirportId())
                 , UUID.fromString(searchParamDto.getDestinationAirportId()));
     }
+
+
 
     private boolean isValidFlight(FlightDto flightDto) {
 //        if(StringUtils.isEmpty(flightDto.getDestinationAirport().getCode())) {

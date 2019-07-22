@@ -35,9 +35,9 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "where flight.departureDate=:departureDate and departureAirport.city=:departureLocation")
     Iterable<FlightDtoSimple> findByNameAndDAteSimple(Date departureDate, String departureLocation);
 
-    @Query("select new com.p5.flightmanager.service.dto.FlightDtoParamSearch(flight.name, departureAirport.id, destinationAirport.id) from Flight flight " +
-            "join flight.departureLocation departureAirport " +
-            "join flight.destinationLocation destinationAirport " +
-            "where flight.departureDate=:departureDate and departureAirport.city=:departureLocation")
-    Iterable<FlightDtoParamSearch> findByIdAndDate(Date departureDate, String departureId, String destinationId);
+//    @Query("select new com.p5.flightmanager.service.dto.FlightDtoParamSearch(flight.name, departureAirport.id, destinationAirport.id) from Flight flight " +
+//            "join flight.departureLocation departureAirport " +
+//            "join flight.destinationLocation destinationAirport " +
+//            "where flight.departureDate=:departureDate and departureAirport.city=:departureLocation")
+//    Iterable<FlightDtoParamSearch> findByIdAndDate(Date departureDate, String departureId, String destinationId);
 }

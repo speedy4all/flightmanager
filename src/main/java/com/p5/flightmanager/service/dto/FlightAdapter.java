@@ -46,6 +46,8 @@ public class FlightAdapter {
         flightDtoView.setDepartureDate(flight.getDepartureDate());
         flightDtoView.setFreeSeats(flight.getPlane().getSeats());
         flightDtoView.setDestinationDate(flight.getDestinationDate());
+        flightDtoView.setDeparureId(flight.getDepartureLocation().getId().toString());
+        flightDtoView.setDestinationId(flight.getDestinationLocation().getId().toString());
 
         return flightDtoView;
     }

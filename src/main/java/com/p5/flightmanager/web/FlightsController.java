@@ -74,8 +74,8 @@ public class FlightsController extends RestExceptionHandler {
         return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
     }
 
-    @GetMapping("/search1")
-    Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(@Valid SearchParamDtoFlight searchParamDtoFlight){
-        return flightService.getByDepIdAndDestIdAndDepDate(searchParamDtoFlight);
-    }
+//    @GetMapping("/search1")
+//    Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(@Valid SearchParamDtoFlight searchParamDtoFlight){
+//        return flightService.getByDepIdAndDestIdAndDepDate(searchParamDtoFlight);
+//    }
 }

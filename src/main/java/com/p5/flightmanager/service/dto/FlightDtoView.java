@@ -14,7 +14,24 @@ public class FlightDtoView {
     private Integer freeSeats;
     private Date departureDate;
     private Date destinationDate;
+    private String deparureId;
+    private String destinationId;
 
+    public String getDeparureId() {
+        return deparureId;
+    }
+
+    public void setDeparureId(String deparureId) {
+        this.deparureId = deparureId;
+    }
+
+    public String getDestinationId() {
+        return destinationId;
+    }
+
+    public void setDestinationId(String destinationId) {
+        this.destinationId = destinationId;
+    }
 
     public String getId() {
         return id;

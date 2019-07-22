@@ -2,13 +2,12 @@ package com.p5.flightmanager.web;
 
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.dto.AirportDto;
-import com.p5.flightmanager.service.dto.AirportDtoSimple;
+import com.p5.flightmanager.service.dto.AirportSimpleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import java.util.List;
@@ -39,9 +38,9 @@ public class AirportController {
     }
 
     //TODO: endpoint care returneaza o lista de dto-uri care contine din aeroport numele, id-ul(iata), city; DONE
-    @GetMapping("/details")
-    Iterable<AirportDtoSimple> getAirportNameIataAndCity(){
-        return airportService.getAirportNameIataAndCity();
+    @GetMapping("/simple-list")
+    ResponseEntity<Iterable<AirportSimpleDto>> getAllSimpleAirports(){
+        return ResponseEntity.ok(airportService.getAllSimpleAirports());
     }
 
     @PostMapping

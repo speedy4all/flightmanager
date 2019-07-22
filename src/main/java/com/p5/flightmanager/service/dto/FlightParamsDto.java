@@ -5,25 +5,29 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.UUID;
 
 public class FlightParamsDto {
 
-    @NotNull
-    @NotBlank
-    private String departureLocation;
-
-    @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private UUID idDeparture;
+    private UUID idDestination;
     private Date departureDate;
 
-    @NotNull
-    @NotBlank
-    private String destinationLocation;
+    public UUID getIdDeparture() {
+        return idDeparture;
+    }
 
-    @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private Date destinationDate;
+    public void setIdDeparture(UUID idDeparture) {
+        this.idDeparture = idDeparture;
+    }
 
+    public UUID getIdDestination() {
+        return idDestination;
+    }
+
+    public void setIdDestination(UUID idDestination) {
+        this.idDestination = idDestination;
+    }
 
     public Date getDepartureDate() {
         return departureDate;
@@ -31,21 +35,5 @@ public class FlightParamsDto {
 
     public void setDepartureDate(Date departureDate) {
         this.departureDate = departureDate;
-    }
-
-    public Date getDestinationDate() { return destinationDate; }
-
-    public void setDestinationDate(Date destinationDate) { this.destinationDate = destinationDate; }
-
-    public String getDepartureLocation() { return departureLocation; }
-
-    public void setDepartureLocation(String departureLocation) { this.departureLocation = departureLocation; }
-
-    public String getDestinationLocation() {
-        return destinationLocation;
-    }
-
-    public void setDestinationLocation(String destinationLocation) {
-        this.destinationLocation = destinationLocation;
     }
 }

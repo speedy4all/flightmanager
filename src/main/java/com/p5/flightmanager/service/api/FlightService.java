@@ -1,7 +1,7 @@
 package com.p5.flightmanager.service.api;
 
 import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.FlightDtoSimple;
+import com.p5.flightmanager.service.dto.FlightSimpleDto;
 import com.p5.flightmanager.service.dto.FlightParamsDto;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +25,9 @@ public interface FlightService {
 
     void associatePlaneToFlight(String flightId, String planeId);
 
-    Iterable<FlightDtoSimple> getByDepartureAndDestinationDateAndLocation(FlightParamsDto searchParamDto);
-
     List<FlightDto> getBySearchParams(Date departureDate, String location, String destination);
 
     void setDepartureAndDestinationAirport(String flightId, String departureAirportIata, String destinationAirportIata);
+
+    Iterable<FlightSimpleDto> getSimpleFlightDto();
 }

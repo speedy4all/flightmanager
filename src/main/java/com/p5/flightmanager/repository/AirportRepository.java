@@ -1,7 +1,7 @@
 package com.p5.flightmanager.repository;
 
 import com.p5.flightmanager.repository.models.Airport;
-import com.p5.flightmanager.service.dto.AirportDtoSimple;
+import com.p5.flightmanager.service.dto.AirportSimpleDto;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -17,9 +17,9 @@ public interface AirportRepository extends CrudRepository<Airport, UUID> {
 
     Optional<Airport> findByCity(String name);
 
-    @Query("select new com.p5.flightmanager.service.dto.AirportDtoSimple(airport.name, airport.iata, airport.city) from Airport airport")
-    Iterable<AirportDtoSimple> findAirportNameIataAndCity();
-
     @Query("select a from Airport a where lower(iata) like concat('%', lower(?1), '%')")
     Optional<Airport> findByIata(String iata);
+
+    @Query("select new com.p5.flightmanager.service.dto.AirportSimpleDto(airport.id, airport.name, airport.iata) from Airport airport")
+    Iterable<AirportSimpleDto> getAllSimpleAirports();
 }

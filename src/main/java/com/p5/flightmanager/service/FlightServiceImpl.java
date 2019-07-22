@@ -8,11 +8,10 @@ import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.repository.models.Plane;
-import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.adapter.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.FlightDtoSimple;
+import com.p5.flightmanager.service.dto.FlightSimpleDto;
 import com.p5.flightmanager.service.dto.FlightParamsDto;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
@@ -125,12 +124,6 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Iterable<FlightDtoSimple> getByDepartureAndDestinationDateAndLocation(FlightParamsDto flightParamDto) {
-        return flightsRepository.findByDepartureAndDestinationDateAndLocation(flightParamDto.getDepartureLocation(), flightParamDto.getDepartureDate(),
-                flightParamDto.getDestinationLocation(), flightParamDto.getDestinationDate());
-    }
-
-    @Override
     public void setDepartureAndDestinationAirport(String flightId, String departureAirportIata, String destinationAirportIata) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if (optionalFlight.isPresent()){
@@ -143,5 +136,10 @@ public class FlightServiceImpl implements FlightService {
                 flightsRepository.save(flight);
             }
         }
+    }
+
+    @Override
+    public Iterable<FlightSimpleDto> getSimpleFlightDto() {
+        return flightsRepository.findSimpleFlightDto();
     }
 }

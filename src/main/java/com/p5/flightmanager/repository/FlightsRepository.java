@@ -1,8 +1,7 @@
 package com.p5.flightmanager.repository;
 
-import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
-import com.p5.flightmanager.service.dto.FlightDtoSimple;
+import com.p5.flightmanager.service.dto.FlightSimpleDto;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -29,9 +28,11 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
     Iterable<Flight> findByDateAndName(Date departureDate, String departureLocation);
 
     //TODO: lista de flight-uri care sa contina id-ul flight-ului, numele flight-ului, departure&destination date&city; DONE
-    @Query("select new com.p5.flightmanager.service.dto.FlightDtoSimple(flight.id, flight.name, flight.departureDate, depAirport.city, flight.destinationDate, desAirport.city) from Flight flight " +
-            "inner join flight.departureAirport depAirport on depAirport.city=:departureLocation " +
-            "inner join flight.destinationAirport desAirport on desAirport.city=:destinationLocation " +
-            "where flight.departureDate=:departureDate and flight.destinationDate=:destinationDate")
-    Iterable<FlightDtoSimple> findByDepartureAndDestinationDateAndLocation(String departureLocation, Date departureDate, String destinationLocation, Date destinationDate);
+    @Query("select new com.p5.flightmanager.service.dto.FlightSimpleDto(depAirport.iata, desAirport.iata, depAirport.name, desAirport.name, flight.departureDate, flight.destinationDate, depAirport.id, desAirport.id, flight.flightType) from Flight flight " +
+            "inner join flight.departureAirport depAirport " +
+            "inner join flight.destinationAirport desAirport  ")
+    Iterable<FlightSimpleDto> findSimpleFlightDto();
 }
+
+//    public FlightSimpleDto(String departureAirportCode, String destinationAirportCode, String departureAirportName,
+//                           String destinationAirportName, Date departureDate, Date destinationDate, String flightType) {

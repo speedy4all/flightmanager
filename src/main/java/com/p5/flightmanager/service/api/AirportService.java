@@ -1,12 +1,10 @@
 package com.p5.flightmanager.service.api;
 
-import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.service.dto.AirportDto;
-import com.p5.flightmanager.service.dto.AirportDtoSimple;
+import com.p5.flightmanager.service.dto.AirportSimpleDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface AirportService {
@@ -25,5 +23,5 @@ public interface AirportService {
 
     void addFlightToAirport(String airportId, String flightId);
 
-    Iterable<AirportDtoSimple> getAirportNameIataAndCity();
+    Iterable<AirportSimpleDto> getAllSimpleAirports();
 }

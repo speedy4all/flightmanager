@@ -2,19 +2,19 @@ package com.p5.flightmanager.service.dto;
 
 import java.util.UUID;
 
-public class AirportDtoSimple {
+public class AirportSimpleDto {
+    private UUID id;
     private String name;
-    private String city;
     private String iata;
 
-    public AirportDtoSimple(){
+    public AirportSimpleDto(){
 
     }
 
-    public AirportDtoSimple(String name, String iata, String city) {
+    public AirportSimpleDto(UUID id, String name, String iata) {
         this.name = name;
         this.iata = iata;
-        this.city = city;
+        this.id = id;
     }
 
     public String getName() {
@@ -25,13 +25,9 @@ public class AirportDtoSimple {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
-    }
+    public UUID getId() { return id; }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+    public void setId(UUID id) { this.id = id; }
 
     public String getIata() {
         return iata;

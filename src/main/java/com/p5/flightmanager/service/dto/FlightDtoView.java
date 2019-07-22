@@ -14,7 +14,16 @@ public class FlightDtoView {
     private Integer freeSeats;
     private Date departureDate;
     private Date destinationDate;
+    private String deparureId;
+    private String destinationId;
 
+    private String destinationAirportName;
+    private String departureAirportName;
+
+    private String departureAirportCode;
+    private String destinationAirportCode;
+
+    private String planeModel;
 
     public String getId() {
         return id;
@@ -78,5 +87,61 @@ public class FlightDtoView {
 
     public void setDestinationDate(Date destinationDate) {
         this.destinationDate = destinationDate;
+    }
+
+    public String getDeparureId() {
+        return deparureId;
+    }
+
+    public void setDeparureId(String deparureId) {
+        this.deparureId = deparureId;
+    }
+
+    public String getDestinationId() {
+        return destinationId;
+    }
+
+    public void setDestinationId(String destinationId) {
+        this.destinationId = destinationId;
+    }
+
+    public String getDestinationAirportName() {
+        return destinationAirportName;
+    }
+
+    public void setDestinationAirportName(String destinationAirportName) {
+        this.destinationAirportName = destinationAirportName;
+    }
+
+    public String getDepartureAirportName() {
+        return departureAirportName;
+    }
+
+    public void setDepartureAirportName(String departureAirportName) {
+        this.departureAirportName = departureAirportName;
+    }
+
+    public String getDepartureAirportCode() {
+        return departureAirportCode;
+    }
+
+    public void setDepartureAirportCode(String departureAirportCode) {
+        this.departureAirportCode = departureAirportCode;
+    }
+
+    public String getDestinationAirportCode() {
+        return destinationAirportCode;
+    }
+
+    public void setDestinationAirportCode(String destinationAirportCode) {
+        this.destinationAirportCode = destinationAirportCode;
+    }
+
+    public String getPlaneModel() {
+        return planeModel;
+    }
+
+    public void setPlaneModel(String planeModel) {
+        this.planeModel = planeModel;
     }
 }

@@ -26,5 +26,7 @@ public interface FlightService {
 
     List<FlightDto> getBySearchParams(Date departureDate, String location, String destination);
 
-   // Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight);
+    void addPassenger(String flightId, String passengerId);
+
+    // Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight);
 }

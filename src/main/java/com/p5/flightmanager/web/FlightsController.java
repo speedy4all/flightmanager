@@ -69,6 +69,11 @@ public class FlightsController extends RestExceptionHandler {
         flightService.addPassengerToFlight(flightId, passengerId);
     }
 
+    @PutMapping("/{flightId}/add--passenger/{passengerId}")
+    void addPassenger(@PathVariable String flightId, @PathVariable String passengerId){
+        flightService.addPassenger(flightId, passengerId);
+    }
+
     @GetMapping("/search")
     Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
         return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);

@@ -122,6 +122,21 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public void addPassenger(String flightId, String passengerId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
+        if (optionalFlight.isPresent()) {
+            Optional<Passenger> optionalPassenger = passengerRepository.findById(UUID.fromString(passengerId));
+            if (optionalFlight.get().getPassengerList().size() <= optionalFlight.get().getPlane().getSeats()) {
+                if (optionalPassenger.isPresent()) {
+                    Flight flight = optionalFlight.get();
+                    flight.getPassengerList().add(optionalPassenger.get());
+                    flightsRepository.save(flight);
+                }
+            }
+        }
+    }
+
+    @Override
     public void addPassengerToFlight(String flightId, String passengerId) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if (optionalFlight.isPresent()) {

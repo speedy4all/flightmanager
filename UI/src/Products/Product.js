@@ -25,7 +25,7 @@ const Product = props => {
 };
 
 Product.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string,
   fullFlightDescription: PropTypes.string,
   departureDate: PropTypes.string,

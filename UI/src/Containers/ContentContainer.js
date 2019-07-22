@@ -6,6 +6,7 @@ import { Spinner } from "react-mdl";
 const ContentContainer = props => {
   return (
     <div>
+      
       {props.loading ? (
         <Spinner />
       ) : props.selectedMenu && props.selectedMenu.route === FLIGHTS_ROUTE ? (
@@ -13,7 +14,8 @@ const ContentContainer = props => {
           products={props.products}
           onAddToCart={props.onAddToCart}
         />
-      ) : props.selectedMenu && props.selectedMenu.route === RESERVATIONS_ROUTE ? (
+      ) : props.selectedMenu &&
+        props.selectedMenu.route === RESERVATIONS_ROUTE ? (
         <ProductsList
           editMode
           products={props.shoppingCart}

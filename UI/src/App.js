@@ -2,22 +2,20 @@ import React, { Component } from "react";
 import "./App.css";
 import Header from "./Header/Header";
 import { getProducts } from "./Redux/Actions/products";
+import { getAirports } from "./Redux/Actions/airports";
 import { connect } from "react-redux";
 import ContentContainer from "./Containers/ContentContainer";
-import {
-  menuClicked,
-  createSearchAction,
-} from "./Redux/Actions/ui";
+import { menuClicked, createSearchAction } from "./Redux/Actions/ui";
 import { Layout, Content } from "react-mdl";
 import NavigationComponent from "./Navigation/NavigationComponent";
+import SimpleSelect from "./SimpleSelect/simple-select";
 
 class App extends Component {
-
   componentWillMount = () => {
     this.props._getProducts();
+    this.props._getAirports();
   };
 
-  
   render() {
     const selectedMenuList = this.props.ui.menu.filter(
       menuItem => menuItem.selected
@@ -38,6 +36,7 @@ class App extends Component {
           />
 
           <Content>
+            <SimpleSelect airports={this.props.airports}/>
             <ContentContainer
               loading={this.props.ui.pending}
               selectedMenu={selectedMenu}
@@ -50,18 +49,20 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => { 
+const mapStateToProps = state => {
   return {
     ui: state.ui,
     products: state.products,
-    id: state.id
-  }
+    id: state.id,
+    airports: state.airports
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
   _handleSearch: val => dispatch(createSearchAction(val)),
   _getProducts: () => dispatch(getProducts()),
   _menuClickHandler: route => dispatch(menuClicked(route)),
+  _getAirports: () => dispatch(getAirports()),
 });
 
 export default connect(

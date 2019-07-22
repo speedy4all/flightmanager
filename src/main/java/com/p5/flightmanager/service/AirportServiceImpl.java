@@ -6,6 +6,7 @@ import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.AirportAdapter;
 import com.p5.flightmanager.service.dto.AirportDto;
+import com.p5.flightmanager.service.dto.AirportSimpleDTO;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoAirportException;
@@ -90,5 +91,10 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public void addFlight(String airportId, String flightId) {
 
+    }
+
+    @Override
+    public Iterable<AirportSimpleDTO> getAllForSelect() {
+        return airportRepository.getAllForSelect();
     }
 }

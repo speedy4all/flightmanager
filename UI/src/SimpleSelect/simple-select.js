@@ -11,8 +11,8 @@ import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap"
+    display: "inline-flex",
+    flexWrap: "nowrap"
   },
   formControl: {
     margin: theme.spacing(1),
@@ -35,6 +35,7 @@ export default function SimpleSelect(props) {
       ...oldValues,
       [event.target.name]: event.target.value
     }));
+    props.onChange(props.fieldName, event.target.value);
   }
   const items = props.airports.map(airport => (
     <MenuItem value={airport.id}>{airport.name}</MenuItem>
@@ -42,13 +43,13 @@ export default function SimpleSelect(props) {
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="departure">Departure</InputLabel>
+        <InputLabel htmlFor={props.name}>{props.name}</InputLabel>
         <Select
           value={values.name}
           onChange={handleChange}
           inputProps={{
-            name: "name",
-            id: "id"
+            name: 'name',
+            id: 'id'
           }}
         >
          {items}

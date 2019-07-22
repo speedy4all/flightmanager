@@ -4,7 +4,8 @@ import {
   GET_PRODUCTS,
   SELECT_PRODUCT,
   updateProducts,
-  DELETE_PRODUCT
+  DELETE_PRODUCT,
+  SEARCH_FLIGHTS
 } from "../Actions/products";
 import {
   showSpinner,
@@ -13,6 +14,25 @@ import {
   hideDeleteDialog
 } from "./../Actions/ui";
 import { apiRequest } from "./../Actions/api";
+
+export const searchFlightsFlow = ({ dispatch }) => next => action => {
+  next(action);
+
+  if (action.type === SEARCH_FLIGHTS) {
+    const { destinationId, departureId, departureDate } = action.payload;
+
+    dispatch(
+      apiRequest(
+        "GET",
+        `/flight?departureId=${departureId}&destinationId=${destinationId}&departureDate=${departureDate}`,
+        null,
+        FETCH_PRODUCTS_SUCCESS,
+        FETCH_PRODUCTS_ERROR
+      )
+    );
+    dispatch(showSpinner());
+  }
+};
 
 // this middleware only care about the getProducts action
 export const getProductsFlow = ({ dispatch }) => next => action => {
@@ -73,5 +93,6 @@ export const productsMdl = [
   getProductsFlow,
   processProductsCollection,
   selectProductFlow,
-  deleteShoppingCartProductFlow
+  deleteShoppingCartProductFlow,
+  searchFlightsFlow
 ];

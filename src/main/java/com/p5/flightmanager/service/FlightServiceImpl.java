@@ -1,7 +1,6 @@
 package com.p5.flightmanager.service;
 
 import com.p5.flightmanager.repository.PassengerRepository;
-import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
@@ -11,9 +10,13 @@ import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import com.p5.flightmanager.service.dto.SearchParamDto;
+import com.p5.flightmanager.service.exceptions.ApiError;
+import com.p5.flightmanager.service.exceptions.ApiSubError;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
+import com.p5.flightmanager.service.exceptions.FlightValidationException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -42,13 +45,10 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public FlightDto createFlight(FlightDto flightDto) {
 
-        if (isValidFlight(flightDto)) {
+        validateFlightDto(flightDto);
 
-            return FlightAdapter.toDto(flightsRepository.save(FlightAdapter.fromDto(flightDto)));
-        } else {
-            throw new EmptyFieldException();
+        return FlightAdapter.toDto(flightsRepository.save(FlightAdapter.fromDto(flightDto)));
 
-        }
     }
 
     @Override
@@ -80,12 +80,27 @@ public class FlightServiceImpl implements FlightService {
         }
     }
 
-    private boolean isValidFlight(FlightDto flightDto) {
-        if (flightDto.getDepartureLocation() == null)
-            return false;
-        if (flightDto.getDestinationLocation() == null || flightDto.getDestinationLocation().isEmpty())
-            return false;
-        return true;
+    private void validateFlightDto(FlightDto flightDto) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+
+        if (flightDto.getDepartureLocation() == null) {
+            apiError.getSubErrors().add(new ApiSubError("departureLocation", "Can not be null"));
+        }
+
+        if (flightDto.getDestinationLocation() == null) {
+            apiError.getSubErrors().add(new ApiSubError("destinationLocation", "Can not be null"));
+
+        }
+
+        if (flightDto.getDurationTime() > 180) {
+            apiError.getSubErrors().add(new ApiSubError("durationTime", "Value must be under 180", String.valueOf(flightDto.getDurationTime())));
+
+        }
+
+        if(apiError.getSubErrors().size() > 0) {
+            throw new FlightValidationException(apiError);
+        }
+
     }
 
     @Override

@@ -1,0 +1,18 @@
+.MenuItem {
+    text-align: left;
+    height: 40px;
+  }
+
+  .MenuItem:hover {
+    cursor: pointer;
+    background-color: #906ebb;
+    color: white;
+  }
+  
+  .MenuItemText {
+    line-height: 40px;
+    padding-left: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }

@@ -1,0 +1,18 @@
+.MenuContainer {
+    width: 20%;
+    float: left;
+    height: 100vh;
+    margin-bottom: 0px;
+    overflow-x: hidden;
+    background-color: #906ebb;
+  }
+  
+  .Menu {
+    list-style: none;
+    margin: 10px 0;
+    text-align: left;
+    padding: 0px;
+    background-color: orange;
+  }
+  
+  

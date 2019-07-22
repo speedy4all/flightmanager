@@ -1,0 +1,34 @@
+.App {
+  text-align: center;
+}
+
+.FloatRight {
+  float: right;
+}
+
+.CenterHeader {
+  padding: 10px;
+}
+
+.visible.hidden {
+  visibility: hidden;
+}
+.visible {
+  visibility: visible;
+}
+
+
+
+.selected {
+  background-color: white;
+  font-style: italic;
+}
+
+.mdl-spinner {
+  width: 84px;
+  height: 84px;
+}
+
+.mdl-spinner__circle {
+  border-width: 9px;
+}

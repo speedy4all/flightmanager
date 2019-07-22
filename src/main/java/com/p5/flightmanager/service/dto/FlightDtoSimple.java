@@ -17,6 +17,24 @@ public class FlightDtoSimple {
     private String destinationAirportName;
     private UUID idDestinationAirport;
     private String destinationAirportCode;
+    private UUID idPlane;
+    private String codePlane;
+
+    public UUID getIdPlane() {
+        return idPlane;
+    }
+
+    public void setIdPlane(UUID idPlane) {
+        this.idPlane = idPlane;
+    }
+
+    public String getCodePlane() {
+        return codePlane;
+    }
+
+    public void setCodePlane(String codePlane) {
+        this.codePlane = codePlane;
+    }
 
     public UUID getIdDepartureAirport() {
         return idDepartureAirport;

@@ -79,4 +79,9 @@ public class PassengerServiceImpl implements PassengerService {
 
         return true;
     }
+
+    @Override
+    public Passenger getOrCreate(String uniqueIdentifier, String name) {
+        return null;
+    }
 }

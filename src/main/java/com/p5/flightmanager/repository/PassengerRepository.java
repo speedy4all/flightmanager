@@ -12,4 +12,6 @@ public interface PassengerRepository extends CrudRepository<Passenger, UUID> {
 
     @Query("select p from Passenger p where lower(second_name) like concat('%', lower(?1), '%')")
     Iterable<Passenger> filterByName(String search);
+
+    Passenger getByIdentifyNumber(String identifyNumber);
 }

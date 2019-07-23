@@ -1,6 +1,7 @@
 package com.p5.flightmanager.service.dto;
 
 import com.p5.flightmanager.repository.models.Passenger;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,16 @@ public class PassengerAdapter {
         passengerDto.setBirthdayDate(passenger.getBirthdayDate());
         passengerDto.setCountry(passenger.getCountry());
         passengerDto.setEmail(passenger.getEmail());
+
         passengerDto.setFirstName(passenger.getFirstName());
         passengerDto.setSecondName(passenger.getSecondName());
-        passengerDto.setFullName(passenger.getFirstName().concat("-").concat(passenger.getSecondName()));
+
+        if (!StringUtils.isEmpty(passengerDto.getSecondName())) {
+            passengerDto.setFullName(passenger.getFirstName().concat("-").concat(passenger.getSecondName()));
+        }
+
+
+
         passengerDto.setIdentifyNumber(passenger.getIdentifyNumber());
         passengerDto.setPhoneNumber(passenger.getPhoneNumber());
         passengerDto.setSex(passenger.getSex());

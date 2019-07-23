@@ -43,7 +43,7 @@ public class FlightsController extends RestExceptionHandler {
     }
 
     @PutMapping("/add")
-    void flightUpdate(FlightUpdateDto flightUpdateDto){
+    void flightUpdate(@RequestBody  FlightUpdateDto flightUpdateDto){
         flightService.addPassengerDto(flightUpdateDto);
     }
 
@@ -82,6 +82,11 @@ public class FlightsController extends RestExceptionHandler {
     @GetMapping("/search")
     Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
         return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
+    }
+
+    @GetMapping("/offers")
+    Iterable<FlightDtoView> getOffers(){
+        return flightService.getAllOffers();
     }
 
 //    @GetMapping("/search1")

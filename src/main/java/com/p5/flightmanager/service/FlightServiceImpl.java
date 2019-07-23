@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -153,7 +150,7 @@ public class FlightServiceImpl implements FlightService {
             flightsRepository.save(flight);
         } else {
             //throw new PassengerExistException(flightUpdateDto.getUniqueIdentifier());
-            throw new NoPassengerException();
+            throw new PassengerExistException(flightUpdateDto.getUniqueIdentifier());
         }
 }
 
@@ -166,8 +163,37 @@ public class FlightServiceImpl implements FlightService {
         throw new NoFlightException();
     }
 
+    @Override
+    public Iterable<FlightDtoView> getAllOffers() {
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, 7);
+        Date endDate = cal.getTime(); // get back a Date objec
+
+        Iterable<Flight> list = flightsRepository.getAllOffers(endDate);
+        List<FlightDtoView> offers = FlightAdapter.toListDtoView(list);
+
+        return offers;
+    }
+
 
     private void validateUpdateFlight(FlightUpdateDto flightUpdateDto) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightUpdateDto.getFlightId()));
+        if(!optionalFlight.isPresent()) {
+            apiError.getSubErrors().add(new ApiSubError("flight", "flight not found"));
+        }
+//        Optional<Passenger> passenger = passengerRepository.getByUniqueIdentifier(flightUpdateDto.getUniqueIdentifier());
+//        if(passenger.isPresent()) {
+//            apiError.getSubErrors().add(new ApiSubError("passenger", "passenger already found"));
+//        }
+        if(flightUpdateDto.getFlightId() == null)
+        {
+            apiError.getSubErrors().add(new ApiSubError("id", "id is null"));
+        }
+        if(apiError.getSubErrors().size() > 0) {
+            throw new NoPassengerException();
+        }
     }
 
     @Override

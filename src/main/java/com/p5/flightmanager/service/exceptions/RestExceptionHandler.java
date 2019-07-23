@@ -70,4 +70,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleFlightValidateException(FlightValidationException ex){
         return buildResponseEntity(ex.getApiError());
     }
+
+    @ExceptionHandler(PassengerExistException.class)
+    protected ResponseEntity<Object> handlePassengerExistError(PassengerExistException ex){
+        return buildResponseEntity(ex.getApiError());
+    }
 }

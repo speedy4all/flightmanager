@@ -2,6 +2,7 @@ package com.p5.flightmanager.repository;
 
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.dto.FlightSimpleDto;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -40,4 +41,21 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "join f.plane plane where " +
             "departure.id=:departureId and destination.id=:destinationId and f.departureDate=:departureDate")
     Iterable<Flight> getByDepartureIdAndDestinationIdAndDepartureDate(UUID departureId, UUID destinationId, Date departureDate);
+
+    @Query("select f from Flight f where f.passengerList.size < 10 and f.departureDate > now() and f.departureDate < :endDate")
+    Iterable<Flight> getOffers(Date endDate, Pageable pageable);
 }
+
+/*
+
+
+
+flights.forEach(flight -> {
+            if (flight.getPassengerList().size() < 10 && flight.getDurationTime()
+                    < 120 && flightSimpleDtoList.size() != 10){
+                flightSimpleDtoList.add(FlightAdapter.toSimpleDto(flight));
+                flightsRepository.save(flight);
+            }
+        });
+
+ */

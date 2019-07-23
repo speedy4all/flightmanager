@@ -15,14 +15,14 @@ import com.p5.flightmanager.service.dto.adapter.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightSimpleDto;
 import com.p5.flightmanager.service.exceptions.*;
+import org.glassfish.jersey.internal.guava.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -56,7 +56,6 @@ public class FlightServiceImpl implements FlightService {
     public FlightDto updateFlight(FlightDto flightDto) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getId()));
         if (optionalFlight.isPresent()) {
-
             return FlightAdapter.toDto(flightsRepository.save(FlightAdapter.fromDto(flightDto, optionalFlight.get())));
         }
         throw new NoFlightException();
@@ -79,28 +78,6 @@ public class FlightServiceImpl implements FlightService {
             Flight flight = optionalFlight.get();
             flightsRepository.delete(flight);
         }
-    }
-
-    private void validateFlightDto(FlightDto flightDto) {
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
-
-        if (flightDto.getDepartureAirport() == null) {
-            apiError.getSubErrors().add(new ApiSubError("departureLocation", "Cannot be null"));
-        }
-
-        if (flightDto.getDestinationAirport() == null){
-            apiError.getSubErrors().add(new ApiSubError("destinationLocation", "Cannot be null"));
-        }
-
-        if (flightDto.getDurationTime() > 180){
-            apiError.getSubErrors().add(new ApiSubError("durationTime", "Value must be under 180",
-                    String.valueOf(flightDto.getDurationTime())));
-        }
-
-        if (apiError.getSubErrors().size() > 0){
-            throw new FlightValidationException(apiError);
-        }
-
     }
 
     @Override
@@ -182,8 +159,54 @@ public class FlightServiceImpl implements FlightService {
         }
     }
 
+    @Override
+    public List<FlightSimpleDto> getOffers() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        Date endDate = calendar.getTime();      // get back a Date object
+
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Flight> list = Lists.newArrayList(flightsRepository.getOffers(endDate, pageable));
+        List<FlightSimpleDto> offers = FlightAdapter.toListSimpleDto(list);
+
+        return offers;
+    }
+
     private void validateUpdateFlightDto(FlightUpdateDto flightUpdateDto){
-        //todo implement validation
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+
+        if (flightUpdateDto.getUniqueIdentifier().chars().count() != 13){
+            apiError.getSubErrors().add(new ApiSubError("uniqueIdentifier", "invalid size of identifier"));
+        }
+
+        if (flightUpdateDto.getPassengerName().isEmpty()){
+            apiError.getSubErrors().add(new ApiSubError("passengerName","no name for passenger"));
+        }
+
+        if (apiError.getSubErrors().size() > 0){
+            throw new PassengerExistException(apiError);
+        }
+    }
+
+    private void validateFlightDto(FlightDto flightDto) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+
+        if (flightDto.getDepartureAirport() == null) {
+            apiError.getSubErrors().add(new ApiSubError("departureLocation", "Cannot be null"));
+        }
+
+        if (flightDto.getDestinationAirport() == null){
+            apiError.getSubErrors().add(new ApiSubError("destinationLocation", "Cannot be null"));
+        }
+
+        if (flightDto.getDurationTime() > 180){
+            apiError.getSubErrors().add(new ApiSubError("durationTime", "Value must be under 180",
+                    String.valueOf(flightDto.getDurationTime())));
+        }
+
+        if (apiError.getSubErrors().size() > 0){
+            throw new FlightValidationException(apiError);
+        }
     }
 
 }

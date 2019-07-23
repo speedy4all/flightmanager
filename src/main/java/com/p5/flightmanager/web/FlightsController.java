@@ -44,6 +44,11 @@ public class FlightsController extends RestExceptionHandler {
         return ResponseEntity.ok(flightService.getById(id));
     }
 
+    @GetMapping("/offers")
+    List<FlightSimpleDto> getOffers(){
+        return flightService.getOffers();
+    }
+
     @GetMapping("/simple-list")
     ResponseEntity<Iterable<FlightSimpleDto>> getSimpleFlightDto() {
         return ResponseEntity.ok(flightService.getSimpleFlightDto());

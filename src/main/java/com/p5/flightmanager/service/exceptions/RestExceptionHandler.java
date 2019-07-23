@@ -58,11 +58,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
-    private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
-        return new ResponseEntity<>(apiError, apiError.getStatus());
-    }
-
-
     @ExceptionHandler(ValidationException.class)
     protected ResponseEntity<Object> handleValidationError(ValidationException ex) {
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "Missing arguments", ex));
@@ -71,5 +66,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(FlightValidationException.class)
     protected ResponseEntity<Object> handleFlightValidationError(FlightValidationException ex){
         return buildResponseEntity(ex.getApiError());
+    }
+
+    private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
+        return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 }

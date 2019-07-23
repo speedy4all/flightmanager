@@ -135,9 +135,7 @@ public class Flight extends BaseModel implements Serializable {
         this.flightType = flightType;
     }
 
-    public List<Passenger> getPassengerList() {
-        return passengerList;
-    }
+    public List<Passenger> getPassengerList() { return passengerList; }
 
     public void setPassengerList(List<Passenger> passengerList) {
         this.passengerList = passengerList;

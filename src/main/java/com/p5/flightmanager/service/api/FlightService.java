@@ -35,4 +35,6 @@ public interface FlightService {
     List<FlightSimpleDto> searchBy(FlightSearchDto search);
 
     void addPassenger(FlightUpdateDto flightUpdateDto);
+
+    List<FlightSimpleDto> getOffers();
 }

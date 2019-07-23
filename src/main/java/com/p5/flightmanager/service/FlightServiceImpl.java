@@ -6,15 +6,19 @@ import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
+import com.p5.flightmanager.service.api.PassengerService;
 import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
+import com.p5.flightmanager.service.dto.FlightSearchDto;
+import com.p5.flightmanager.service.dto.FlightUpdateDto;
 import com.p5.flightmanager.service.dto.SearchParamDto;
 import com.p5.flightmanager.service.exceptions.ApiError;
 import com.p5.flightmanager.service.exceptions.ApiSubError;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.FlightValidationException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
+import com.p5.flightmanager.service.exceptions.PassengerExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -23,6 +27,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -35,6 +41,10 @@ public class FlightServiceImpl implements FlightService {
 
     @Autowired
     private AirportService airportService;
+
+    @Autowired
+    private PassengerService passengerService;
+
 
     @Override
     public List<FlightDto> getAll(String search) {
@@ -97,7 +107,7 @@ public class FlightServiceImpl implements FlightService {
 
         }
 
-        if(apiError.getSubErrors().size() > 0) {
+        if (apiError.getSubErrors().size() > 0) {
             throw new FlightValidationException(apiError);
         }
 
@@ -125,5 +135,69 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(SearchParamDto searchParamDto) {
         return flightsRepository.findByNameAndDAteSimple(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
+    }
+
+    @Override
+    public List<FlightDto> searchBy(FlightSearchDto searchDto) {
+        Iterable<Flight> flights = flightsRepository.getByDepartureIdAndDestinationIdAndDepartureDate(UUID.fromString(searchDto.getDepartureId()), UUID.fromString(searchDto.getDestinationId()), searchDto.getDepartureDate());
+        return FlightAdapter.toListDto(flights);
+    }
+
+    @Override
+    public Flight getFlightById(UUID flightId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(flightId);
+        if (optionalFlight.isPresent()) {
+            return optionalFlight.get();
+        }
+        throw new NoFlightException();
+
+    }
+
+    @Override
+    public FlightDto addPassenger(FlightUpdateDto flightUpdateDto) {
+        validateUpdateFlightDto(flightUpdateDto);
+
+        Flight flight = getFlightById(UUID.fromString(flightUpdateDto.getFlightId()));
+
+        validateForAvailableSeat(flight);
+        Passenger passenger = passengerService.getOrCreate(flightUpdateDto.getUniqueIdentifier(), flightUpdateDto.getPassengerName());
+
+        boolean exists = flight.getPassengerList().stream().map(Passenger::getIdentifyNumber).anyMatch(s -> s.equals(flightUpdateDto.getUniqueIdentifier()));
+        if(!exists) {
+            flight.getPassengerList().add(passenger);
+            return FlightAdapter.toDto(flightsRepository.save(flight));
+        } else {
+            throw new PassengerExistException(flightUpdateDto.getUniqueIdentifier());
+        }
+
+    }
+
+    private void validateForAvailableSeat(Flight flight) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+
+
+        if (apiError.getSubErrors().size() > 0) {
+            throw new FlightValidationException(apiError);
+        }
+    }
+
+    private void validateUpdateFlightDto(FlightUpdateDto flightUpdateDto) {
+        //todo implement validation
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+
+        try {
+            UUID uuid = UUID.fromString(flightUpdateDto.getFlightId());
+            if (uuid == null) {
+                apiError.getSubErrors().add(new ApiSubError("flightId", "bad format"));
+            }
+        } catch (Exception ex) {
+            apiError.getSubErrors().add(new ApiSubError("flightId", "bad format from catch"));
+        } finally {
+            if (apiError.getSubErrors().size() > 0) {
+                throw new FlightValidationException(apiError);
+            }
+        }
+
+
     }
 }

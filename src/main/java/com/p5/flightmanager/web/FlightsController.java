@@ -4,6 +4,8 @@ package com.p5.flightmanager.web;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
+import com.p5.flightmanager.service.dto.FlightSearchDto;
+import com.p5.flightmanager.service.dto.FlightUpdateDto;
 import com.p5.flightmanager.service.dto.SearchParamDto;
 import com.p5.flightmanager.service.exceptions.RestExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,9 @@ public class FlightsController extends RestExceptionHandler {
     private FlightService flightService;
 
     @GetMapping
-    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
+    ResponseEntity<List<FlightDto>> getAll(FlightSearchDto searchDto) {
 
-        return ResponseEntity.ok(flightService.getAll(search));
+        return ResponseEntity.ok(flightService.searchBy(searchDto));
     }
 
     @GetMapping("/search-by")
@@ -50,10 +52,8 @@ public class FlightsController extends RestExceptionHandler {
     }
 
     @PutMapping()
-    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
-        return ResponseEntity.ok(flightService.updateFlight(flightDto));
-        //return ResponseEntity.ok("Update flight");
-
+    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightUpdateDto flightUpdateDto) {
+        return ResponseEntity.ok(flightService.addPassenger(flightUpdateDto));
     }
 
     @DeleteMapping("/{id}")

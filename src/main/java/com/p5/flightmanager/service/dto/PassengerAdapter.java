@@ -16,7 +16,7 @@ public class PassengerAdapter {
         passengerDto.setEmail(passenger.getEmail());
         passengerDto.setFirstName(passenger.getFirstName());
         passengerDto.setSecondName(passenger.getSecondName());
-        passengerDto.setFullName(passenger.getFirstName().concat("-").concat(passenger.getSecondName()));
+        passengerDto.setFullName(passenger.getFirstName());
         passengerDto.setIdentifyNumber(passenger.getIdentifyNumber());
         passengerDto.setPhoneNumber(passenger.getPhoneNumber());
         passengerDto.setSex(passenger.getSex());

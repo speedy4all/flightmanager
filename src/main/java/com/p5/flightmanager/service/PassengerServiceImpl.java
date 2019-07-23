@@ -79,4 +79,16 @@ public class PassengerServiceImpl implements PassengerService {
 
         return true;
     }
+
+    @Override
+    public Passenger getOrCreate(String uniqueIdentifier, String name) {
+        Passenger passenger = passengerRepository.getByIdentifyNumber(uniqueIdentifier);
+        if (passenger == null) {
+            Passenger newPassenger = new Passenger();
+            newPassenger.setFirstName(name);
+            newPassenger.setIdentifyNumber(uniqueIdentifier);
+            passenger = passengerRepository.save(newPassenger);
+        }
+        return passenger;
+    }
 }

@@ -42,6 +42,11 @@ public class FlightsController extends RestExceptionHandler {
         return ResponseEntity.ok(flightService.getBySearchParams(departureDate, location, destination));
     }
 
+    @PutMapping("/add")
+    void flightUpdate(FlightUpdateDto flightUpdateDto){
+        flightService.addPassengerDto(flightUpdateDto);
+    }
+
     @GetMapping("/{id}")
     ResponseEntity<FlightDto> getById(@PathVariable String id) {
         return ResponseEntity.ok(flightService.getById(id));

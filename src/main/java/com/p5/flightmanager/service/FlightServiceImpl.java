@@ -8,11 +8,9 @@ import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
+import com.p5.flightmanager.service.api.PassengerService;
 import com.p5.flightmanager.service.dto.*;
-import com.p5.flightmanager.service.exceptions.ApiError;
-import com.p5.flightmanager.service.exceptions.ApiSubError;
-import com.p5.flightmanager.service.exceptions.FlightValidationException;
-import com.p5.flightmanager.service.exceptions.NoFlightException;
+import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -33,6 +31,9 @@ public class FlightServiceImpl implements FlightService {
 
     @Autowired
     private PassengerRepository passengerRepository;
+
+    @Autowired
+    private PassengerService passengerService;
 
     @Autowired
     private AirportService airportService;
@@ -135,6 +136,38 @@ public class FlightServiceImpl implements FlightService {
                 }
             }
         }
+    }
+
+    @Override
+    public void addPassengerDto(FlightUpdateDto flightUpdateDto) {
+        validateUpdateFlight(flightUpdateDto);
+
+        Flight flight = getFlightById(UUID.fromString(flightUpdateDto.getFlightId()));
+
+        //validateAvailableSeat(flight);
+        Passenger passenger = passengerService.getOrCreate(flightUpdateDto.getUniqueIdentifier(), flightUpdateDto.getPassengerName());
+        boolean exists = flight.getPassengerList().stream().map(Passenger::getIdentifyNumber).anyMatch(s -> s.equals(flightUpdateDto.getUniqueIdentifier()));
+
+        if(!exists) {
+            flight.getPassengerList().add(passenger);
+            flightsRepository.save(flight);
+        } else {
+            //throw new PassengerExistException(flightUpdateDto.getUniqueIdentifier());
+            throw new NoPassengerException();
+        }
+}
+
+    @Override
+    public Flight getFlightById(UUID flightId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(flightId);
+        if (optionalFlight.isPresent()) {
+            return optionalFlight.get();
+        }
+        throw new NoFlightException();
+    }
+
+
+    private void validateUpdateFlight(FlightUpdateDto flightUpdateDto) {
     }
 
     @Override

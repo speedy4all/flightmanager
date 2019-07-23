@@ -1,15 +1,22 @@
 package com.p5.flightmanager.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class FlightSearchDto implements Serializable {
+public class SearchParamDtoFlight {
+
+    @NotNull
+    @NotBlank
     private String departureId;
+
+    @NotNull
+    @NotBlank
     private String destinationId;
 
+    @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date departureDate;
 

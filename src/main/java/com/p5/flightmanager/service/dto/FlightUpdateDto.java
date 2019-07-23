@@ -1,8 +1,7 @@
 package com.p5.flightmanager.service.dto;
 
-import java.io.Serializable;
+public class FlightUpdateDto {
 
-public class FlightUpdateDto implements Serializable {
     private String flightId;
     private String uniqueIdentifier;
     private String passengerName;

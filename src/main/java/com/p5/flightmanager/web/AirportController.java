@@ -4,7 +4,7 @@ import com.p5.flightmanager.repository.AirportRepository;
 import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.dto.AirportDto;
-import com.p5.flightmanager.service.dto.AirportSimpleDTO;
+import com.p5.flightmanager.service.dto.AirportDtoView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +28,12 @@ public class AirportController {
     ResponseEntity<List<AirportDto>> getAll(@RequestParam String search){
 
         return ResponseEntity.ok(airportService.getAll(search));
+    }
+
+    @GetMapping("/list")
+    ResponseEntity<List<AirportDtoView>> getAirports(){
+
+        return ResponseEntity.ok(airportService.getAirports());
     }
 
     @GetMapping("/{id}")
@@ -56,10 +62,5 @@ public class AirportController {
     @PutMapping("/{airportId}/add-flight/{flightId}")
     void addFlight(@PathVariable String airportId, @PathVariable String flightId) {
         airportService.addFlight(airportId, flightId);
-    }
-
-    @GetMapping("/simple-list")
-    Iterable<AirportSimpleDTO> getAllForSelect() {
-        return airportService.getAllForSelect();
     }
 }

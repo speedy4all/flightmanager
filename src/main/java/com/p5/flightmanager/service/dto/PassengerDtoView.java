@@ -2,19 +2,15 @@ package com.p5.flightmanager.service.dto;
 
 import java.util.Date;
 
-public class PassengerDto {
+public class PassengerDtoView {
 
     private String id;
     private String firstName;
     private String secondName;
-    private Integer age;
-    private String sex;
     private Date birthdayDate;
     private String email;
     private String phoneNumber;
-    private String country;
     private String identifyNumber;
-    private String fullName;
 
     public String getId() {
         return id;
@@ -40,28 +36,12 @@ public class PassengerDto {
         this.secondName = secondName;
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
     public Date getBirthdayDate() {
         return birthdayDate;
     }
 
-    public void setBirthdayDate(Date birthDate) {
-        this.birthdayDate = birthDate;
+    public void setBirthdayDate(Date birthdayDate) {
+        this.birthdayDate = birthdayDate;
     }
 
     public String getEmail() {
@@ -80,14 +60,6 @@ public class PassengerDto {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     public String getIdentifyNumber() {
         return identifyNumber;
     }
@@ -95,13 +67,4 @@ public class PassengerDto {
     public void setIdentifyNumber(String identifyNumber) {
         this.identifyNumber = identifyNumber;
     }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
 }

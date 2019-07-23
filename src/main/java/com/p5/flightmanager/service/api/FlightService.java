@@ -34,7 +34,7 @@ public interface FlightService {
 
     Flight getFlightById(UUID flightId);
 
-    Iterable<FlightDtoView> getAllOffers();
+    List<FlightDtoView> getAllOffers();
 
     // Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight);
 }

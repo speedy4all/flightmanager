@@ -12,6 +12,8 @@ import com.p5.flightmanager.service.api.PassengerService;
 import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -164,13 +166,15 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Iterable<FlightDtoView> getAllOffers() {
+    public List<FlightDtoView> getAllOffers() {
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 7);
         Date endDate = cal.getTime(); // get back a Date objec
 
-        Iterable<Flight> list = flightsRepository.getAllOffers(endDate);
+
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Flight> list = flightsRepository.getAllOffers(endDate, pageable);
         List<FlightDtoView> offers = FlightAdapter.toListDtoView(list);
 
         return offers;

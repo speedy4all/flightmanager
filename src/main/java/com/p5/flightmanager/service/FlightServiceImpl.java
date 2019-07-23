@@ -138,6 +138,37 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public void addPassengerDto(FlightUpdateDto flightUpdateDto) {
+        validateUpdateFlight(flightUpdateDto);
+
+        Flight flight = getFlightById(UUID.fromString(flightUpdateDto.getFlightId()));
+
+        //validateAvailableSeat(flight);
+        Passenger passenger = passengerService.getOrCreate(flightUpdateDto.getUniqueIdentifier(), flightUpdateDto.getPassengerName());
+        //boolean exists = flight.getPassengerList().stream().map(Passenger::getIdentifyNumber.anyMatch());
+
+        if(!exists) {
+            flight.getPassengerList().add(passenger);
+            flightsRepository.save(flight);
+        } else {
+            throw new PassengerExistException();
+        }
+}
+
+    @Override
+    public Flight getFlightById(UUID flightId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(flightId);
+        if (optionalFlight.isPresent()) {
+            return optionalFlight.get();
+        }
+        throw new NoFlightException();
+    }
+
+
+    private void validateUpdateFlight(FlightUpdateDto flightUpdateDto) {
+    }
+
+    @Override
     public void addPassengerToFlight(String flightId, String passengerId) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if (optionalFlight.isPresent()) {

@@ -4,10 +4,14 @@ import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import com.p5.flightmanager.service.dto.FlightDtoView;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +43,7 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
     Iterable<FlightDtoView> findByLocationIdAndDestinationIdAirport(UUID locationAirportId, UUID destinationAirportId);
 
     @Query("select flight from Flight flight where flight.passengerList.size < 10 and departure_date > now() and departure_date < :endDate")
-    Iterable<Flight> getAllOffers(Date endDate);
+    List<Flight> getAllOffers(Date endDate, Pageable pageable);
 
 
     //TODO:

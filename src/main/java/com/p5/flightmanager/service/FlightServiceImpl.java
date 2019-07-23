@@ -12,6 +12,8 @@ import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -64,13 +66,15 @@ public class FlightServiceImpl implements FlightService {
         throw new NoFlightException();
     }
 
+    //todo amount -> default
     @Override
     public List<FlightDtoSimple> getOffers() {
         Calendar currentDate = Calendar.getInstance();
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH,7);
-        //cal.set(currentDate.get(currentDate.YEAR),currentDate.get(currentDate.MONTH),currentDate.get(currentDate.DAY_OF_MONTH) + 10);
-        Iterable<Flight> offersFlights = flightsRepository.getAllOffers(cal.getTime());
+        //makes a list with maximum 10 elemnts
+        Pageable pageable = PageRequest.of(0,10);
+        List<Flight> offersFlights = flightsRepository.getAllOffers(cal.getTime(), pageable);
         List<FlightDtoSimple> offers = FlightAdapter.toListSimpleDto(offersFlights);
         return offers;
     }

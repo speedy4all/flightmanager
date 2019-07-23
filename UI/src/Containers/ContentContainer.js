@@ -13,6 +13,7 @@ const ContentContainer = props => {
         <ProductsList
           products={props.products}
           onAddToCart={props.onAddToCart}
+          onAddPassenger={props.onAddPassenger}
         />
       ) : props.selectedMenu &&
         props.selectedMenu.route === RESERVATIONS_ROUTE ? (

@@ -5,13 +5,17 @@ import {
   SELECT_PRODUCT,
   updateProducts,
   DELETE_PRODUCT,
-  SEARCH_FLIGHTS
+  SEARCH_FLIGHTS,
+  ADD_PASSENGER,
+  ADD_PASSENGER_ERROR,
+  ADD_PASSENGER_SUCCESS,
 } from "../Actions/products";
 import {
   showSpinner,
   hideSpinner,
   updateCart,
-  hideDeleteDialog
+  hideDeleteDialog,
+  showNotification
 } from "./../Actions/ui";
 import { apiRequest } from "./../Actions/api";
 
@@ -49,6 +53,41 @@ export const getProductsFlow = ({ dispatch }) => next => action => {
       )
     );
     dispatch(showSpinner());
+  }
+};
+
+export const addPassengerFlow = ({ dispatch }) => next => action => {
+  next(action);
+
+  if (action.type === ADD_PASSENGER) {
+    dispatch(
+      apiRequest(
+        "PUT",
+        `/flight`,
+        JSON.stringify(action.payload),
+        ADD_PASSENGER_SUCCESS,
+        ADD_PASSENGER_ERROR
+      )
+    );
+    dispatch(showSpinner());
+  }
+};
+
+export const processAddPassengerSuccess = ({ dispatch }) => next => action => {
+  next(action);
+
+  if (action.type === ADD_PASSENGER_SUCCESS) {
+    dispatch(hideSpinner());
+    dispatch(showNotification("Passenger added to flight !", 'success'));
+  }
+};
+
+export const processAddPassengerError = ({ dispatch }) => next => action => {
+  next(action);
+
+  if (action.type === ADD_PASSENGER_ERROR) {
+    dispatch(hideSpinner());
+    dispatch(showNotification(action.payload.message, 'error'));
   }
 };
 
@@ -94,5 +133,8 @@ export const productsMdl = [
   processProductsCollection,
   selectProductFlow,
   deleteShoppingCartProductFlow,
-  searchFlightsFlow
+  searchFlightsFlow,
+  addPassengerFlow,
+  processAddPassengerSuccess,
+  processAddPassengerError,
 ];

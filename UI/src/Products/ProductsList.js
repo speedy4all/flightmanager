@@ -9,6 +9,7 @@ const ProductsList = props => {
       <Product
         {...product}
         editMode={props.editMode}
+        onAddPassenger={props.onAddPassenger}
       />
     </Cell>
   ));

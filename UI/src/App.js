@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import "./App.css";
 import Header from "./Header/Header";
-import { getProducts, searchFlights } from "./Redux/Actions/products";
+import { getProducts, searchFlights, addPassenger } from "./Redux/Actions/products";
 import { getAirports } from "./Redux/Actions/airports";
 import { connect } from "react-redux";
 import ContentContainer from "./Containers/ContentContainer";
-import { menuClicked, createSearchAction } from "./Redux/Actions/ui";
+import { menuClicked, createSearchAction, hideNotification } from "./Redux/Actions/ui";
 import { Layout, Content, Cell, Button } from "react-mdl";
 import NavigationComponent from "./Navigation/NavigationComponent";
 import SimpleSelect from "./SimpleSelect/simple-select";
 import DatePicker from "./DatePicker/date-picker";
+import AddPassenger from "./AddPassenger/add-passenger";
+import Notification from './SnackBar/notification';
 
 class App extends Component {
   constructor(props) {
@@ -17,13 +19,23 @@ class App extends Component {
     this.state = {
       departureId: '',
       destinationId: '',
-      departureDate: new Date()
+      departureDate: new Date(),
     };
 
     this.onSearchFieldChange = this.onSearchFieldChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.onAddPassenger = this.onAddPassenger.bind(this);
+    this.handleCloseNotification = this.handleCloseNotification.bind(this);
   }
   
+  handleCloseNotification() {
+    this.props._hideNotification();
+  }
+
+  onAddPassenger(data) {
+    this.props._onAddPassenger(data);
+  }
+
   onSearchFieldChange(field, value) {
     this.setState({
       [field]: value
@@ -35,7 +47,6 @@ class App extends Component {
   }
 
   componentWillMount = () => {
-    this.props._getProducts();
     this.props._getAirports();
   };
 
@@ -67,11 +78,18 @@ class App extends Component {
             </Cell>
            
             <ContentContainer
+              onAddPassenger={this.onAddPassenger}
               loading={this.props.ui.pending}
               selectedMenu={selectedMenu}
               products={this.props.products}
             />
           </Content>
+          <Notification 
+            open={this.props.ui.showNotification} 
+            message={this.props.message} 
+            handleCloseNotification={this.handleCloseNotification}
+            type={this.props.ui.notificationType}
+            />
         </Layout>
       </div>
     );
@@ -93,6 +111,8 @@ const mapDispatchToProps = dispatch => ({
   _menuClickHandler: route => dispatch(menuClicked(route)),
   _getAirports: () => dispatch(getAirports()),
   _serachFlights: (data) => dispatch(searchFlights(data)),
+  _onAddPassenger: data => dispatch(addPassenger(data)),
+  _hideNotification: () => dispatch(hideNotification()),
 });
 
 export default connect(

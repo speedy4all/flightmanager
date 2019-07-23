@@ -5,7 +5,9 @@ export const api = ({ dispatch }) => next => action => {
   if (action.type === API_REQUEST) {
     const { method, url, onSuccess, onError } = action.meta;
 
-    fetch(url, { method })
+    fetch(url, { method, body: action.payload, headers: {
+      'Content-type': 'application/json'
+    } })
       .then(response => response.json())
       .then(data => dispatch({ type: onSuccess, payload: data }))
       .catch(error => dispatch({ type: onError, payload: error }));

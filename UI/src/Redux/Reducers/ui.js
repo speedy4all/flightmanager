@@ -8,7 +8,9 @@ import {
   SET_CURRENT_PRODUCT,
   UPDATE_PRODUCT_QUANTITY,
   HIDE_DELETE_DIALOG,
-  SHOW_DELETE_DIALOG
+  SHOW_DELETE_DIALOG,
+  SHOW_NOTIFICATION,
+  HIDE_NOTIFICATION
 } from "../Actions/ui";
 import { FLIGHTS_ROUTE, OFFERS_ROUTE, RESERVATIONS_ROUTE } from "./../../Menu/Menu";
 
@@ -19,6 +21,8 @@ const initUi = {
   currentProduct: { quantity: "" },
   isLoggedIn: true,
   shoppingCart: [],
+  showNotification: false,
+  notificationType: 'success',
   menu: [
     {
       name: "Flights",
@@ -42,6 +46,12 @@ export function uiReducer(state = initUi, action) {
   switch (action.type) {
     case SHOW_SPINNER:
       return { ...state, pending: true };
+    
+    case SHOW_NOTIFICATION:
+      return { ...state, showNotification: true, notificationType: action.meta };
+    
+    case HIDE_NOTIFICATION:
+      return { ...state, showNotification: false };
 
     case HIDE_SPINNER:
       return { ...state, pending: false };

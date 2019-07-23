@@ -12,6 +12,8 @@ export const UPDATE_CART = "[ui] update cart";
 export const UPDATE_PRODUCT_QUANTITY = "[ui] update product quantity";
 export const SHOW_DELETE_DIALOG = "[ui] show delete dialog";
 export const HIDE_DELETE_DIALOG = "[ui] hide delete dialog";
+export const HIDE_NOTIFICATION = "[ui] hide notification";
+export const SHOW_NOTIFICATION = "[ui] show notification";
 
 export const showSpinner = () => ({
   type: SHOW_SPINNER
@@ -74,4 +76,14 @@ export const showDeleteDialog = () => ({
 
 export const hideDeleteDialog = () => ({
   type: HIDE_DELETE_DIALOG
+});
+
+export const hideNotification = () => ({
+  type: HIDE_NOTIFICATION
+});
+
+export const showNotification = (msg, type) => ({
+  type: SHOW_NOTIFICATION,
+  payload: msg,
+  meta: type,
 });

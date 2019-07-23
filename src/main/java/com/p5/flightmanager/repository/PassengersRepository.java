@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,9 +15,11 @@ public interface PassengersRepository extends CrudRepository<Passenger, UUID> {
     @Query("select f from Passenger f where lower(firstName) like concat('%',lower(?1),'%') order by f.firstName")
     Iterable<Passenger> filterByFirstName(String search);
 
-    //todo query
+    @Query("select f from Passenger f where f.personalID=:uniqueIdentifier")
     Optional<Passenger> getByUniqueIdentifier(String uniqueIdentifier);
 
-    Passenger getByIdentifyNumber(String identifyNumber);
+    Passenger getByPersonalID(String identifyNumber);
 
+//    @Query("select a from Passenger a where a.personalID=:uniqueIdentifier")
+//    List<Passenger> getAllPassengersByUniqueId(String uniqueIdentifier);
 }

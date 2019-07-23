@@ -1,5 +1,6 @@
 package com.p5.flightmanager.service.api;
 
+import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.service.dto.PassengerDto;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,6 @@ public interface PassengerService {
     PassengerDto updatePassenger(PassengerDto passengerDto);
 
     void deletePassenger(String passengerDtoID);
+
+    Passenger getOrCreate(String uniqueIdentifier, String name);
 }

@@ -3,6 +3,8 @@ package com.p5.flightmanager.service.dto;
 import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.models.Plane;
+import org.springframework.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,9 @@ public class FlightAdapter {
         flightDto.setName(flight.getName());
         flightDto.setDepartureDate(flight.getDepartureDate());
         flightDto.setDestinationDate(flight.getDestinationDate());
-        flightDto.setFullFlightDescription(flight.getLocationAirport().getLocation().concat("-").concat(flight.getDestinationAirport().getLocation()));
+        if(!StringUtils.isEmpty(flight.getLocationAirport().getLocation()) && !StringUtils.isEmpty(flight.getDestinationAirport().getLocation())) {
+            flightDto.setFullFlightDescription(flight.getLocationAirport().getLocation().concat("-").concat(flight.getDestinationAirport().getLocation()));
+        }
         flightDto.setDurationTime(flight.getDurationTime());
         if(flight.getPlane() != null) {
             flightDto.setPlane(PlaneAdapter.toDto(flight.getPlane()));
@@ -93,6 +97,12 @@ public class FlightAdapter {
         List<FlightDto> listDto = new ArrayList<>();
         flightList.forEach(flight -> listDto.add(toDto(flight)));
 
+        return listDto;
+    }
+
+    public final static List<FlightDtoSimple> toListDtoSimple(Iterable<Flight> flightList) {
+        List<FlightDtoSimple> listDto = new ArrayList<>();
+        flightList.forEach(flight -> listDto.add(toSimpleDto(flight)));
         return listDto;
     }
 

@@ -1,5 +1,6 @@
 package com.p5.flightmanager.service.exceptions;
 
+import com.p5.flightmanager.repository.models.Passenger;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -9,7 +10,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -33,15 +33,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
-    @ExceptionHandler(NoPassengerException.class)
-    ResponseEntity<Object> handleNoPassengerException(NoPassengerException ex) {
+    @ExceptionHandler(PassengerException.class)
+    ResponseEntity<Object> handleNoPassengerException(PassengerException ex) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
 
     @ExceptionHandler(NoAirportException.class)
-    ResponseEntity<Object> handlerNoAirportException(NoPassengerException ex) {
+    ResponseEntity<Object> handlerNoAirportException(PassengerException ex) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
@@ -60,5 +60,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(FlightValidationException.class)
     protected ResponseEntity<Object> handlerFlightValidationError(FlightValidationException ex) {
         return buildResponseEntity(ex.getApiError());
+    }
+
+    @ExceptionHandler(PassengerExistException.class)
+    protected ResponseEntity<Object> handlerPassengerExistError(PassengerExistException ex) {
+        return  buildResponseEntity(ex.getApiError());
     }
 }

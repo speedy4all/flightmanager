@@ -5,7 +5,7 @@ import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.service.api.PassengerService;
 import com.p5.flightmanager.service.dto.PassengerAdapter;
 import com.p5.flightmanager.service.dto.PassengerDto;
-import com.p5.flightmanager.service.exceptions.NoPassengerException;
+import com.p5.flightmanager.service.exceptions.PassengerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +41,7 @@ public class PassengerServiceImpl implements PassengerService {
             Passenger passenger = optionalPassenger.get();
             return PassengerAdapter.toDto(passenger);
         }
-        throw new NoPassengerException();
+        throw new PassengerException();
     }
 
     @Override
@@ -52,7 +52,7 @@ public class PassengerServiceImpl implements PassengerService {
             passengerRepository.save(PassengerAdapter.fromDto(passengerDto,passenger));
             return PassengerAdapter.toDto(PassengerAdapter.fromDto(passengerDto,passenger));
         }
-        throw new NoPassengerException();
+        throw new PassengerException();
     }
 
     @Override
@@ -63,7 +63,20 @@ public class PassengerServiceImpl implements PassengerService {
             passengerRepository.delete(passenger);
             return;
         }
-        throw new NoPassengerException();
+        throw new PassengerException();
+    }
+
+    @Override
+    public Passenger getOrCreate(String uniqueIdentifier, String name) {
+        Passenger passenger = passengerRepository.getByPersonalID(uniqueIdentifier);
+        if(passenger == null) {
+            Passenger newPassenger = new Passenger();
+            newPassenger.setFirstName(name);
+            newPassenger.setpersonalID(uniqueIdentifier);
+            Passenger savedPassenger = passengerRepository.save(newPassenger);
+            return  newPassenger;
+        }
+        return passenger;
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class FlightDtoSimple {
+
     private UUID id;
     private Date departureDate;
     private Date destinationDate;

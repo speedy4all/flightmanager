@@ -42,12 +42,12 @@ public class FlightController {
         return ResponseEntity.ok(flightService.createFlight(postFlightDto));
     }
 
-    @PutMapping
-    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
-        return ResponseEntity.ok(flightService.updateFlight(flightDto));
-    }
+    //de mine
+//    @PutMapping
+//    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
+//        return ResponseEntity.ok(flightService.updateFlight(flightDto));
+//    }
 
-    //2
     @PutMapping
     void updateFlight(@RequestBody FlightUpdateDto flightDto) {
         flightService.addPassenger(flightDto);
@@ -58,7 +58,6 @@ public class FlightController {
 
         flightService.deleteFlight(iddelete);
     }
-
 
     @PutMapping("/{flightId}/add-passenger/{passengerId}")
     void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId) {
@@ -98,5 +97,10 @@ public class FlightController {
     @GetMapping("/all")
     Iterable<FlightDtoSimple> getAllFlights() {
         return flightService.getAllFlights();
+    }
+
+    @GetMapping("offers")
+    Iterable<FlightDtoSimple> getOffers() {
+        return flightService.getOffers();
     }
 }

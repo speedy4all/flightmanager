@@ -15,26 +15,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 public class FlightServiceImpl implements FlightService {
-
+//aici trebuie sa avem doar flightRepository, pentru celelalte folosim serviciile lor !
     @Autowired
     private FlightsRepository flightsRepository;
 
+    //la flightcontroller vom folosi metoda de updateFLight si va primi un obiect cu flightId, uniqueId, passengerName. (FlightUpdateDto)
+    //cream o met in serv care il valideaza
+    //
     @Autowired
     private PassengersRepository passengerRepository;
+    //get flights/get offers ret iter/lista flight de dto mare, fara parametru,
+    //in service implementam un alg care sa aduca pe baza criteriilor noastre (de ex. acel flight e la oferta daca nu are mai mult de
+    //10 pasageri si dataDeparture nu e mai mult de 3 zile)
+    //nu mai mult de 10 flight-uri sa returnam
 
     @Autowired
     private PlanesRepository planeRepository;
 
     @Autowired
+    private PlaneServiceImpl planeService;
+
+    @Autowired
     private AirportsRepository airportsRepository;
 
+    @Autowired
+    private PassengerServiceImpl passengerService;
 
     public List<FlightDto> getAll(String search) {
 
@@ -44,6 +53,26 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public Iterable<FlightDtoSimple> getAllFlights() {
         return FlightAdapter.toListSimpleDto(flightsRepository.findAll());
+    }
+
+    @Override
+    public Flight getFlightById(UUID id) {
+        Optional<Flight> flight = flightsRepository.findById(id);
+        if(flight.isPresent()) {
+            return flight.get();
+        }
+        throw new NoFlightException();
+    }
+
+    @Override
+    public List<FlightDtoSimple> getOffers() {
+        Calendar currentDate = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH,7);
+        //cal.set(currentDate.get(currentDate.YEAR),currentDate.get(currentDate.MONTH),currentDate.get(currentDate.DAY_OF_MONTH) + 10);
+        Iterable<Flight> offersFlights = flightsRepository.getAllOffers(cal.getTime());
+        List<FlightDtoSimple> offers = FlightAdapter.toListSimpleDto(offersFlights);
+        return offers;
     }
 
     @Override
@@ -101,31 +130,44 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    //todo refractorizare
     public void addPassenger(FlightUpdateDto flightDto) {
+        Flight flight = getFlightById(UUID.fromString(flightDto.getFlightId()));
         validateUpdateFlightDto(flightDto);
-        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getFlightId()));
-        if (optionalFlight.isPresent()) {
-
-            Flight flight = optionalFlight.get();
-            Optional<Passenger> passenger = passengerRepository.getByUniqueIdentifier(flightDto.getUniqueIdentifier());
-            if(passenger != null) {
-                flight.getPassengerList().add(passenger.get());
-            } else {
-                Passenger newPassenger = new Passenger();
-                newPassenger.setFirstName(flightDto.getName());
-                newPassenger.setpersonalID(flightDto.getUniqueIdentifier());
-                Passenger savedPassenger = passengerRepository.save(newPassenger);
-                flight.getPassengerList().add(savedPassenger);
-                flightsRepository.save(flight);
-            }
-        }
+        Passenger passenger = passengerService.getOrCreate(flightDto.getUniqueIdentifier(),flightDto.getName());
+        boolean anyMatch = flight.getPassengerList().stream().map(Passenger::getpersonalID).anyMatch(s -> s.equals(flightDto.getUniqueIdentifier()));
+        //stream e o copie/secventa a obiectelor respectve pe care poti itera
+        //suporta ceva
+        //face singur iteratie
+        //putem genera stream simplu sau paralel stream
+        if(!anyMatch) {
+            flight.getPassengerList().add(passenger);
+            flightsRepository.save(flight);
+         } else {
+           throw new PassengerExistException(flightDto.getUniqueIdentifier());
+       }
     }
 
     private void validateUpdateFlightDto(FlightUpdateDto flightDto) {
-        //todo implement validation
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightDto.getFlightId()));
+        if(!optionalFlight.isPresent()) {
+            apiError.getSubErrors().add(new ApiSubError("flight", "flight not found"));
+        }
+//        Optional<Passenger> passenger = passengerRepository.getByUniqueIdentifier(flightDto.getUniqueIdentifier());
+//        if(!passenger.isPresent()) {
+//            apiError.getSubErrors().add(new ApiSubError("passenger", "passenger already found"));
+//        }
+        if(flightDto.getFlightId() == null)
+        {
+            apiError.getSubErrors().add(new ApiSubError("id", "id is null"));
+        }
+        if(apiError.getSubErrors().size() > 0) {
+            throw new PassengerException();
+        }
     }
 
+    //eu
     @Override
     public void addPassengerToFlight(String flightId, String passengerId) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));

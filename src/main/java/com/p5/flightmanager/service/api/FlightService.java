@@ -1,10 +1,12 @@
 package com.p5.flightmanager.service.api;
 
+import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.service.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public interface FlightService {
@@ -36,5 +38,9 @@ public interface FlightService {
     Iterable<FlightDtoView> getByLocationIdAndDestinationIdAirport(SearchParamsFlightDtoView searchParamDto);
 
     Iterable<FlightDtoSimple> getAllFlights();
+
+    Flight getFlightById(UUID id);
+
+    List<FlightDtoSimple> getOffers();
 
 }

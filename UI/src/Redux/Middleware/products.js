@@ -46,7 +46,7 @@ export const getProductsFlow = ({ dispatch }) => next => action => {
     dispatch(
       apiRequest(
         "GET",
-        `/flight?search=`,
+        `/flight/search?name=${action.payload}`,
         null,
         FETCH_PRODUCTS_SUCCESS,
         FETCH_PRODUCTS_ERROR

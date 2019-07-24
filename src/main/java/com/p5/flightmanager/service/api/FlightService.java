@@ -17,7 +17,7 @@ import java.util.UUID;
 @Service
 public interface FlightService {
 
-    List<FlightDto> getAll(String search);
+    ListResponseDto<ResponseFlightDto> getAll(String search);
 
     FlightDto createFlight(FlightDto flightDto);
 

@@ -19,7 +19,9 @@ const ContentContainer = props => {
         props.selectedMenu.route === RESERVATIONS_ROUTE ? (
         <ProductsList
           editMode
-          products={props.shoppingCart}
+          showReservationInfo={props.showReservationInfo}
+          reservations
+          products={props.reservations}
           onAddToCart={props.onAddToCart}
           onDeleteProduct={props.deleteInProgress}
         />

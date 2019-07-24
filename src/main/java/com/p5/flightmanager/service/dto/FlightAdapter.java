@@ -65,4 +65,17 @@ public class FlightAdapter {
 
         return flight;
     }
+
+    public static ListResponseDto<ResponseFlightDto> toResponseListDto(Iterable<Flight> flights) {
+
+        ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
+        flights.forEach(f -> {
+            ResponseFlightDto responseFlightDto = new ResponseFlightDto();
+            responseFlightDto.setFlightId(f.getId());
+            
+
+            response.getList().add(responseFlightDto);
+        });
+        return response;
+    }
 }

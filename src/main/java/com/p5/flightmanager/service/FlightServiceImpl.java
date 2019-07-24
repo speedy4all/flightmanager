@@ -49,9 +49,9 @@ public class FlightServiceImpl implements FlightService {
 
 
     @Override
-    public List<FlightDto> getAll(String search) {
+    public ListResponseDto<ResponseFlightDto> getAll(String search) {
 
-        return FlightAdapter.toListDto(flightsRepository.filterByName(search));
+        return FlightAdapter.toResponseListDto(flightsRepository.filterByName(search));
     }
 
     @Override

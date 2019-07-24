@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +37,12 @@ public class FlightsController extends RestExceptionHandler {
     ResponseEntity<ListResponseDto<ResponseFlightDto>> getAll(FlightSearchDto searchDto) {
 
         return ResponseEntity.ok(flightService.searchBy(searchDto));
+    }
+
+    @GetMapping("/search")
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAllByName(@QueryParam("name") String name) {
+
+        return ResponseEntity.ok(flightService.getAll(name));
     }
 
     @GetMapping("/{id}")

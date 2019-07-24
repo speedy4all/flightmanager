@@ -4,9 +4,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
-public class SearchParamFlightDto {
+public class SearchParamFlightDto implements Serializable {
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

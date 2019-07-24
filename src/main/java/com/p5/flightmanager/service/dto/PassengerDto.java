@@ -11,7 +11,8 @@ public class PassengerDto {
     private String email;
     private String phoneNumber;
     private String nationality;
-    private Date bornDate;
+    private int age;
+    private Date dateBorn;
     private TitlePassenger title;
     private String fullName;
 
@@ -79,19 +80,27 @@ public class PassengerDto {
         this.nationality = nationality;
     }
 
-    public Date getBornDate() {
-        return bornDate;
-    }
-
-    public void setBornDate(Date bornDate) {
-        this.bornDate = bornDate;
-    }
-
     public TitlePassenger getTitle() {
         return title;
     }
 
     public void setTitle(TitlePassenger title) {
         this.title = title;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Date getDateBorn() {
+        return dateBorn;
+    }
+
+    public void setDateBorn(Date dateBorn) {
+        this.dateBorn = dateBorn;
     }
 }

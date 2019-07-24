@@ -44,8 +44,8 @@ public class FlightAdapter {
         return flight;
     }
 
-    public final static FlightDtoSimple toSimpleDto(Flight flight) {
-        FlightDtoSimple flightDto = new FlightDtoSimple();
+    public final static ResponseFlightDto toResponseDto(Flight flight) {
+        ResponseFlightDto flightDto = new ResponseFlightDto();
 
         flightDto.setFlightId(flight.getId());
         flightDto.setDepartureDate(flight.getDepartureDate());
@@ -55,7 +55,7 @@ public class FlightAdapter {
         flightDto.setDepartureAirportName(flight.getLocationAirport().getName());
         flightDto.setDestinationAirportCode(flight.getDestinationAirport().getCode());
         flightDto.setDestinationAirportName(flight.getDestinationAirport().getName());
-        flightDto.setSeatsAvailable(flight.getPlane().getSeats() - flight.getPassengerList().size());
+        flightDto.setAvailableSeats(flight.getPlane().getSeats() - flight.getPassengerList().size());
         flightDto.setPlaneType(flight.getPlane().getModel());
 
         return flightDto;
@@ -87,7 +87,6 @@ public class FlightAdapter {
         return flight;
     }
 
-
     public final static List<FlightDto> toListDto(Iterable<Flight> flightList) {
         List<FlightDto> listDto = new ArrayList<>();
         flightList.forEach(flight -> listDto.add(toDto(flight)));
@@ -95,33 +94,15 @@ public class FlightAdapter {
         return listDto;
     }
 
-    public final static List<FlightDtoSimple> toListDtoSimple(Iterable<Flight> flightList) {
-        List<FlightDtoSimple> listDto = new ArrayList<>();
-        flightList.forEach(flight -> listDto.add(toSimpleDto(flight)));
-        return listDto;
-    }
+    public static ListResponseDto<ResponseFlightDto> toResponseListDto(Iterable<Flight> flights) {
+        ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
+        flights.forEach(f -> {
+            ResponseFlightDto responseFlightDto = new ResponseFlightDto();
+            responseFlightDto.setFlightId(f.getId());
 
-    public final static List<FlightDtoSimple> toListSimpleDto(Iterable<Flight> flightList) {
-        List<FlightDtoSimple> listDto = new ArrayList<>();
-        flightList.forEach(flight -> listDto.add(toSimpleDto(flight)));
 
-        return listDto;
-    }
-
-    public static List<FlightDtoView> toListDtoView(Iterable<FlightDtoView> flights) {
-        List<FlightDtoView> listDto = new ArrayList<>();
-        flights.forEach(flight -> listDto.add(toDtoView(flight)));
-        return listDto;
-    }
-
-    private static FlightDtoView toDtoView(FlightDtoView flight) {
-        FlightDtoView flightDto = new FlightDtoView();
-
-        flightDto.setIdFlight(flight.getIdFlight());
-        flightDto.setDepartureDate(flight.getDepartureDate());
-        flightDto.setDestinationDate(flight.getDestinationDate());
-        flightDto.setDurationTime(flight.getDurationTime());
-        return flightDto;
-
+            response.getList().add(responseFlightDto);
+        });
+        return response;
     }
 }

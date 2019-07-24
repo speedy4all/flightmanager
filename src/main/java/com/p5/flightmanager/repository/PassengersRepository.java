@@ -15,10 +15,10 @@ public interface PassengersRepository extends CrudRepository<Passenger, UUID> {
     @Query("select f from Passenger f where lower(firstName) like concat('%',lower(?1),'%') order by f.firstName")
     Iterable<Passenger> filterByFirstName(String search);
 
-    @Query("select f from Passenger f where f.personalID=:uniqueIdentifier")
+    @Query("select f from Passenger f where f.personalId=:uniqueIdentifier")
     Optional<Passenger> getByUniqueIdentifier(String uniqueIdentifier);
 
-    Passenger getByPersonalID(String identifyNumber);
+    Passenger getByPersonalId(String identifyNumber);
 
 //    @Query("select a from Passenger a where a.personalID=:uniqueIdentifier")
 //    List<Passenger> getAllPassengersByUniqueId(String uniqueIdentifier);

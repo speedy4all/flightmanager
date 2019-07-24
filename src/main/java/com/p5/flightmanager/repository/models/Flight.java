@@ -65,8 +65,8 @@ public class Flight extends BaseModel implements Serializable {
             indexes = { @Index(columnList = "passenger_id", name = "ix_flight_passenger")})
     List<Passenger> passengerList = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Plane.class)
-    @JoinColumn(name = "plane_id")
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = Plane.class)
+    @JoinColumn(name = "plane_id",  foreignKey = @ForeignKey(name = "fk_flight_plane"))
     Plane plane;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Airport.class, cascade = CascadeType.ALL)

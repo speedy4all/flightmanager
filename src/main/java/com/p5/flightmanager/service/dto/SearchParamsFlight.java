@@ -1,21 +1,18 @@
 package com.p5.flightmanager.service.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class SearchParamsFlightDtoView {
+public class SearchParamsFlight {
 
-    @NotNull
-    @NotBlank
     private String destinationAirportId;
 
-    @NotNull
-    @NotBlank
     private String locationAirportId;
 
-    @NotNull
-    @NotBlank
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date departureDate;
 
     public Date getDepartureDate() {

@@ -16,8 +16,6 @@ public class PassengerAdapter {
         passengerDto.setId(passenger.getId().toString());
         passengerDto.setFirstName(passenger.getFirstName());
         passengerDto.setLastName(passenger.getLastName());
-        passengerDto.setBornDate(passenger.getBornDate());
-        passengerDto.setPersonalID(passenger.getpersonalID());
         passengerDto.setEmail(passenger.getEmail());
         passengerDto.setNationality(passenger.getNationality());
         passengerDto.setPhoneNumber(passenger.getPhoneNumber());
@@ -40,8 +38,6 @@ public class PassengerAdapter {
     {
         passenger.setFirstName(passengerDto.getFirstName());
         passenger.setLastName(passengerDto.getLastName());
-        passenger.setBornDate(passengerDto.getBornDate());
-        passenger.setpersonalID(passengerDto.getPersonalID());
         passenger.setEmail(passengerDto.getEmail());
         passenger.setNationality(passengerDto.getNationality());
         passenger.setPhoneNumber(passengerDto.getPhoneNumber());

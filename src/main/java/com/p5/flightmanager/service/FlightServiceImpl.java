@@ -49,6 +49,12 @@ public class FlightServiceImpl implements FlightService {
 
 
     @Override
+    public ListResponseDto<ResponseFlightDto> getAll(String search) {
+        return FlightAdapter.toResponseListDto(flightsRepository.filterByName(search));
+
+    }
+
+    @Override
     public FlightDto createFlight(PostFlightDto postFlightDto) {
 
         Optional<Plane> optionalPlane = planeRepository.findById(UUID.fromString(postFlightDto.getPlaneId()));
@@ -68,14 +74,9 @@ public class FlightServiceImpl implements FlightService {
         return FlightAdapter.toDto(flightsRepository.save(FlightAdapter.fromPostDto(postFlightDto, optionalPlane.get(), optionalLocation.get(), optionalDestination.get())));
     }
 
-    public List<FlightDto> getAll(String search) {
-
-        return FlightAdapter.toListDto(flightsRepository.filterByName(search));
-    }
-
     @Override
-    public Iterable<FlightDtoSimple> getAllFlights() {
-        return FlightAdapter.toListSimpleDto(flightsRepository.findAll());
+    public ListResponseDto<ResponseFlightDto> getAllFlights() {
+        return FlightAdapter.toResponseListDto(flightsRepository.findAll());
     }
 
     @Override
@@ -94,40 +95,47 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Iterable<FlightDto> getByDepDateAndDestDateAndLocation(SearchParamFlightDto searchParamDto) {
+    public Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(SearchParamFlightDto searchParamDto) {
         return flightsRepository.findByNameAndDAte(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
-    }
-
-    @Override
-    public Iterable<FlightDtoView> getByLocationIdAndDestinationIdAirportAndDate(SearchParamsFlightDtoView searchParamDto) {
-        return flightsRepository.findByLocationIdAndDestinationIdAirportAndDate(UUID.fromString(searchParamDto.getLocationAirportId())
-                , UUID.fromString(searchParamDto.getDestinationAirportId()), searchParamDto.getDepartureDate());
     }
 
     //todo amount -> default
     @Override
-    public List<FlightDtoSimple> getOffers() {
+    public ListResponseDto<ResponseFlightDto> getOffers() {
         Calendar currentDate = Calendar.getInstance();
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH,7);
         //makes a list with maximum 10 elemnts
         Pageable pageable = PageRequest.of(0,10);
         List<Flight> offersFlights = flightsRepository.getAllOffers(cal.getTime(), pageable);
-        List<FlightDtoSimple> offers = FlightAdapter.toListSimpleDto(offersFlights);
+        ListResponseDto<ResponseFlightDto> offers = FlightAdapter.toResponseListDto(offersFlights);
         return offers;
     }
 
-    //todo getAllMyFlight to return FlightDtoSimple
+    /**
+     * returns a list of response flight dto of the passenger with the given id
+     * @param id is the if of an passenger
+     * @return
+     */
     @Override
-    public List<FlightDtoSimple> getAllMyFlights(String id) {
+    public ListResponseDto<ResponseFlightDto> getAllMyFlights(String id) {
         List<Flight> flights = flightsRepository.getAllMyFlights(UUID.fromString(id));
-        List<FlightDtoSimple> flightDtoSimples = FlightAdapter.toListSimpleDto(flights);
-        return flightDtoSimples;
+        ListResponseDto<ResponseFlightDto> responseFlightDtos = FlightAdapter.toResponseListDto(flights);
+        return responseFlightDtos;
+    }
+
+    /**
+     * returns a list of response flight dto that match the parameter name
+     * @param name
+     * @return
+     */
+    @Override
+    public ListResponseDto<ResponseFlightDto> getAllByName(String name) {
+        return FlightAdapter.toResponseListDto(flightsRepository.filterByName(name));
     }
 
     @Override
     public FlightDto getById(String id) {
-
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
         if(optionalFlight.isPresent()) {
             Flight flight = optionalFlight.get();
@@ -137,13 +145,11 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public ListDto<FlightDtoView> searchBy(SearchParamsFlightDtoView search) {
-//        List<FlightDtoView> result = FlightAdapter.toListDtoView(flights);
-//        return result;
-        ListDto<FlightDtoView> response = new ListDto<>();
-        Iterable<FlightDtoView> flights = flightsRepository.findByLocationIdAndDestinationIdAirportAndDate(UUID.fromString(search.getLocationAirportId()), UUID.fromString(search.getDestinationAirportId()), search.getDepartureDate());
-        flights.forEach(response.getObjects()::add);
-        response.setCount(Long.valueOf(response.getObjects().size()));
+    public ListResponseDto<ResponseFlightDto> searchBy(SearchParamsFlight search) {
+        ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
+        Iterable<ResponseFlightDto> flights = flightsRepository.getByLocationIdAndDestinationIdAndDepartureDate(UUID.fromString(search.getLocationAirportId()), UUID.fromString(search.getDestinationAirportId()), search.getDepartureDate());
+        flights.forEach(response.getList()::add);
+        response.setTotalCount(Long.valueOf(response.getList().size()));
         return response;
     }
 
@@ -223,7 +229,7 @@ public class FlightServiceImpl implements FlightService {
         Flight flight = getFlightById(UUID.fromString(flightDto.getFlightId()));
         validateUpdateFlightDto(flightDto);
         Passenger passenger = passengerService.getOrCreate(flightDto.getUniqueIdentifier(),flightDto.getName());
-        boolean anyMatch = flight.getPassengerList().stream().map(Passenger::getpersonalID).anyMatch(s -> s.equals(flightDto.getUniqueIdentifier()));
+        boolean anyMatch = flight.getPassengerList().stream().map(Passenger::getPersonalId).anyMatch(s -> s.equals(flightDto.getUniqueIdentifier()));
         //stream e o copie/secventa a obiectelor respectve pe care poti itera
         //suporta ceva
         //face singur iteratie

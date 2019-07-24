@@ -20,9 +20,9 @@ public class Passenger extends BaseModel implements Serializable {
     @Type(type = "string")
     private String lastName;
 
-    @Column(name = "personal_ID")
+    @Column(name = "personal_id")
     @Type(type = "string")
-    private String personalID;
+    private String personalId;
 
     @Column(name = "email")
     @Type(type = "string")
@@ -36,15 +36,10 @@ public class Passenger extends BaseModel implements Serializable {
     @Type(type = "string")
     private String nationality;
 
-    @Column(name = "date_Born")
+    @Column(name = "date_born")
     @Type(type = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date bornDate;
-
-    @Column(name = "destination_date")
-    @Type(type = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date destinationDate;
 
     @Column(name = "title")
     @Enumerated(EnumType.STRING)
@@ -54,10 +49,10 @@ public class Passenger extends BaseModel implements Serializable {
         //default constructor
     }
 
-    public Passenger(String firstName, String lastName, String personalID, String email, String phoneNumber, String nationality, Date bornDate, Date destinationDate, TitlePassenger title) {
+    public Passenger(String firstName, String lastName, String personalId, String email, String phoneNumber, String nationality, Date bornDate, TitlePassenger title) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.personalID = personalID;
+        this.personalId = personalId;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.nationality = nationality;
@@ -69,16 +64,12 @@ public class Passenger extends BaseModel implements Serializable {
         super(source);
         this.firstName = source.firstName;
         this.lastName = source.lastName;
-        this.personalID = source.personalID;
+        this.personalId = source.personalId;
         this.email = source.email;
         this.phoneNumber = source.phoneNumber;
         this.nationality = source.nationality;
         this.bornDate = source.bornDate;
         this.title = source.title;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
     }
 
     public String getFirstName() {
@@ -97,12 +88,12 @@ public class Passenger extends BaseModel implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getpersonalID() {
-        return personalID;
+    public String getPersonalId() {
+        return personalId;
     }
 
-    public void setpersonalID(String personalID) {
-        this.personalID = personalID;
+    public void setPersonalId(String personalID) {
+        this.personalId = personalID;
     }
 
     public String getEmail() {
@@ -135,14 +126,6 @@ public class Passenger extends BaseModel implements Serializable {
 
     public void setBornDate(Date bornDate) {
         this.bornDate = bornDate;
-    }
-
-    public Date getDestinationDate() {
-        return destinationDate;
-    }
-
-    public void setDestinationDate(Date destinationDate) {
-        this.destinationDate = destinationDate;
     }
 
     public TitlePassenger getTitle() {

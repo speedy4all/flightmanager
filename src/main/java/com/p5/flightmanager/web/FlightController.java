@@ -2,6 +2,7 @@ package com.p5.flightmanager.web;
 
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.*;
+import com.p5.flightmanager.service.exceptions.RestExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -10,26 +11,30 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import java.util.Date;
 import java.util.List;
 
-//todo clean code
 @RestController
 @RequestMapping("/flight")
 @Consumes("application/json")
 @Produces("application/json")
 @Transactional //im momentul in care s-a mapat metodele din clasa vor primi o tranzactie noua de fiecare data cand o metoda este apelata
 //la fiecare metoda se dechide cate o tranzactie
-public class FlightController {
+public class FlightController extends RestExceptionHandler {
 
     @Autowired
     private FlightService flightService;
 
+    /**
+     * returns a list of flights that have the requirements
+     * @param search
+     * @return
+     */
     @GetMapping
-    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
-        return ResponseEntity.ok(flightService.getAll(search));
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAll(SearchParamsFlight search) {
+        return ResponseEntity.ok(flightService.searchBy(search));
     }
 
     @GetMapping("/search-by")
@@ -37,36 +42,42 @@ public class FlightController {
         return ResponseEntity.ok(flightService.getBySearchParams(departureDate, location));
     } //iso date e format an-luna-zi
 
+    /**
+     * returns a list of flights that have the required name
+     * @param name
+     * @return
+     */
     @GetMapping("/search")
-    Iterable<FlightDto> getByDepDateAndDestDateAndLocation(@Valid SearchParamFlightDto searchParamDto) {
-        return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
-    }
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAllByName(@QueryParam("name") String name) {
 
-    @GetMapping("/find")
-    Iterable<FlightDtoView> getByDestinationIdAndLocationIdAirport(@Valid SearchParamsFlightDtoView searchParamDto) {
-        return flightService.getByLocationIdAndDestinationIdAirportAndDate(searchParamDto);
+        return ResponseEntity.ok(flightService.getAllByName(name));
     }
 
     @GetMapping("/all")
-    Iterable<FlightDtoSimple> getAllFlights() {
+    ListResponseDto<ResponseFlightDto> getAllFlights() {
         return flightService.getAllFlights();
     }
 
     @GetMapping("/offers")
-    Iterable<FlightDtoSimple> getOffers() {
+    ListResponseDto<ResponseFlightDto> getOffers() {
         return flightService.getOffers();
     }
 
 //    @GetMapping
-//    List<FlightDtoView> getAll(SearchParamsFlightDtoView search) {
+//    List<FlightDtoView> getAll(SearchParamsFlight search) {
 //        return flightService.searchBy(search);
 //    }
 
     @GetMapping("/my-flights/{id}")
-    ResponseEntity<List<FlightDtoSimple>> getAllMyFlights (@PathVariable String id) {
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAllMyFlights (@PathVariable String id) {
         return ResponseEntity.ok(flightService.getAllMyFlights(id));
     }
 
+    /**
+     * returns a flight with the given id
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     ResponseEntity<FlightDto> getById(@PathVariable String id) {
         return ResponseEntity.ok(flightService.getById(id));
@@ -87,7 +98,6 @@ public class FlightController {
     void updateFlight(@RequestBody FlightUpdateDto flightDto) {
         flightService.addPassenger(flightDto);
     }
-
 
     @PutMapping("/{flightId}/add-plane/{planeId}")
     void addPlaneToFlight(@PathVariable String flightId, @PathVariable String planeId){

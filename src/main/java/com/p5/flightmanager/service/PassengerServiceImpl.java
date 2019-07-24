@@ -35,11 +35,11 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Override
     public Passenger getOrCreate(String uniqueIdentifier, String name) {
-        Passenger passenger = passengerRepository.getByPersonalID(uniqueIdentifier);
+        Passenger passenger = passengerRepository.getByPersonalId(uniqueIdentifier);
         if(passenger == null) {
             Passenger newPassenger = new Passenger();
             newPassenger.setFirstName(name);
-            newPassenger.setpersonalID(uniqueIdentifier);
+            newPassenger.setPersonalId(uniqueIdentifier);
             Passenger savedPassenger = passengerRepository.save(newPassenger);
             return  newPassenger;
         }

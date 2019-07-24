@@ -30,7 +30,7 @@ public class AirportController {
         return ResponseEntity.ok(airportService.getAll(search));
     }
 
-    @GetMapping("/list")
+    @GetMapping("/simple-list")
     ResponseEntity<List<AirportDtoView>> getAirports(){
 
         return ResponseEntity.ok(airportService.getAirports());

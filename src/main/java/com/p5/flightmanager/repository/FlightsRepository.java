@@ -86,9 +86,8 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
 
 
 
-    @Query("select f from Flight f where f.passengerList.size < 10 and f.departureDate > now() and f.departureDate < :endDate")
-
-    Iterable<Flight> getOffers(Date endDate, Pageable pageable);
+    @Query("select f from Flight f")
+    Iterable<Flight>getAll();
 
 }
 

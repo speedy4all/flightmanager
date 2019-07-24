@@ -1,7 +1,6 @@
 package com.p5.flightmanager.service;
 
 
-
 import com.p5.flightmanager.repository.AirportRepository;
 
 import com.p5.flightmanager.repository.PassengerRepository;
@@ -45,9 +44,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 
-
 import java.util.*;
-
 
 
 @Component
@@ -55,11 +52,9 @@ import java.util.*;
 public class FlightServiceImpl implements FlightService {
 
 
-
     @Autowired
 
     private FlightsRepository flightsRepository;
-
 
 
     @Autowired
@@ -67,17 +62,14 @@ public class FlightServiceImpl implements FlightService {
     private PassengerRepository passengerRepository;
 
 
-
     @Autowired
 
     private AirportRepository airportRepository;
 
 
-
     @Autowired
 
     private PlaneRepository planeRepository;
-
 
 
     @Override
@@ -89,21 +81,17 @@ public class FlightServiceImpl implements FlightService {
     }
 
 
-
     @Override
 
     public FlightDto createFlight(FlightDto flightDto) {
 
 
-
         validateFlightDto(flightDto);
-
 
 
         return FlightAdapter.toDto(flightsRepository.save(FlightAdapter.fromDto(flightDto)));
 
     }
-
 
 
     @Override
@@ -121,7 +109,6 @@ public class FlightServiceImpl implements FlightService {
         throw new NoFlightException();
 
     }
-
 
 
     @Override
@@ -143,7 +130,6 @@ public class FlightServiceImpl implements FlightService {
     }
 
 
-
     @Override
 
     public void deleteFlight(String id) {
@@ -161,7 +147,6 @@ public class FlightServiceImpl implements FlightService {
     }
 
 
-
     @Override
 
     public List<FlightDto> getBySearchParams(Date departureDate, String location, String destination) {
@@ -171,7 +156,6 @@ public class FlightServiceImpl implements FlightService {
         return FlightAdapter.toListDto(flights);
 
     }
-
 
 
     @Override
@@ -199,7 +183,6 @@ public class FlightServiceImpl implements FlightService {
     }
 
 
-
     @Override
 
     public void associatePlaneToFlight(String flightId, String planeId) {
@@ -225,20 +208,19 @@ public class FlightServiceImpl implements FlightService {
     }
 
 
-
     @Override
 
     public void setDepartureAndDestinationAirport(String flightId, String departureAirportIata, String destinationAirportIata) {
 
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
 
-        if (optionalFlight.isPresent()){
+        if (optionalFlight.isPresent()) {
 
             Optional<Airport> departureAirportOptional = airportRepository.findByIata(departureAirportIata);
 
             Optional<Airport> destinationAirportOptional = airportRepository.findByIata(destinationAirportIata);
 
-            if (departureAirportOptional.isPresent() && destinationAirportOptional.isPresent()){
+            if (departureAirportOptional.isPresent() && destinationAirportOptional.isPresent()) {
 
                 Flight flight = optionalFlight.get();
 
@@ -255,7 +237,6 @@ public class FlightServiceImpl implements FlightService {
     }
 
 
-
     @Override
 
     public Iterable<FlightSimpleDto> getSimpleFlightDto() {
@@ -263,7 +244,6 @@ public class FlightServiceImpl implements FlightService {
         return flightsRepository.findSimpleFlightDto();
 
     }
-
 
 
     @Override
@@ -275,11 +255,9 @@ public class FlightServiceImpl implements FlightService {
                 UUID.fromString(search.getIdDestination()), search.getDepartureDate());
 
 
-
         return FlightAdapter.toListSimpleDto(flights);
 
     }
-
 
 
     @Override
@@ -289,16 +267,15 @@ public class FlightServiceImpl implements FlightService {
         validateUpdateFlightDto(flightUpdateDto);
 
 
-
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightUpdateDto.getFlightId()));
 
-        if (optionalFlight.isPresent()){
+        if (optionalFlight.isPresent()) {
 
             Flight flight = optionalFlight.get();
 
             Passenger passenger = passengerRepository.getByIdentifyNumber(flightUpdateDto.getUniqueIdentifier());
 
-            if (passenger == null){
+            if (passenger == null) {
 
                 Passenger newPassenger = new Passenger();
 
@@ -319,56 +296,45 @@ public class FlightServiceImpl implements FlightService {
     }
 
 
-
     @Override
 
     public List<FlightSimpleDto> getOffers() {
 
-        Calendar calendar = Calendar.getInstance();
+        Iterable<Flight> list = flightsRepository.getAll();
 
-        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        List<FlightSimpleDto> offers = new ArrayList<>();
 
-        Date endDate = calendar.getTime();      // get back a Date object
-
-
-
-        Pageable pageable = PageRequest.of(0, 10);
-
-        List<Flight> list = Lists.newArrayList(flightsRepository.getOffers(endDate, pageable));
-
-        List<FlightSimpleDto> offers = FlightAdapter.toListSimpleDto(list);
-
-
+        for (Flight flight : list)
+            if (flight.getDurationTime() < 180 && flight.getPassengerList().size() < 10) {
+                offers.add(FlightAdapter.toSimpleDto(flight));
+                flightsRepository.save(flight);
+            }
 
         return offers;
 
     }
 
 
-
-    private void validateUpdateFlightDto(FlightUpdateDto flightUpdateDto){
+    private void validateUpdateFlightDto(FlightUpdateDto flightUpdateDto) {
 
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
 
 
-
-        if (flightUpdateDto.getUniqueIdentifier().chars().count() != 13){
+        if (flightUpdateDto.getUniqueIdentifier().chars().count() != 13) {
 
             apiError.getSubErrors().add(new ApiSubError("uniqueIdentifier", "invalid size of identifier"));
 
         }
 
 
+        if (flightUpdateDto.getPassengerName().isEmpty()) {
 
-        if (flightUpdateDto.getPassengerName().isEmpty()){
-
-            apiError.getSubErrors().add(new ApiSubError("passengerName","no name for passenger"));
+            apiError.getSubErrors().add(new ApiSubError("passengerName", "no name for passenger"));
 
         }
 
 
-
-        if (apiError.getSubErrors().size() > 0){
+        if (apiError.getSubErrors().size() > 0) {
 
             throw new PassengerExistException(apiError);
 
@@ -377,11 +343,9 @@ public class FlightServiceImpl implements FlightService {
     }
 
 
-
     private void validateFlightDto(FlightDto flightDto) {
 
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
-
 
 
         if (flightDto.getDepartureAirport() == null) {
@@ -391,16 +355,14 @@ public class FlightServiceImpl implements FlightService {
         }
 
 
-
-        if (flightDto.getDestinationAirport() == null){
+        if (flightDto.getDestinationAirport() == null) {
 
             apiError.getSubErrors().add(new ApiSubError("destinationLocation", "Cannot be null"));
 
         }
 
 
-
-        if (flightDto.getDurationTime() > 180){
+        if (flightDto.getDurationTime() > 180) {
 
             apiError.getSubErrors().add(new ApiSubError("durationTime", "Value must be under 180",
 
@@ -409,15 +371,13 @@ public class FlightServiceImpl implements FlightService {
         }
 
 
-
-        if (apiError.getSubErrors().size() > 0){
+        if (apiError.getSubErrors().size() > 0) {
 
             throw new FlightValidationException(apiError);
 
         }
 
     }
-
 
 
 }

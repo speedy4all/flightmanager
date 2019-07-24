@@ -23,6 +23,9 @@ public class FlightDtoView {
         this.availableSeats = availableSeats;
     }
 
+    public FlightDtoView() {
+    }
+
     public String getIdFlight() {
         return idFlight;
     }

@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/flights")
+@RequestMapping("/flight")
 @Consumes("application/json")
 @Produces("application/json")
 @Transactional //im momentul in care s-a mapat metodele din clasa vor primi o tranzactie noua de fiecare data cand o metoda este apelata
@@ -30,6 +31,12 @@ public class FlightController {
 
         return ResponseEntity.ok(flightService.getAll(search));
     }
+
+//    @GetMapping
+//    List<FlightDtoView> getAll(SearchParamsFlightDtoView search) {
+//        return flightService.searchBy(search);
+//    }
+
 
     @GetMapping("/{id}")
     ResponseEntity<FlightDto> getById(@PathVariable String id) {
@@ -63,6 +70,7 @@ public class FlightController {
     void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId) {
         flightService.addPassengerToFlight(flightId,passengerId);
     }
+    //toate flighturile dupa un anumit pasager
 
     @PutMapping("/{flightId}/add-plane/{planeId}")
     void addPlaneToFlight(@PathVariable String flightId, @PathVariable String planeId){
@@ -91,7 +99,7 @@ public class FlightController {
 
     @GetMapping("/find")
     Iterable<FlightDtoView> getByDestinationIdAndLocationIdAirport(@Valid SearchParamsFlightDtoView searchParamDto) {
-        return flightService.getByLocationIdAndDestinationIdAirport(searchParamDto);
+        return flightService.getByLocationIdAndDestinationIdAirportAndDate(searchParamDto);
     }
 
     @GetMapping("/all")
@@ -99,8 +107,13 @@ public class FlightController {
         return flightService.getAllFlights();
     }
 
-    @GetMapping("offers")
+    @GetMapping("/offers")
     Iterable<FlightDtoSimple> getOffers() {
         return flightService.getOffers();
+    }
+
+    @DeleteMapping("/{flightId}/remove/{personalId}")
+    void removePasenger(@PathVariable String flightId, @PathVariable String personalId) {
+        flightService.deletePassenger(flightId, personalId);
     }
 }

@@ -47,21 +47,16 @@ public class FlightAdapter {
     public final static FlightDtoSimple toSimpleDto(Flight flight) {
         FlightDtoSimple flightDto = new FlightDtoSimple();
 
-        flightDto.setId(flight.getId());
-        flightDto.setFlightType(flight.getFlightType());
-        flightDto.setName(flight.getName());
+        flightDto.setFlightId(flight.getId());
         flightDto.setDepartureDate(flight.getDepartureDate());
         flightDto.setDestinationDate(flight.getDestinationDate());
         flightDto.setDurationTime(flight.getDurationTime());
         flightDto.setDepartureAirportCode(flight.getLocationAirport().getCode());
         flightDto.setDepartureAirportName(flight.getLocationAirport().getName());
-        flightDto.setIdDepartureAirport(flight.getLocationAirport().getId());
         flightDto.setDestinationAirportCode(flight.getDestinationAirport().getCode());
         flightDto.setDestinationAirportName(flight.getDestinationAirport().getName());
-        flightDto.setIdDestinationAirport(flight.getDestinationAirport().getId());
         flightDto.setSeatsAvailable(flight.getPlane().getSeats() - flight.getPassengerList().size());
-        flightDto.setCodePlane(flight.getPlane().getCode());
-        flightDto.setIdPlane(flight.getPlane().getId());
+        flightDto.setPlaneType(flight.getPlane().getModel());
 
         return flightDto;
     }
@@ -111,5 +106,22 @@ public class FlightAdapter {
         flightList.forEach(flight -> listDto.add(toSimpleDto(flight)));
 
         return listDto;
+    }
+
+    public static List<FlightDtoView> toListDtoView(Iterable<FlightDtoView> flights) {
+        List<FlightDtoView> listDto = new ArrayList<>();
+        flights.forEach(flight -> listDto.add(toDtoView(flight)));
+        return listDto;
+    }
+
+    private static FlightDtoView toDtoView(FlightDtoView flight) {
+        FlightDtoView flightDto = new FlightDtoView();
+
+        flightDto.setIdFlight(flight.getIdFlight());
+        flightDto.setDepartureDate(flight.getDepartureDate());
+        flightDto.setDestinationDate(flight.getDestinationDate());
+        flightDto.setDurationTime(flight.getDurationTime());
+        return flightDto;
+
     }
 }

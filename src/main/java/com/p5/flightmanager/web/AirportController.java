@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @Transactional
-@RequestMapping("/airports")
+@RequestMapping("/airport")
 @Consumes("application/json")
 @Produces("application/json")
 public class AirportController {

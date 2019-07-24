@@ -15,7 +15,7 @@ import java.util.List;
 @Transactional
 @Consumes("application/json")
 @Produces("application/json")
-@RequestMapping("/planes")
+@RequestMapping("/plane")
 public class PlaneController {
 
     @Autowired

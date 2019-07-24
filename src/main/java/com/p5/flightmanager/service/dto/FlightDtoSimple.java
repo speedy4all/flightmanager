@@ -5,60 +5,23 @@ import java.util.UUID;
 
 public class FlightDtoSimple {
 
-    private UUID id;
+    private UUID flightId;
     private Date departureDate;
     private Date destinationDate;
     private Double durationTime;
     private int seatsAvailable;
-    private String name;
-    private FlightType flightType;
+    private String planeType;
     private String departureAirportName;
-    private UUID idDepartureAirport;
     private String departureAirportCode;
     private String destinationAirportName;
-    private UUID idDestinationAirport;
     private String destinationAirportCode;
-    private UUID idPlane;
-    private String codePlane;
 
-    public UUID getIdPlane() {
-        return idPlane;
+    public UUID getFlightId() {
+        return flightId;
     }
 
-    public void setIdPlane(UUID idPlane) {
-        this.idPlane = idPlane;
-    }
-
-    public String getCodePlane() {
-        return codePlane;
-    }
-
-    public void setCodePlane(String codePlane) {
-        this.codePlane = codePlane;
-    }
-
-    public UUID getIdDepartureAirport() {
-        return idDepartureAirport;
-    }
-
-    public void setIdDepartureAirport(UUID idDepartureAirport) {
-        this.idDepartureAirport = idDepartureAirport;
-    }
-
-    public UUID getIdDestinationAirport() {
-        return idDestinationAirport;
-    }
-
-    public void setIdDestinationAirport(UUID idDestinationAirport) {
-        this.idDestinationAirport = idDestinationAirport;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
+    public void setFlightId(UUID flightId) {
+        this.flightId = flightId;
     }
 
     public Date getDepartureDate() {
@@ -93,20 +56,12 @@ public class FlightDtoSimple {
         this.seatsAvailable = seatsAvailable;
     }
 
-    public String getName() {
-        return name;
+    public String getPlaneType() {
+        return planeType;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public FlightType getFlightType() {
-        return flightType;
-    }
-
-    public void setFlightType(FlightType flightType) {
-        this.flightType = flightType;
+    public void setPlaneType(String planeType) {
+        this.planeType = planeType;
     }
 
     public String getDepartureAirportName() {

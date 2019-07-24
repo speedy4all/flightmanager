@@ -35,7 +35,7 @@ public interface FlightService {
 
     Iterable<FlightDto> getByDepDateAndDestDateAndLocation(SearchParamFlightDto searchParamDto);
 
-    Iterable<FlightDtoView> getByLocationIdAndDestinationIdAirport(SearchParamsFlightDtoView searchParamDto);
+    Iterable<FlightDtoView> getByLocationIdAndDestinationIdAirportAndDate(SearchParamsFlightDtoView searchParamDto);
 
     Iterable<FlightDtoSimple> getAllFlights();
 
@@ -43,4 +43,7 @@ public interface FlightService {
 
     List<FlightDtoSimple> getOffers();
 
+    List<FlightDtoView> searchBy(SearchParamsFlightDtoView search);
+
+    void deletePassenger(String flightId, String personalId);
 }

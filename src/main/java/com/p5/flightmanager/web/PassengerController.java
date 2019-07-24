@@ -1,6 +1,7 @@
 package com.p5.flightmanager.web;
 
 
+import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.service.api.PassengerService;
 import com.p5.flightmanager.service.dto.PassengerDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import javax.ws.rs.Produces;
 import java.util.List;
 
 @RestController
-@RequestMapping("/passengers")
+@RequestMapping("/passenger")
 @Consumes("application/json")
 @Produces("application/json")
 @Transactional
@@ -51,4 +52,5 @@ public class PassengerController {
 
         passengerService.deletePassenger(iddelete);
     }
+
 }

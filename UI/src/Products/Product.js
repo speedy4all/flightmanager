@@ -58,10 +58,22 @@ class Product extends React.Component {
           <ListItemContent
             avatar="flight"
             subtitle={
-              <div style={{ display: "flex" }}>
-                <span>Flight duration: {flightDuration}</span>
-                <span>Plane type: {planeType}</span>
-                <span>Available seats: {availableSeats}</span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column"
+                }}
+              >
+                <div>
+                  <span>Flight duration: {flightDuration}</span>
+                </div>
+                <div>
+                  <span>Plane type: {planeType}</span>
+                </div>
+                <div>
+                  <span>Available seats: {availableSeats}</span>
+                </div>
               </div>
             }
           >
@@ -78,7 +90,9 @@ class Product extends React.Component {
 
             <div style={{ float: "left" }}>
               <div>
-                <span style={{ float: "left" }}>Plane type: {planeType}</span>
+                <span style={{ float: "left" }}>
+                  Flight name: {departureAirportName} - {destinationAirportName}
+                </span>
               </div>
               <div>
                 <span style={{ width: "100%", display: "flex" }}>

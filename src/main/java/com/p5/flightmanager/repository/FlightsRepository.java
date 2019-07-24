@@ -42,8 +42,8 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "departure.id=:departureId and destination.id=:destinationId and f.departureDate=:departureDate")
     Iterable<Flight> getByDepartureIdAndDestinationIdAndDepartureDate(UUID departureId, UUID destinationId, Date departureDate);
 
-    @Query("select f from Flight f where f.passengerList.size < 10 and f.departureDate > now() and f.departureDate < :endDate")
-    Iterable<Flight> getOffers(Date endDate, Pageable pageable);
+    @Query("select f from Flight f")
+    Iterable<Flight> getAll();
 }
 
 /*

@@ -161,13 +161,15 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<FlightSimpleDto> getOffers() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, 7);
-        Date endDate = calendar.getTime();      // get back a Date object
+        Iterable<Flight> list = flightsRepository.getAll();
+        List<FlightSimpleDto> offers = new ArrayList<>();
 
-        Pageable pageable = PageRequest.of(0, 10);
-        List<Flight> list = Lists.newArrayList(flightsRepository.getOffers(endDate, pageable));
-        List<FlightSimpleDto> offers = FlightAdapter.toListSimpleDto(list);
+        for (Flight flight : list){
+            if (flight.getDurationTime() < 180 && flight.getPassengerList().size() < 10){
+                offers.add(FlightAdapter.toSimpleDto(flight));
+                flightsRepository.save(flight);
+            }
+        }
 
         return offers;
     }

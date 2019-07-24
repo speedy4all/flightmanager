@@ -14,7 +14,9 @@ public interface FlightService {
     //List<FlightDto> getAll(String search);
     List<FlightDtoView> getAll(String search);
 
-    List<FlightDto> searchBy(FlightSearchDto searchDto);
+    //List<FlightDto> searchBy(FlightSearchDto searchDto);
+
+    ListResponseDto<ResponseFlightDto> searchBy(FlightSearchDto searchDto);
 
     FlightDto createFlight(FlightDto flightDto);
 
@@ -37,6 +39,8 @@ public interface FlightService {
     Flight getFlightById(UUID flightId);
 
     List<FlightDtoView> getAllOffers();
+
+    void removePassenger(String uniqueIdentifier, String flightId);
 
     // Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight);
 }

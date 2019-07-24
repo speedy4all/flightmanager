@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import java.util.Date;
 import java.util.List;
 
@@ -25,17 +27,23 @@ public class FlightsController extends RestExceptionHandler {
     @Autowired
     private FlightService flightService;
 
-    @GetMapping
-    ResponseEntity<List<FlightDtoView>> getAll(@RequestParam String search) {
-
-        return ResponseEntity.ok(flightService.getAll(search));
-    }
-
-//    @GetMapping
-//    ResponseEntity<List<FlightDto>> getAll(FlightSearchDto searchDto) {
+//    @GetMapping("/search/name")//queryparam
+//    ResponseEntity<List<FlightDtoView>> getAll(@RequestParam String search) {
 //
-//        return ResponseEntity.ok(flightService.searchBy(searchDto));
+//        return ResponseEntity.ok(flightService.getAll(search));
 //    }
+
+//    @GetMapping//queryparam
+//    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAll(@QueryParam() String search) {
+//
+//        return ResponseEntity.ok(flightService.getAll(search));
+//    }
+
+    @GetMapping
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAll(FlightSearchDto searchDto) {
+
+        return ResponseEntity.ok(flightService.searchBy(searchDto));
+    }
 
 
     @GetMapping("/search-by")
@@ -46,6 +54,11 @@ public class FlightsController extends RestExceptionHandler {
     @PutMapping("/add")
     void flightUpdate(@RequestBody  FlightUpdateDto flightUpdateDto){
         flightService.addPassengerDto(flightUpdateDto);
+    }
+
+    @PutMapping("/{uniqueIdentifier}/remove-from/{flightId}")
+    void flightUpdateDel(@PathVariable String uniqueIdentifier, @PathVariable String flightId){
+        flightService.removePassenger(uniqueIdentifier, flightId);
     }
 
     @GetMapping("/{id}")

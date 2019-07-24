@@ -48,6 +48,7 @@ public class FlightServiceImpl implements FlightService {
         return FlightAdapter.toListDtoView(flightsRepository.filterByName(search));
     }
 
+
     @Override
     public FlightDto createFlight(FlightDto flightDto) {
 
@@ -98,6 +99,17 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public ListResponseDto<ResponseFlightDto> searchBy(FlightSearchDto searchDto) {
+        ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
+
+        Iterable<ResponseFlightDto> flights = flightsRepository.getByDepartureIdAndDestinationIdAndDepartureDate(UUID.fromString(searchDto.getDepartureId()), UUID.fromString(searchDto.getDestinationId()), searchDto.getDepartureDate());
+        flights.forEach(response.getList()::add);
+        response.setTotalCount(Long.valueOf(response.getList().size()));
+        return response;
+
+    }
+
+    @Override
     public FlightDto getById(String id) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(id));
         if (optionalFlight.isPresent()) {
@@ -138,6 +150,20 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public void removePassenger(String uniqueIdentifier, String flightId) {
+        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
+        if(optionalFlight.isPresent()){
+            Optional<Passenger> optionalPassenger = passengerRepository.getByUniqueIdentifier(uniqueIdentifier);
+            if(optionalPassenger.isPresent()){
+               if(optionalFlight.get().getPassengerList().contains(optionalPassenger.get())){
+                   optionalFlight.get().getPassengerList().remove(optionalPassenger.get());
+                   flightsRepository.save(optionalFlight.get());
+               }
+            }
+        }
+    }
+
+    @Override
     public void addPassengerDto(FlightUpdateDto flightUpdateDto) {
         validateUpdateFlight(flightUpdateDto);
 
@@ -167,12 +193,6 @@ public class FlightServiceImpl implements FlightService {
 
     /////
     @Override
-    public List<FlightDto> searchBy(FlightSearchDto searchDto) {
-        Iterable<Flight> flights = flightsRepository.getByDepartureIdAndDestinationIdAndDepartureDate(UUID.fromString(searchDto.getDepartureId()), UUID.fromString(searchDto.getDestinationId()), searchDto.getDepartureDate());
-        return FlightAdapter.toListDto(flights);
-    }
-
-    @Override
     public List<FlightDtoView> getAllOffers() {
 
         Calendar cal = Calendar.getInstance();
@@ -186,7 +206,6 @@ public class FlightServiceImpl implements FlightService {
 
         return offers;
     }
-
 
     private void validateUpdateFlight(FlightUpdateDto flightUpdateDto) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);

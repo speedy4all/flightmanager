@@ -21,6 +21,7 @@ public class Flight extends BaseModel implements Serializable {
 //pe aeroport o lsta de flight
 //pe flight un aeroport destination, unu location
     public static final long serialVersionUID = 1L;
+    //-----un dto care are o lista de ce returnam noi si un count(listDto cu un private list de T
     /*
     toate flighturile care au data de plecare o anumita data si locatia, o locatie -
     sa putem sa setam departure si destination location (airport) -

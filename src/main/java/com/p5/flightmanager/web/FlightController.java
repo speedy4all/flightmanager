@@ -22,6 +22,7 @@ import java.util.List;
 @Transactional //im momentul in care s-a mapat metodele din clasa vor primi o tranzactie noua de fiecare data cand o metoda este apelata
 //la fiecare metoda se dechide cate o tranzactie
 public class FlightController {
+    //toate flighturile dupa un anumit pasager
 
     @Autowired
     private FlightService flightService;
@@ -36,6 +37,11 @@ public class FlightController {
 //    List<FlightDtoView> getAll(SearchParamsFlightDtoView search) {
 //        return flightService.searchBy(search);
 //    }
+
+    @GetMapping("/my-flights/{id}")
+    ResponseEntity<List<FlightDtoSimple>> getAllMyFlights (@PathVariable String id) {
+        return ResponseEntity.ok(flightService.getAllMyFlights(id));
+    }
 
 
     @GetMapping("/{id}")
@@ -70,7 +76,6 @@ public class FlightController {
     void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId) {
         flightService.addPassengerToFlight(flightId,passengerId);
     }
-    //toate flighturile dupa un anumit pasager
 
     @PutMapping("/{flightId}/add-plane/{planeId}")
     void addPlaneToFlight(@PathVariable String flightId, @PathVariable String planeId){

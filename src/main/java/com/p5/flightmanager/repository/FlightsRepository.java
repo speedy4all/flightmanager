@@ -45,6 +45,11 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
     @Query("select flight from Flight flight where flight.passengerList.size < 10 and departure_date > now() and departure_date < :endDate")
     List<Flight> getAllOffers(Date endDate, Pageable pageable);
 
+    @Query("select flight from Flight flight " +
+            "join flight.passengerList p " +
+            "where p.id = :id")
+    List<Flight> getAllMyFlights(UUID id);
+
 
     //TODO:
 //    @Query("select new com.p5.flightmanager.service.dto.FlightDtoSimple(flight.name, locationAirport.location, destinationAirport.location, " +

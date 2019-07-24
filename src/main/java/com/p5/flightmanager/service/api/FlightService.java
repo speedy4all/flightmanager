@@ -46,4 +46,6 @@ public interface FlightService {
     List<FlightDtoView> searchBy(SearchParamsFlightDtoView search);
 
     void deletePassenger(String flightId, String personalId);
+
+    List<FlightDtoSimple> getAllMyFlights(String id);
 }

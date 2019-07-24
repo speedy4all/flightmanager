@@ -100,6 +100,14 @@ public class FlightServiceImpl implements FlightService {
         }
     }
 
+    //todo getAllMyFlight to return FlightDtoSimple
+    @Override
+    public List<FlightDtoSimple> getAllMyFlights(String id) {
+        List<Flight> flights = flightsRepository.getAllMyFlights(UUID.fromString(id));
+        List<FlightDtoSimple> flightDtoSimples = FlightAdapter.toListSimpleDto(flights);
+        return flightDtoSimples;
+    }
+
     @Override
     public FlightDto createFlight(PostFlightDto postFlightDto) {
 

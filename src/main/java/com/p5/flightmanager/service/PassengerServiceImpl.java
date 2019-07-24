@@ -71,6 +71,21 @@ public class PassengerServiceImpl implements PassengerService {
         }
     }
 
+    @Override
+    public Passenger getOrCreate(String uniqueIdentifier, String name) {
+        Passenger passenger = passengerRepository.getByIdentifyNumber(uniqueIdentifier);
+
+        if (passenger == null) {
+            Passenger newPassenger = new Passenger();
+            newPassenger.setFirstName(name);
+            newPassenger.setIdentifyNumber(uniqueIdentifier);
+            Passenger savedPassenger = passengerRepository.save(newPassenger);
+            return newPassenger;
+        }
+
+        return passenger;
+    }
+
     public boolean isValidPassenger(PassengerDto passengerDto){
         if(passengerDto.getFirstName() == null || passengerDto.getFirstName().isEmpty())
             return false;
@@ -80,15 +95,4 @@ public class PassengerServiceImpl implements PassengerService {
         return true;
     }
 
-    @Override
-    public Passenger getOrCreate(String uniqueIdentifier, String name) {
-        Passenger passenger = passengerRepository.getByIdentifyNumber(uniqueIdentifier);
-        if (passenger == null) {
-            Passenger newPassenger = new Passenger();
-            newPassenger.setFirstName(name);
-            newPassenger.setIdentifyNumber(uniqueIdentifier);
-            passenger = passengerRepository.save(newPassenger);
-        }
-        return passenger;
-    }
 }

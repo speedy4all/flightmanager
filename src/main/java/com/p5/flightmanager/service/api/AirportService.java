@@ -2,7 +2,7 @@ package com.p5.flightmanager.service.api;
 
 import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.service.dto.AirportDto;
-import com.p5.flightmanager.service.dto.AirportSimpleDTO;
+import com.p5.flightmanager.service.dto.AirportDtoView;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface AirportService {
 
     List<AirportDto> getAll(String search);
+
+    List<AirportDtoView> getAirports();
 
     AirportDto createAirport(AirportDto airportDto);
 
@@ -25,5 +27,5 @@ public interface AirportService {
 
     void addFlight(String airportId, String flightId);
 
-    Iterable<AirportSimpleDTO> getAllForSelect();
+
 }

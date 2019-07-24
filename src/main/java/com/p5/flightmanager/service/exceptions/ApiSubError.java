@@ -1,10 +1,9 @@
 package com.p5.flightmanager.service.exceptions;
 
 public class ApiSubError {
-
     private String fieldName;
-    private String message;
     private String receivedValue;
+    private String message;
 
     public ApiSubError() {
     }
@@ -14,10 +13,10 @@ public class ApiSubError {
         this.message = message;
     }
 
-    public ApiSubError(String fieldName, String message, String receivedValue) {
+    public ApiSubError(String fieldName, String receivedValue, String message) {
         this.fieldName = fieldName;
-        this.message = message;
         this.receivedValue = receivedValue;
+        this.message = message;
     }
 
     public String getFieldName() {
@@ -28,19 +27,19 @@ public class ApiSubError {
         this.fieldName = fieldName;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getReceivedValue() {
         return receivedValue;
     }
 
     public void setReceivedValue(String receivedValue) {
         this.receivedValue = receivedValue;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

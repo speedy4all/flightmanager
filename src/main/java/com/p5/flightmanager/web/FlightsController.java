@@ -1,14 +1,7 @@
 package com.p5.flightmanager.web;
 
-
 import com.p5.flightmanager.service.api.FlightService;
-import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.FlightDtoSimple;
-import com.p5.flightmanager.service.dto.FlightSearchDto;
-import com.p5.flightmanager.service.dto.FlightUpdateDto;
-import com.p5.flightmanager.service.dto.ListResponseDto;
-import com.p5.flightmanager.service.dto.ResponseFlightDto;
-import com.p5.flightmanager.service.dto.SearchParamDto;
+import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.RestExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,9 +26,26 @@ public class FlightsController extends RestExceptionHandler {
     private FlightService flightService;
 
     @GetMapping
-    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAll(FlightSearchDto searchDto) {
+    ResponseEntity<List<FlightDtoView>> getAll(@RequestParam String search) {
 
-        return ResponseEntity.ok(flightService.searchBy(searchDto));
+        return ResponseEntity.ok(flightService.getAll(search));
+    }
+
+//    @GetMapping
+//    ResponseEntity<List<FlightDto>> getAll(FlightSearchDto searchDto) {
+//
+//        return ResponseEntity.ok(flightService.searchBy(searchDto));
+//    }
+
+
+    @GetMapping("/search-by")
+    ResponseEntity<List<FlightDto>> getBySearchParams(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date departureDate, @RequestParam String location, @RequestParam String destination) {
+        return ResponseEntity.ok(flightService.getBySearchParams(departureDate, location, destination));
+    }
+
+    @PutMapping("/add")
+    void flightUpdate(@RequestBody  FlightUpdateDto flightUpdateDto){
+        flightService.addPassengerDto(flightUpdateDto);
     }
 
     @GetMapping("/{id}")
@@ -48,9 +58,11 @@ public class FlightsController extends RestExceptionHandler {
         return ResponseEntity.ok(flightService.createFlight(flightDto));
     }
 
-    @PutMapping()
-    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightUpdateDto flightUpdateDto) {
-        return ResponseEntity.ok(flightService.addPassenger(flightUpdateDto));
+    @PutMapping
+    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
+        return ResponseEntity.ok(flightService.updateFlight(flightDto));
+        //return ResponseEntity.ok("Update flight");
+
     }
 
     @DeleteMapping("/{id}")
@@ -63,4 +75,23 @@ public class FlightsController extends RestExceptionHandler {
         flightService.addPassengerToFlight(flightId, passengerId);
     }
 
+    @PutMapping("/{flightId}/add--passenger/{passengerId}")
+    void addPassenger(@PathVariable String flightId, @PathVariable String passengerId){
+        flightService.addPassenger(flightId, passengerId);
+    }
+
+    @GetMapping("/search")
+    Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
+        return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
+    }
+
+    @GetMapping("/offers")
+    Iterable<FlightDtoView> getOffers(){
+        return flightService.getAllOffers();
+    }
+
+//    @GetMapping("/search1")
+//    Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(@Valid SearchParamDtoFlight searchParamDtoFlight){
+//        return flightService.getByDepIdAndDestIdAndDepDate(searchParamDtoFlight);
+//    }
 }

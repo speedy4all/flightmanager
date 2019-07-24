@@ -27,7 +27,7 @@ public class FlightsController extends RestExceptionHandler {
     @Autowired
     private FlightService flightService;
 
-//    @GetMapping("/search/name")//queryparam
+//    @GetMapping()//queryparam
 //    ResponseEntity<List<FlightDtoView>> getAll(@RequestParam String search) {
 //
 //        return ResponseEntity.ok(flightService.getAll(search));

@@ -1,3 +1,4 @@
+
 package com.p5.flightmanager.service;
 
 import com.p5.flightmanager.repository.AirportRepository;
@@ -26,65 +27,25 @@ public class FlightServiceImpl implements FlightService {
     private FlightsRepository flightsRepository;
 
     @Autowired
-    private AirportRepository airportRepository;
-
-    @Autowired
     private PassengerRepository passengerRepository;
 
     @Autowired
     private PassengerService passengerService;
 
-    @Autowired
-    private AirportService airportService;
 
-    //    @Override
-//    public List<FlightDto> getAll(String search) {
-//
-//        return FlightAdapter.toListDto(flightsRepository.filterByName(search));
-//    }
     @Override
-    public List<FlightDtoView> getAll(String search) {
+    public ListResponseDto<ResponseFlightDto> getAll(String search) {
 
-        return FlightAdapter.toListDtoView(flightsRepository.filterByName(search));
+        return FlightAdapter.toResponseListDto(flightsRepository.filterByName(search));
     }
 
     @Override
     public FlightDto createFlight(FlightDto flightDto) {
 
-
         validateFlightDto(flightDto);
 
-        Flight flight = FlightAdapter.fromDto(flightDto);
+        return FlightAdapter.toDto(flightsRepository.save(FlightAdapter.fromDto(flightDto)));
 
-        Optional<Airport> departureOptionalAirport = airportRepository.findById(UUID.fromString(flightDto.getDepartureLocation()));
-        Optional<Airport> destinationOptionalAirport = airportRepository.findById(UUID.fromString(flightDto.getDestinationLocation()));
-
-        if (departureOptionalAirport.isPresent() && destinationOptionalAirport.isPresent()) {
-            flight.setDepartureLocation(departureOptionalAirport.get());
-            flight.setDestinationLocation(destinationOptionalAirport.get());
-        }
-
-        return FlightAdapter.toDto(flightsRepository.save(flight));
-
-    }
-
-    private void validateFlightDto(FlightDto flightDto) {
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
-
-        if (flightDto.getDestinationLocation() == null) {
-            apiError.getSubErrors().add(new ApiSubError("destinationLocation", "Null received"));
-        }
-        if (flightDto.getFlightType() == null) {
-            apiError.getSubErrors().add(new ApiSubError("flightType", "Null received", String.valueOf(flightDto.getFlightType())));
-        }
-        if (flightDto.getDurationTime() > 180) {
-            apiError.getSubErrors().add(new ApiSubError("flightType", String.valueOf(flightDto.getDurationTime()), "Should be less then 180"));
-        }
-
-
-        if (apiError.getSubErrors().size() > 0) {
-            throw new FlightValidationException(apiError);
-        }
     }
 
     @Override
@@ -116,6 +77,29 @@ public class FlightServiceImpl implements FlightService {
         }
     }
 
+    private void validateFlightDto(FlightDto flightDto) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+
+        if (flightDto.getDepartureLocation() == null) {
+            apiError.getSubErrors().add(new ApiSubError("departureLocation", "Can not be null"));
+        }
+
+        if (flightDto.getDestinationLocation() == null) {
+            apiError.getSubErrors().add(new ApiSubError("destinationLocation", "Can not be null"));
+
+        }
+
+        if (flightDto.getDurationTime() > 180) {
+            apiError.getSubErrors().add(new ApiSubError("durationTime", "Value must be under 180", String.valueOf(flightDto.getDurationTime())));
+
+        }
+
+        if (apiError.getSubErrors().size() > 0) {
+            throw new FlightValidationException(apiError);
+        }
+
+    }
+
     @Override
     public List<FlightDto> getBySearchParams(Date departureDate, String location, String destination) {
         Iterable<Flight> flights = flightsRepository.getBySearchParams(departureDate, location, destination);
@@ -123,37 +107,32 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void addPassenger(String flightId, String passengerId) {
+    public void addPassengerToFlight(String flightId, String passengerId) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if (optionalFlight.isPresent()) {
             Optional<Passenger> optionalPassenger = passengerRepository.findById(UUID.fromString(passengerId));
-            if (optionalFlight.get().getPassengerList().size() <= optionalFlight.get().getPlane().getSeats()) {
-                if (optionalPassenger.isPresent()) {
-                    Flight flight = optionalFlight.get();
-                    flight.getPassengerList().add(optionalPassenger.get());
-                    flightsRepository.save(flight);
-                }
+            if (optionalPassenger.isPresent()) {
+                Flight flight = optionalFlight.get();
+                flight.getPassengerList().add(optionalPassenger.get());
+                flightsRepository.save(flight);
             }
         }
     }
 
     @Override
-    public void addPassengerDto(FlightUpdateDto flightUpdateDto) {
-        validateUpdateFlight(flightUpdateDto);
+    public Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(SearchParamDto searchParamDto) {
+        return flightsRepository.findByNameAndDAteSimple(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
+    }
 
-        Flight flight = getFlightById(UUID.fromString(flightUpdateDto.getFlightId()));
+    @Override
+    public ListResponseDto<ResponseFlightDto> searchBy(FlightSearchDto searchDto) {
+        ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
 
-        //validateAvailableSeat(flight);
-        Passenger passenger = passengerService.getOrCreate(flightUpdateDto.getUniqueIdentifier(), flightUpdateDto.getPassengerName());
-        boolean exists = flight.getPassengerList().stream().map(Passenger::getIdentifyNumber).anyMatch(s -> s.equals(flightUpdateDto.getUniqueIdentifier()));
+        Iterable<ResponseFlightDto> flights = flightsRepository.getByDepartureIdAndDestinationIdAndDepartureDate(UUID.fromString(searchDto.getDepartureId()), UUID.fromString(searchDto.getDestinationId()), searchDto.getDepartureDate());
+        flights.forEach(response.getList()::add);
+        response.setTotalCount(Long.valueOf(response.getList().size()));
+        return response;
 
-        if(!exists) {
-            flight.getPassengerList().add(passenger);
-            flightsRepository.save(flight);
-        } else {
-            //throw new PassengerExistException(flightUpdateDto.getUniqueIdentifier());
-            throw new PassengerExistException(flightUpdateDto.getUniqueIdentifier());
-        }
     }
 
     @Override
@@ -163,11 +142,11 @@ public class FlightServiceImpl implements FlightService {
             return optionalFlight.get();
         }
         throw new NoFlightException();
+
     }
 
     @Override
-    public List<FlightDtoView> getAllOffers() {
-
+    public Iterable<FlightDtoView> getAllOffers() {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 7);
         Date endDate = cal.getTime(); // get back a Date objec
@@ -180,48 +159,50 @@ public class FlightServiceImpl implements FlightService {
         return offers;
     }
 
+    @Override
+    public FlightDto addPassenger(FlightUpdateDto flightUpdateDto) {
+        validateUpdateFlightDto(flightUpdateDto);
 
-    private void validateUpdateFlight(FlightUpdateDto flightUpdateDto) {
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
-        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightUpdateDto.getFlightId()));
-        if(!optionalFlight.isPresent()) {
-            apiError.getSubErrors().add(new ApiSubError("flight", "flight not found"));
+        Flight flight = getFlightById(UUID.fromString(flightUpdateDto.getFlightId()));
+
+        validateForAvailableSeat(flight);
+        Passenger passenger = passengerService.getOrCreate(flightUpdateDto.getUniqueIdentifier(), flightUpdateDto.getPassengerName());
+
+        boolean exists = flight.getPassengerList().stream().map(Passenger::getIdentifyNumber).anyMatch(s -> s.equals(flightUpdateDto.getUniqueIdentifier()));
+        if(!exists) {
+            flight.getPassengerList().add(passenger);
+            return FlightAdapter.toDto(flightsRepository.save(flight));
+        } else {
+            throw new PassengerExistException(flightUpdateDto.getUniqueIdentifier());
         }
-//        Optional<Passenger> passenger = passengerRepository.getByUniqueIdentifier(flightUpdateDto.getUniqueIdentifier());
-//        if(passenger.isPresent()) {
-//            apiError.getSubErrors().add(new ApiSubError("passenger", "passenger already found"));
-//        }
-        if(flightUpdateDto.getFlightId() == null)
-        {
-            apiError.getSubErrors().add(new ApiSubError("id", "id is null"));
-        }
-        if(apiError.getSubErrors().size() > 0) {
-            throw new NoPassengerException();
+
+    }
+
+    private void validateForAvailableSeat(Flight flight) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+
+
+        if (apiError.getSubErrors().size() > 0) {
+            throw new FlightValidationException(apiError);
         }
     }
 
-    @Override
-    public void addPassengerToFlight(String flightId, String passengerId) {
-        Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
-        if (optionalFlight.isPresent()) {
-            Optional<Passenger> optionalPassenger = passengerRepository.findById(UUID.fromString(passengerId));
-            if (optionalFlight.get().getPassengerList().size() <= optionalFlight.get().getPlane().getSeats()) {
-                if (optionalPassenger.isPresent()) {
-                    Flight flight = optionalFlight.get();
-                    flight.getPassengerList().add(optionalPassenger.get());
-                    flightsRepository.save(flight);
-                }
+    private void validateUpdateFlightDto(FlightUpdateDto flightUpdateDto) {
+        //todo implement validation
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        try {
+            UUID uuid = UUID.fromString(flightUpdateDto.getFlightId());
+            if (uuid == null) {
+                apiError.getSubErrors().add(new ApiSubError("flightId", "bad format"));
+            }
+        } catch (Exception ex) {
+            apiError.getSubErrors().add(new ApiSubError("flightId", "bad format from catch"));
+        } finally {
+            if (apiError.getSubErrors().size() > 0) {
+                throw new FlightValidationException(apiError);
             }
         }
     }
 
-    @Override
-    public Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(SearchParamDto searchParamDto) {
-        return flightsRepository.findByNameAndDAteSimple(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
-    }
 
-//    @Override
-//    public Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight) {
-//        return flightsRepository.findByIdAndDate(searchParamDtoFlight.getDepartureDate(), searchParamDtoFlight.getDepartureId(), searchParamDtoFlight.getDestinationId());
-//    }
 }

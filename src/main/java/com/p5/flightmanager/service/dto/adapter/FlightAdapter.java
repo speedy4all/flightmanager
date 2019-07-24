@@ -51,6 +51,8 @@ public class FlightAdapter {
         return flightSimpleDtos;
     }
 
+
+
     public final static FlightSimpleDto toSimpleDto(Flight flight){
         FlightSimpleDto flightSimpleDto = new FlightSimpleDto();
 

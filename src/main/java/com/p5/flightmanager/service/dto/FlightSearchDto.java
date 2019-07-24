@@ -1,39 +1,85 @@
 package com.p5.flightmanager.service.dto;
 
+
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
+
+
+import javax.validation.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
+
 import java.util.Date;
 
+import java.util.UUID;
+
+
+
 public class FlightSearchDto implements Serializable {
-    private String departureId;
-    private String destinationId;
 
 
-    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
+
+    private String idDeparture;
+
+    private String idDestination;
+
+
+
+    //@JsonFormat(iso = DateTimeFormat.ISO.DATE)
+
     private Date departureDate;
 
-    public String getDepartureId() {
-        return departureId;
+
+
+    public String getIdDeparture() {
+
+        return idDeparture;
+
     }
 
-    public void setDepartureId(String departureId) {
-        this.departureId = departureId;
+
+
+    public void setIdDeparture(String idDeparture) {
+
+        this.idDeparture = idDeparture;
+
     }
 
-    public String getDestinationId() {
-        return destinationId;
+
+
+    public String getIdDestination() {
+
+        return idDestination;
+
     }
 
-    public void setDestinationId(String destinationId) {
-        this.destinationId = destinationId;
+
+
+    public void setIdDestination(String idDestination) {
+
+        this.idDestination = idDestination;
+
     }
+
+
 
     public Date getDepartureDate() {
+
         return departureDate;
+
     }
 
+
+
     public void setDepartureDate(Date departureDate) {
+
         this.departureDate = departureDate;
+
     }
+
 }

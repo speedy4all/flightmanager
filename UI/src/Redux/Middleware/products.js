@@ -96,7 +96,7 @@ export const processProductsCollection = ({ dispatch }) => next => action => {
   next(action);
 
   if (action.type === FETCH_PRODUCTS_SUCCESS) {
-    dispatch(updateProducts(action.payload));
+    dispatch(updateProducts(action.payload.list));
     dispatch(hideSpinner());
   }
 };

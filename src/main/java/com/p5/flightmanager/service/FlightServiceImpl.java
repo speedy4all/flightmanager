@@ -12,6 +12,8 @@ import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import com.p5.flightmanager.service.dto.FlightSearchDto;
 import com.p5.flightmanager.service.dto.FlightUpdateDto;
+import com.p5.flightmanager.service.dto.ListResponseDto;
+import com.p5.flightmanager.service.dto.ResponseFlightDto;
 import com.p5.flightmanager.service.dto.SearchParamDto;
 import com.p5.flightmanager.service.exceptions.ApiError;
 import com.p5.flightmanager.service.exceptions.ApiSubError;
@@ -138,9 +140,14 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<FlightDto> searchBy(FlightSearchDto searchDto) {
-        Iterable<Flight> flights = flightsRepository.getByDepartureIdAndDestinationIdAndDepartureDate(UUID.fromString(searchDto.getDepartureId()), UUID.fromString(searchDto.getDestinationId()), searchDto.getDepartureDate());
-        return FlightAdapter.toListDto(flights);
+    public ListResponseDto<ResponseFlightDto> searchBy(FlightSearchDto searchDto) {
+        ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
+
+        Iterable<ResponseFlightDto> flights = flightsRepository.getByDepartureIdAndDestinationIdAndDepartureDate(UUID.fromString(searchDto.getDepartureId()), UUID.fromString(searchDto.getDestinationId()), searchDto.getDepartureDate());
+        flights.forEach(response.getList()::add);
+        response.setTotalCount(Long.valueOf(response.getList().size()));
+        return response;
+
     }
 
     @Override

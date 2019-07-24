@@ -6,6 +6,8 @@ import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import com.p5.flightmanager.service.dto.FlightSearchDto;
 import com.p5.flightmanager.service.dto.FlightUpdateDto;
+import com.p5.flightmanager.service.dto.ListResponseDto;
+import com.p5.flightmanager.service.dto.ResponseFlightDto;
 import com.p5.flightmanager.service.dto.SearchParamDto;
 import com.p5.flightmanager.service.exceptions.RestExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +33,9 @@ public class FlightsController extends RestExceptionHandler {
     private FlightService flightService;
 
     @GetMapping
-    ResponseEntity<List<FlightDto>> getAll(FlightSearchDto searchDto) {
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAll(FlightSearchDto searchDto) {
 
         return ResponseEntity.ok(flightService.searchBy(searchDto));
-    }
-
-    @GetMapping("/search-by")
-    ResponseEntity<List<FlightDto>> getBySearchParams(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date departureDate, @RequestParam String location, @RequestParam String destination) {
-        return ResponseEntity.ok(flightService.getBySearchParams(departureDate, location, destination));
     }
 
     @GetMapping("/{id}")
@@ -66,8 +63,4 @@ public class FlightsController extends RestExceptionHandler {
         flightService.addPassengerToFlight(flightId, passengerId);
     }
 
-    @GetMapping("/search")
-    Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
-        return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
-    }
 }

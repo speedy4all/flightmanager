@@ -14,46 +14,92 @@ import {
 import AddPassenger from "../AddPassenger/add-passenger";
 
 class Product extends React.Component {
-  
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false,
+      isOpen: false
     };
 
     this.onComplete = this.onComplete.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-  
+
   handleClose() {
-    this.setState({isOpen: false});
+    this.setState({ isOpen: false });
   }
 
   onComplete(data) {
-    this.setState({isOpen: false});
+    this.setState({ isOpen: false });
     this.props.onAddPassenger(data);
   }
 
   render() {
-    const { id, name, departureDate } = this.props;
+    const {
+      flightId,
+      availableSeats,
+      departureDate,
+      destinationAirportName,
+      planeType,
+      flightDuration,
+      destinationDate,
+      departureAirportName
+    } = this.props;
     return (
       <List>
-        <AddPassenger 
-        onComplete={this.onComplete} 
-        open={this.state.isOpen} 
-        name="" 
-        identifier="" 
-        flightId={id} 
-        handleClose={this.handleClose}
+        <AddPassenger
+          onComplete={this.onComplete}
+          open={this.state.isOpen}
+          name=""
+          identifier=""
+          flightId={flightId}
+          handleClose={this.handleClose}
         />
-        <ListItem twoLine>
+        <ListItem twoLine style={{ height: 150 }}>
           <ListItemContent
             avatar="flight"
-            subtitle={new Date(departureDate).toDateString()}
+            subtitle={
+              <div style={{ display: "flex" }}>
+                <span>Flight duration: {flightDuration}</span>
+                <span>Plane type: {planeType}</span>
+                <span>Available seats: {availableSeats}</span>
+              </div>
+            }
           >
-            {name}
+            <div style={{ float: "right", marginLeft: 10 }}>
+              <div>
+                <b>Destination: {destinationAirportName}</b>
+              </div>
+              <div>
+                <span style={{ float: "left" }}>
+                  Destination date: {new Date(destinationDate).toDateString()}
+                </span>
+              </div>
+            </div>
+
+            <div style={{ float: "left" }}>
+              <div>
+                <span style={{ float: "left" }}>Plane type: {planeType}</span>
+              </div>
+              <div>
+                <span style={{ width: "100%", display: "flex" }}>
+                  <span style={{ float: "left" }}>
+                    Departure date: {new Date(departureDate).toDateString()}
+                  </span>
+                </span>
+              </div>
+              <div>
+                <span style={{ float: "left" }}>
+                  Departure : {departureAirportName}
+                </span>
+              </div>
+            </div>
           </ListItemContent>
-          <Button raised colored size="sm" onClick={() => this.setState({isOpen: true})} >
+          <Button
+            raised
+            colored
+            size="sm"
+            onClick={() => this.setState({ isOpen: true })}
+          >
             Select flight
           </Button>
         </ListItem>

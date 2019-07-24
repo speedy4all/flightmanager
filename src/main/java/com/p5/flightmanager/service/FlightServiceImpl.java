@@ -165,6 +165,13 @@ public class FlightServiceImpl implements FlightService {
         throw new NoFlightException();
     }
 
+    /////
+    @Override
+    public List<FlightDto> searchBy(FlightSearchDto searchDto) {
+        Iterable<Flight> flights = flightsRepository.getByDepartureIdAndDestinationIdAndDepartureDate(UUID.fromString(searchDto.getDepartureId()), UUID.fromString(searchDto.getDestinationId()), searchDto.getDepartureDate());
+        return FlightAdapter.toListDto(flights);
+    }
+
     @Override
     public List<FlightDtoView> getAllOffers() {
 

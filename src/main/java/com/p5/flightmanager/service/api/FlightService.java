@@ -14,6 +14,8 @@ public interface FlightService {
     //List<FlightDto> getAll(String search);
     List<FlightDtoView> getAll(String search);
 
+    List<FlightDto> searchBy(FlightSearchDto searchDto);
+
     FlightDto createFlight(FlightDto flightDto);
 
     FlightDto getById(String id);

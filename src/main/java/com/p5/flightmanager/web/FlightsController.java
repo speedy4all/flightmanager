@@ -25,17 +25,18 @@ public class FlightsController extends RestExceptionHandler {
     @Autowired
     private FlightService flightService;
 
-//    @GetMapping
-//    ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
-//
-//        return ResponseEntity.ok(flightService.getAll(search));
-//    }
-
     @GetMapping
     ResponseEntity<List<FlightDtoView>> getAll(@RequestParam String search) {
 
         return ResponseEntity.ok(flightService.getAll(search));
     }
+
+//    @GetMapping
+//    ResponseEntity<List<FlightDto>> getAll(FlightSearchDto searchDto) {
+//
+//        return ResponseEntity.ok(flightService.searchBy(searchDto));
+//    }
+
 
     @GetMapping("/search-by")
     ResponseEntity<List<FlightDto>> getBySearchParams(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date departureDate, @RequestParam String location, @RequestParam String destination) {

@@ -45,9 +45,9 @@ public class PlaneController {
         return ResponseEntity.ok(planeService.updatePlane(airportDto));
     }
 
-    @DeleteMapping("/{iddelete}")
-    void deleteAirport(@PathVariable String iddelete) {
-        planeService.deletePlane(iddelete);
+    @DeleteMapping("/{id}")
+    void deleteAirport(@PathVariable String id) {
+        planeService.deletePlane(id);
     }
 
 

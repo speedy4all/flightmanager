@@ -19,16 +19,16 @@ public class PlaneServiceImpl implements PlaneService {
     private PlanesRepository planesRepository;
 
     @Override
-    public List<PlaneDto> getAll(String search) {
-        return PlaneAdapter.toListDto(planesRepository.filterByName(search));
-    }
-
-    @Override
     public PlaneDto createPlane(PlaneDto planeDto) {
 
         Plane plane = PlaneAdapter.fromDto(planeDto);
         planesRepository.save(plane);
         return PlaneAdapter.toDto(plane);
+    }
+
+    @Override
+    public List<PlaneDto> getAll(String search) {
+        return PlaneAdapter.toListDto(planesRepository.filterByName(search));
     }
 
     @Override

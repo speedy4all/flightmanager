@@ -4,10 +4,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListDto implements Serializable {
+public class ListDto<FlightDtoView> implements Serializable {
 
-    private List objects = new ArrayList();
+    private List<FlightDtoView> objects = new ArrayList();
     private Long count = 0L;
+
+    public ListDto() {
+
+    }
+
+    public ListDto(List<FlightDtoView> objects, Long count) {
+        this.objects = objects;
+        this.count = count;
+    }
 
     public Long getCount() {
         return count;

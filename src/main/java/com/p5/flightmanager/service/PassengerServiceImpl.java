@@ -16,7 +16,6 @@ import java.util.UUID;
 @Component
 public class PassengerServiceImpl implements PassengerService {
 
-
     @Autowired
     private PassengersRepository passengerRepository;
 
@@ -32,6 +31,19 @@ public class PassengerServiceImpl implements PassengerService {
         Passenger passenger = passengerRepository.save(PassengerAdapter.fromDto(passengerDto));
 
         return PassengerAdapter.toDto(passenger);
+    }
+
+    @Override
+    public Passenger getOrCreate(String uniqueIdentifier, String name) {
+        Passenger passenger = passengerRepository.getByPersonalID(uniqueIdentifier);
+        if(passenger == null) {
+            Passenger newPassenger = new Passenger();
+            newPassenger.setFirstName(name);
+            newPassenger.setpersonalID(uniqueIdentifier);
+            Passenger savedPassenger = passengerRepository.save(newPassenger);
+            return  newPassenger;
+        }
+        return passenger;
     }
 
     @Override
@@ -66,17 +78,6 @@ public class PassengerServiceImpl implements PassengerService {
         throw new PassengerException();
     }
 
-    @Override
-    public Passenger getOrCreate(String uniqueIdentifier, String name) {
-        Passenger passenger = passengerRepository.getByPersonalID(uniqueIdentifier);
-        if(passenger == null) {
-            Passenger newPassenger = new Passenger();
-            newPassenger.setFirstName(name);
-            newPassenger.setpersonalID(uniqueIdentifier);
-            Passenger savedPassenger = passengerRepository.save(newPassenger);
-            return  newPassenger;
-        }
-        return passenger;
-    }
+
 
 }

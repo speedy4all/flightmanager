@@ -30,9 +30,18 @@ public class AirportController {
         return ResponseEntity.ok(airportService.getAll(search));
     }
 
+    @GetMapping("/all")
+    ResponseEntity<List<AirportDtoView>> getAllDtos() {
+        return ResponseEntity.ok(airportService.getAllDtos());
+    }
+
+    @GetMapping("/simple-list")
+    ResponseEntity<Iterable<AirportSimpleDto>> getAllSimpleAirports() {
+        return ResponseEntity.ok(airportService.getAllSimpleForm());
+    }
+
     @GetMapping("/{id}")
-    ResponseEntity<AirportDto> getById(@PathVariable String id)
-    {
+    ResponseEntity<AirportDto> getById(@PathVariable String id) {
         return ResponseEntity.ok(airportService.getById(id));
     }
 
@@ -46,24 +55,13 @@ public class AirportController {
         return ResponseEntity.ok(airportService.updateAirport(airportDto));
     }
 
-    @DeleteMapping("/{id}")
-    void deleteAirport(@PathVariable String id) {
-        airportService.delete(id);
-    }
-
     @PutMapping("/{airportId}/add-flight/{flightId}")
     void addFlight(@PathVariable String airportId, @PathVariable String flightId) {
         airportService.addFlight(airportId, flightId);
     }
 
-    @GetMapping("/all")
-    ResponseEntity<List<AirportDtoView>> getAllDtos() {
-        return ResponseEntity.ok(airportService.getAllDtos());
+    @DeleteMapping("/{id}")
+    void deleteAirport(@PathVariable String id) {
+        airportService.delete(id);
     }
-
-    @GetMapping("/simple-list")
-    ResponseEntity<Iterable<AirportSimpleDto>> getAllSimpleAirports() {
-        return ResponseEntity.ok(airportService.getAllSimpleForm());
-    }
-
 }

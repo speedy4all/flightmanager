@@ -47,10 +47,10 @@ public class PassengerController {
         return ResponseEntity.ok(passengerService.updatePassenger(passengerDto));
     }
 
-    @DeleteMapping("/{iddelete}")
-    void deleteFlight(@PathVariable String iddelete) {
+    @DeleteMapping("/{id}")
+    void deleteFlight(@PathVariable String id) {
 
-        passengerService.deletePassenger(iddelete);
+        passengerService.deletePassenger(id);
     }
 
 }

@@ -23,8 +23,24 @@ public class AirportServiceImpl implements AirportService {
     FlightsRepository flightsRepository;
 
     @Override
+    public AirportDto createAirport(AirportDto airportDto) {
+        Airport airport = AirportAdapter.fromDto(airportDto);
+        airportsRepository.save(airport);
+        return AirportAdapter.toDto(airport);
+    }
+
+    @Override
     public List<AirportDto> getAll(String search) {
         return AirportAdapter.toListDto(airportsRepository.filterByLocation(search));
+    }
+    @Override
+    public List<AirportDtoView> getAllDtos() {
+        return AirportAdapter.toListDtoView(airportsRepository.findAll());
+    }
+
+    @Override
+    public Iterable<AirportSimpleDto> getAllSimpleForm() {
+        return airportsRepository.getAllSimpleAirports();
     }
 
     @Override
@@ -51,24 +67,6 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public AirportDto createAirport(AirportDto airportDto) {
-        Airport airport = AirportAdapter.fromDto(airportDto);
-        airportsRepository.save(airport);
-        return AirportAdapter.toDto(airport);
-    }
-
-    @Override
-    public void delete(String id) {
-        Optional<Airport> airportOptional = airportsRepository.findById(UUID.fromString(id));
-        if(airportOptional.isPresent())
-        {
-            airportsRepository.delete(airportOptional.get());
-            return;
-        }
-        throw new NoAirportException();
-    }
-
-    @Override
     public void addFlight(String airportId, String flightId) {
         Optional<Airport> optionalAirport = airportsRepository.findById(UUID.fromString(airportId));
         if(optionalAirport.isPresent()) {
@@ -83,13 +81,14 @@ public class AirportServiceImpl implements AirportService {
     }
 
     @Override
-    public List<AirportDtoView> getAllDtos() {
-        return AirportAdapter.toListDtoView(airportsRepository.findAll());
-    }
-
-    @Override
-    public Iterable<AirportSimpleDto> getAllSimpleForm() {
-        return airportsRepository.getAllSimpleAirports();
+    public void delete(String id) {
+        Optional<Airport> airportOptional = airportsRepository.findById(UUID.fromString(id));
+        if(airportOptional.isPresent())
+        {
+            airportsRepository.delete(airportOptional.get());
+            return;
+        }
+        throw new NoAirportException();
     }
 
 }

@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import java.util.Date;
 import java.util.List;
 
+//todo clean code
 @RestController
 @RequestMapping("/flight")
 @Consumes("application/json")
@@ -22,74 +23,13 @@ import java.util.List;
 @Transactional //im momentul in care s-a mapat metodele din clasa vor primi o tranzactie noua de fiecare data cand o metoda este apelata
 //la fiecare metoda se dechide cate o tranzactie
 public class FlightController {
-    //toate flighturile dupa un anumit pasager
 
     @Autowired
     private FlightService flightService;
 
     @GetMapping
     ResponseEntity<List<FlightDto>> getAll(@RequestParam String search) {
-
         return ResponseEntity.ok(flightService.getAll(search));
-    }
-
-//    @GetMapping
-//    List<FlightDtoView> getAll(SearchParamsFlightDtoView search) {
-//        return flightService.searchBy(search);
-//    }
-
-    @GetMapping("/my-flights/{id}")
-    ResponseEntity<List<FlightDtoSimple>> getAllMyFlights (@PathVariable String id) {
-        return ResponseEntity.ok(flightService.getAllMyFlights(id));
-    }
-
-
-    @GetMapping("/{id}")
-    ResponseEntity<FlightDto> getById(@PathVariable String id) {
-
-        return ResponseEntity.ok(flightService.getById(id));
-    }
-
-    @PostMapping
-    ResponseEntity<FlightDto> createFlight(@RequestBody PostFlightDto postFlightDto) {
-        return ResponseEntity.ok(flightService.createFlight(postFlightDto));
-    }
-
-    //de mine
-//    @PutMapping
-//    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
-//        return ResponseEntity.ok(flightService.updateFlight(flightDto));
-//    }
-
-    @PutMapping
-    void updateFlight(@RequestBody FlightUpdateDto flightDto) {
-        flightService.addPassenger(flightDto);
-    }
-
-    @DeleteMapping("/{iddelete}")
-    void deleteFlight(@PathVariable String iddelete) {
-
-        flightService.deleteFlight(iddelete);
-    }
-
-    @PutMapping("/{flightId}/add-passenger/{passengerId}")
-    void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId) {
-        flightService.addPassengerToFlight(flightId,passengerId);
-    }
-
-    @PutMapping("/{flightId}/add-plane/{planeId}")
-    void addPlaneToFlight(@PathVariable String flightId, @PathVariable String planeId){
-        flightService.addPlaneToFlight(flightId,planeId);
-    }
-
-    @PutMapping("/{flightId}/add-destination/{airportId}")
-    void addDestinationAirport(@PathVariable String flightId, @PathVariable String airportId){
-        flightService.addDestinationAirport(flightId,airportId);
-    }
-
-    @PutMapping("/{flightId}/add-location/{airportId}")
-    void addLocationAirport(@PathVariable String flightId, @PathVariable String airportId){
-        flightService.addLocationAirport(flightId,airportId);
     }
 
     @GetMapping("/search-by")
@@ -115,6 +55,63 @@ public class FlightController {
     @GetMapping("/offers")
     Iterable<FlightDtoSimple> getOffers() {
         return flightService.getOffers();
+    }
+
+//    @GetMapping
+//    List<FlightDtoView> getAll(SearchParamsFlightDtoView search) {
+//        return flightService.searchBy(search);
+//    }
+
+    @GetMapping("/my-flights/{id}")
+    ResponseEntity<List<FlightDtoSimple>> getAllMyFlights (@PathVariable String id) {
+        return ResponseEntity.ok(flightService.getAllMyFlights(id));
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<FlightDto> getById(@PathVariable String id) {
+        return ResponseEntity.ok(flightService.getById(id));
+    }
+
+    @PostMapping
+    ResponseEntity<FlightDto> createFlight(@RequestBody PostFlightDto postFlightDto) {
+        return ResponseEntity.ok(flightService.createFlight(postFlightDto));
+    }
+
+    //de mine
+//    @PutMapping
+//    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
+//        return ResponseEntity.ok(flightService.updateFlight(flightDto));
+//    }
+
+    @PutMapping
+    void updateFlight(@RequestBody FlightUpdateDto flightDto) {
+        flightService.addPassenger(flightDto);
+    }
+
+
+    @PutMapping("/{flightId}/add-plane/{planeId}")
+    void addPlaneToFlight(@PathVariable String flightId, @PathVariable String planeId){
+        flightService.addPlaneToFlight(flightId,planeId);
+    }
+
+    @PutMapping("/{flightId}/add-destination/{airportId}")
+    void addDestinationAirport(@PathVariable String flightId, @PathVariable String airportId){
+        flightService.addDestinationAirport(flightId,airportId);
+    }
+
+    @PutMapping("/{flightId}/add-location/{airportId}")
+    void addLocationAirport(@PathVariable String flightId, @PathVariable String airportId){
+        flightService.addLocationAirport(flightId,airportId);
+    }
+
+    @PutMapping("/{flightId}/add-passenger/{passengerId}")
+    void addPassengerToFlight(@PathVariable String flightId, @PathVariable String passengerId) {
+        flightService.addPassengerToFlight(flightId,passengerId);
+    }
+
+    @DeleteMapping("/{iddelete}")
+    void deleteFlight(@PathVariable String iddelete) {
+        flightService.deleteFlight(iddelete);
     }
 
     @DeleteMapping("/{flightId}/remove/{personalId}")

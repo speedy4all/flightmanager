@@ -43,7 +43,7 @@ public interface FlightService {
 
     List<FlightDtoSimple> getOffers();
 
-    List<FlightDtoView> searchBy(SearchParamsFlightDtoView search);
+    ListDto<FlightDtoView> searchBy(SearchParamsFlightDtoView search);
 
     void deletePassenger(String flightId, String personalId);
 

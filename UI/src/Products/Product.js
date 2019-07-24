@@ -77,8 +77,8 @@ class Product extends React.Component {
               </div>
             }
           >
-            <div style={{ float: "right", marginLeft: 10 }}>
-              <div>
+            <div style={{ float: "right", marginRight: 10 }}>
+              <div style={{ float: "left" }}>
                 <b>Destination: {destinationAirportName}</b>
               </div>
               <div>

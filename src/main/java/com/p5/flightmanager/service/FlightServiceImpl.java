@@ -150,7 +150,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void cancelPassengerRservation(String identifyNumber, String flightId) {
+    public void cancelPassengerReservation(String identifyNumber, String flightId) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if(optionalFlight.isPresent()){
             Optional<Passenger> optionalPassenger = passengerRepository.getByUniqueIdentifier(identifyNumber);
@@ -162,7 +162,7 @@ public class FlightServiceImpl implements FlightService {
             }
         }
         else {
-        //
+            throw new NoPassengerException();
         }
     }
 
@@ -186,7 +186,6 @@ public class FlightServiceImpl implements FlightService {
             flight.getPassengerList().add(passenger);
             flightsRepository.save(flight);
         } else {
-            //throw new PassengerExistException(flightUpdateDto.getUniqueIdentifier());
             throw new PassengerExistException(flightUpdateDto.getUniqueIdentifier());
         }
     }

@@ -102,9 +102,9 @@ public class FlightsController extends RestExceptionHandler {
         return flightService.getAllOffers(destinationLocation);
     }
 
-    @PutMapping("/{uniqueIdentifier}/cancel-reservation/{flightId}")
+    @PutMapping("/{identifyNumber}/cancel-reservation/{flightId}")
     void flightUpdateDel(@PathVariable String identifyNumber, @PathVariable String flightId){
-        flightService.cancelPassengerRservation(identifyNumber, flightId);
+        flightService.cancelPassengerReservation(identifyNumber, flightId);
     }
 
 //    @GetMapping("/search1")

@@ -18,6 +18,9 @@ import java.util.UUID;
 @Repository
 public interface FlightsRepository extends CrudRepository<Flight, UUID> {
 
+
+    void cancelReservation(UUID flightId, UUID uniqueIdentifier);
+
     @Query("select new com.p5.flightmanager.service.dto.ResponseFlightDto(flight.id, departureAirport.city, departureAirport.iata, " +
             "destinationAirport.city, destinationAirport.iata, flight.departureDate, flight.destinationDate, plane.model, " +
             "flight.durationTime, plane.seats-flight.passengerList.size) from Flight flight " +

@@ -6,7 +6,6 @@ import java.util.List;
 
 public class FlightDtoSimple {
 
-
     private String name;
     private String departureLocation;
     private String destinationLocation;

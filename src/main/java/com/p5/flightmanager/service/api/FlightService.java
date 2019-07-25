@@ -1,13 +1,7 @@
 package com.p5.flightmanager.service.api;
 
 import com.p5.flightmanager.repository.models.Flight;
-import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.FlightDtoSimple;
-import com.p5.flightmanager.service.dto.FlightSearchDto;
-import com.p5.flightmanager.service.dto.FlightUpdateDto;
-import com.p5.flightmanager.service.dto.ListResponseDto;
-import com.p5.flightmanager.service.dto.ResponseFlightDto;
-import com.p5.flightmanager.service.dto.SearchParamDto;
+import com.p5.flightmanager.service.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -16,6 +10,8 @@ import java.util.UUID;
 
 @Service
 public interface FlightService {
+
+    void cancelReservation(FlightSearchCancelDto flightSearchCancelDto);
 
     //lista de flighturi ale unui pasager
     ListResponseDto<ResponseFlightDto> getMyFlights(String uniqueIdentifier);

@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -63,10 +61,17 @@ public class FlightsController extends RestExceptionHandler {
 
 
 
+//    //todo
+//    @PutMapping("/{uniqueIdentifier}/cancel-reservation/{flightId}")
+//    void flightUpdateDel(@PathVariable String uniqueIdentifier, @PathVariable String flightId){
+//        flightService.removePassenger(uniqueIdentifier, flightId);
+//    }
+
     //todo
-    @PutMapping("/{uniqueIdentifier}/cancel-reservation/{flightId}")
-    void flightUpdateDel(@PathVariable String uniqueIdentifier, @PathVariable String flightId){
-        flightService.removePassenger(uniqueIdentifier, flightId);
+    @PutMapping("/cancel-reservation")
+    ResponseEntity<CancelReservationDto> flightUpdateDel(@RequestBody CancelReservationDto cancelReservationDto){
+        flightService.removePassenger(cancelReservationDto.getIdentifier(), cancelReservationDto.getFlightId());
+        return ResponseEntity.ok(cancelReservationDto);
     }
 
     @GetMapping("/{id}")

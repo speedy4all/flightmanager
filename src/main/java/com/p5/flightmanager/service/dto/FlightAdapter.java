@@ -13,21 +13,18 @@ public class FlightAdapter {
 
     public final static FlightDto toDto(Flight flight) {
         FlightDto flightDto = new FlightDto();
-        flightDto.setId(flight.getId().toString());
-        Airport departureLocation = flight.getDepartureLocation();
-        Airport destinationLocation = flight.getDestinationLocation();
 
 
         flightDto.setFlightType(flight.getFlightType());
-        if(departureLocation != null && destinationLocation != null) {
-            flightDto.setDepartureLocation(AirportAdapter.toDto(departureLocation));
-            flightDto.setFullFlightDescription(departureLocation.getIata().concat("-")
-                    .concat(flight.getDestinationLocation().getIata()));
-        }
+        flightDto.setId(flight.getId().toString());
         flightDto.setName(flight.getName());
-        if(destinationLocation != null) {
-            flightDto.setDestinationLocation(flight.getDestinationLocation().getName());
-        }
+
+        flightDto.setDepartureLocation(flight.getDepartureLocation().getCity());
+
+        flightDto.setFullFlightDescription(flight.getDepartureLocation().getCity().concat("-").concat(flight.getDestinationLocation().getCity()));
+
+        flightDto.setDestinationLocation(flight.getDestinationLocation().getCity());
+
         flightDto.setDurationTime(flight.getDurationTime());
         flightDto.setDepartureDate(flight.getDepartureDate());
         flightDto.setDestinationDate(flight.getDestinationDate());
@@ -37,12 +34,66 @@ public class FlightAdapter {
         return flightDto;
     }
 
+    public static ListResponseDto<ResponseFlightDto> toResponseListDto(Iterable<Flight> flights) {
+
+        ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
+        flights.forEach(f -> {
+            ResponseFlightDto responseFlightDto = new ResponseFlightDto();
+            responseFlightDto.setFlightId(f.getId());
+            responseFlightDto.setAvailableSeats(f.getPlane().getSeats()-f.getPassengerList().size());
+            responseFlightDto.setDepartureAirportCode(f.getDepartureLocation().getIata());
+            responseFlightDto.setDepartureAirportName(f.getDepartureLocation().getName());
+            responseFlightDto.setDestinationAirportCode(f.getDestinationLocation().getIata());
+            responseFlightDto.setDestinationAirportName(f.getDestinationLocation().getName());
+            responseFlightDto.setDepartureDate(f.getDepartureDate());
+            responseFlightDto.setDestinationDate(f.getDestinationDate());
+            responseFlightDto.setFlightDuration(f.getDurationTime());
+            responseFlightDto.setPlaneType(f.getFlightType().toString());
+            response.getList().add(responseFlightDto);
+        });
+        return response;
+    }
+
+    public final static FlightDtoView toDtoView(Flight flight) {
+
+        FlightDtoView flightDtoView = new FlightDtoView();
+
+        flightDtoView.setId(flight.getId().toString());
+        flightDtoView.setName(flight.getName());
+        flightDtoView.setDepartureLocation(flight.getDepartureLocation().getCity());
+        flightDtoView.setDestinationLocation(flight.getDestinationLocation().getCity());
+        flightDtoView.setDurationTime(flight.getDurationTime());
+        flightDtoView.setDepartureDate(flight.getDepartureDate());
+        flightDtoView.setFreeSeats(flight.getPlane().getSeats());
+        flightDtoView.setDestinationDate(flight.getDestinationDate());
+        flightDtoView.setDeparureId(flight.getDepartureLocation().getId().toString());
+        flightDtoView.setDestinationId(flight.getDestinationLocation().getId().toString());
+
+        flightDtoView.setDestinationAirportName(flight.getDestinationLocation().getName());
+        flightDtoView.setDestinationAirportCode(flight.getDestinationLocation().getIata());
+
+        flightDtoView.setDepartureAirportName(flight.getDepartureLocation().getName());
+        flightDtoView.setDepartureAirportCode(flight.getDepartureLocation().getIata());
+
+        flightDtoView.setPlaneModel(flight.getPlane().getModel());
+
+        return flightDtoView;
+    }
+
 
     public final static List<FlightDto> toListDto(Iterable<Flight> flightList) {
         List<FlightDto> listDto = new ArrayList<>();
         flightList.forEach(flight -> listDto.add(toDto(flight)));
 
         return listDto;
+    }
+
+    //
+    public final static List<FlightDtoView> toListDtoView(Iterable<Flight> flightList) {
+        List<FlightDtoView> listDtoView = new ArrayList<>();
+        flightList.forEach(flight -> listDtoView.add(toDtoView(flight)));
+
+        return listDtoView;
     }
 
     public final static Flight fromDto(FlightDto flightDto) {
@@ -58,24 +109,11 @@ public class FlightAdapter {
         flight.setName(flightDto.getName());
         flight.setFlightType(flightDto.getFlightType());
         //flight.setDepartureLocation(flightDto.getDepartureLocation());
-
+        //flight.setDestinationLocation(flightDto.getDestinationLocation());
         flight.setDurationTime(flightDto.getDurationTime());
         flight.setDepartureDate(flightDto.getDepartureDate());
         flight.setDestinationDate(flightDto.getDestinationDate());
 
         return flight;
-    }
-
-    public static ListResponseDto<ResponseFlightDto> toResponseListDto(Iterable<Flight> flights) {
-
-        ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
-        flights.forEach(f -> {
-            ResponseFlightDto responseFlightDto = new ResponseFlightDto();
-            responseFlightDto.setFlightId(f.getId());
-            
-
-            response.getList().add(responseFlightDto);
-        });
-        return response;
     }
 }

@@ -1,36 +1,24 @@
+
 package com.p5.flightmanager.service;
 
+import com.p5.flightmanager.repository.AirportRepository;
 import com.p5.flightmanager.repository.PassengerRepository;
+import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.api.PassengerService;
-import com.p5.flightmanager.service.dto.FlightAdapter;
-import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.FlightDtoSimple;
-import com.p5.flightmanager.service.dto.FlightSearchDto;
-import com.p5.flightmanager.service.dto.FlightUpdateDto;
-import com.p5.flightmanager.service.dto.ListResponseDto;
-import com.p5.flightmanager.service.dto.ResponseFlightDto;
-import com.p5.flightmanager.service.dto.SearchParamDto;
-import com.p5.flightmanager.service.exceptions.ApiError;
-import com.p5.flightmanager.service.exceptions.ApiSubError;
-import com.p5.flightmanager.service.exceptions.EmptyFieldException;
-import com.p5.flightmanager.service.exceptions.FlightValidationException;
-import com.p5.flightmanager.service.exceptions.NoFlightException;
-import com.p5.flightmanager.service.exceptions.PassengerExistException;
+import com.p5.flightmanager.service.dto.*;
+import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -40,9 +28,6 @@ public class FlightServiceImpl implements FlightService {
 
     @Autowired
     private PassengerRepository passengerRepository;
-
-    @Autowired
-    private AirportService airportService;
 
     @Autowired
     private PassengerService passengerService;
@@ -161,6 +146,20 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public Iterable<FlightDtoView> getAllOffers() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, 7);
+        Date endDate = cal.getTime(); // get back a Date objec
+
+
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Flight> list = flightsRepository.getAllOffers(endDate, pageable);
+        List<FlightDtoView> offers = FlightAdapter.toListDtoView(list);
+
+        return offers;
+    }
+
+    @Override
     public FlightDto addPassenger(FlightUpdateDto flightUpdateDto) {
         validateUpdateFlightDto(flightUpdateDto);
 
@@ -191,7 +190,6 @@ public class FlightServiceImpl implements FlightService {
     private void validateUpdateFlightDto(FlightUpdateDto flightUpdateDto) {
         //todo implement validation
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
-
         try {
             UUID uuid = UUID.fromString(flightUpdateDto.getFlightId());
             if (uuid == null) {
@@ -204,7 +202,7 @@ public class FlightServiceImpl implements FlightService {
                 throw new FlightValidationException(apiError);
             }
         }
-
-
     }
+
+
 }

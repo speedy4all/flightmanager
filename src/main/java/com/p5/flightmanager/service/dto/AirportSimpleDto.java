@@ -3,12 +3,12 @@ package com.p5.flightmanager.service.dto;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class AirportSimpleDTO implements Serializable {
+public class AirportSimpleDto implements Serializable {
     private UUID id;
     private String name;
     private String code;
 
-    public AirportSimpleDTO(UUID id, String name, String code) {
+    public AirportSimpleDto(UUID id, String name, String code) {
         this.id = id;
         this.name = name;
         this.code = code;

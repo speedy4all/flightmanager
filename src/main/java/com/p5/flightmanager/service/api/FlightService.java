@@ -1,13 +1,7 @@
 package com.p5.flightmanager.service.api;
 
 import com.p5.flightmanager.repository.models.Flight;
-import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.FlightDtoSimple;
-import com.p5.flightmanager.service.dto.FlightSearchDto;
-import com.p5.flightmanager.service.dto.FlightUpdateDto;
-import com.p5.flightmanager.service.dto.ListResponseDto;
-import com.p5.flightmanager.service.dto.ResponseFlightDto;
-import com.p5.flightmanager.service.dto.SearchParamDto;
+import com.p5.flightmanager.service.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -38,4 +32,6 @@ public interface FlightService {
     FlightDto addPassenger(FlightUpdateDto flightUpdateDto);
 
     Flight getFlightById(UUID flightId);
+
+    Iterable<FlightDtoView> getAllOffers();
 }

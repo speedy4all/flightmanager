@@ -4,7 +4,8 @@ import com.p5.flightmanager.repository.AirportRepository;
 import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.dto.AirportDto;
-import com.p5.flightmanager.service.dto.AirportSimpleDTO;
+import com.p5.flightmanager.service.dto.AirportDtoView;
+import com.p5.flightmanager.service.dto.AirportSimpleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +60,7 @@ public class AirportController {
     }
 
     @GetMapping("/simple-list")
-    Iterable<AirportSimpleDTO> getAllForSelect() {
+    Iterable<AirportSimpleDto> getAllForSelect() {
         return airportService.getAllForSelect();
     }
 }

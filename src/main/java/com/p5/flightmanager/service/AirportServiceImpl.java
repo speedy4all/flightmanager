@@ -4,10 +4,7 @@ import com.p5.flightmanager.repository.AirportRepository;
 import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
-import com.p5.flightmanager.service.dto.AirportAdapter;
-import com.p5.flightmanager.service.dto.AirportDto;
-import com.p5.flightmanager.service.dto.AirportSimpleDTO;
-import com.p5.flightmanager.service.dto.FlightDto;
+import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.NoAirportException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
@@ -28,6 +25,12 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public List<AirportDto> getAll(String search) {
         return AirportAdapter.toListDto(airportRepository.filterByName(search));
+    }
+
+    @Override
+    public List<AirportDtoView> getAirports() {
+
+        return AirportAdapter.toListDtoView(airportRepository.findAll());
     }
 
     @Override
@@ -74,6 +77,16 @@ public class AirportServiceImpl implements AirportService {
         }
     }
 
+    @Override
+    public void addFlight(String airportId, String flightId) {
+
+    }
+
+    @Override
+    public Iterable<AirportSimpleDto> getAllForSelect() {
+        return airportRepository.getAllForSelect();
+    }
+
     public boolean isValidAirport(AirportDto airportDto){
         if(StringUtils.isEmpty(airportDto.getName()))
         {
@@ -86,15 +99,5 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public Optional<Airport> getByName(String name) {
         return airportRepository.findByCity(name);
-    }
-
-    @Override
-    public void addFlight(String airportId, String flightId) {
-
-    }
-
-    @Override
-    public Iterable<AirportSimpleDTO> getAllForSelect() {
-        return airportRepository.getAllForSelect();
     }
 }

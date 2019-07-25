@@ -1,14 +1,7 @@
 package com.p5.flightmanager.web;
 
-
 import com.p5.flightmanager.service.api.FlightService;
-import com.p5.flightmanager.service.dto.FlightDto;
-import com.p5.flightmanager.service.dto.FlightDtoSimple;
-import com.p5.flightmanager.service.dto.FlightSearchDto;
-import com.p5.flightmanager.service.dto.FlightUpdateDto;
-import com.p5.flightmanager.service.dto.ListResponseDto;
-import com.p5.flightmanager.service.dto.ResponseFlightDto;
-import com.p5.flightmanager.service.dto.SearchParamDto;
+import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.RestExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -70,4 +63,8 @@ public class FlightsController extends RestExceptionHandler {
         flightService.addPassengerToFlight(flightId, passengerId);
     }
 
+    @GetMapping("/offers")
+    Iterable<FlightDtoView> getOffers(){
+        return flightService.getAllOffers();
+    }
 }

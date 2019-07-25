@@ -12,7 +12,9 @@ import java.util.UUID;
 public interface FlightService {
 
     //List<FlightDto> getAll(String search);
-    List<FlightDtoView> getAll(String search);
+//    List<FlightDtoView> getAll(String search);
+
+    ListResponseDto<ResponseFlightDto> getAll(String search);
 
     //List<FlightDto> searchBy(FlightSearchDto searchDto);
 
@@ -38,7 +40,7 @@ public interface FlightService {
 
     Flight getFlightById(UUID flightId);
 
-    List<FlightDtoView> getAllOffers();
+    ListResponseDto<ResponseFlightDto> getAllOffers();
 
     void removePassenger(String uniqueIdentifier, String flightId);
 

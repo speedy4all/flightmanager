@@ -45,6 +45,12 @@ public class FlightsController extends RestExceptionHandler {
         return ResponseEntity.ok(flightService.searchBy(searchDto));
     }
 
+    @GetMapping("/search")
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAllByName(@QueryParam("name") String name) {
+
+        return ResponseEntity.ok(flightService.getAll(name));
+    }
+
     @GetMapping("/{uniqueIdentifier}/my-flights")
     ResponseEntity<ListResponseDto<ResponseFlightDto>> getMyFlights(@PathVariable String uniqueIdentifier){
         return ResponseEntity.ok(flightService.getMyFlights(uniqueIdentifier));
@@ -55,10 +61,7 @@ public class FlightsController extends RestExceptionHandler {
         return ResponseEntity.ok(flightService.getBySearchParams(departureDate, location, destination));
     }
 
-    @PutMapping("/add")
-    void flightUpdate(@RequestBody  FlightUpdateDto flightUpdateDto){
-        flightService.addPassengerDto(flightUpdateDto);
-    }
+
 
     //todo
     @PutMapping("/{uniqueIdentifier}/cancel-reservation/{flightId}")
@@ -76,12 +79,17 @@ public class FlightsController extends RestExceptionHandler {
         return ResponseEntity.ok(flightService.createFlight(flightDto));
     }
 
-    @PutMapping
-    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
-        return ResponseEntity.ok(flightService.updateFlight(flightDto));
-        //return ResponseEntity.ok("Update flight");
-
+    @PutMapping()
+    void flightUpdate(@RequestBody  FlightUpdateDto flightUpdateDto){
+        flightService.addPassengerDto(flightUpdateDto);
     }
+
+//    @PutMapping
+//    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
+//        return ResponseEntity.ok(flightService.updateFlight(flightDto));
+//        //return ResponseEntity.ok("Update flight");
+//
+//    }
 
     @DeleteMapping("/{id}")
     void deleteFlight(@PathVariable String id) {
@@ -98,13 +106,13 @@ public class FlightsController extends RestExceptionHandler {
         flightService.addPassenger(flightId, passengerId);
     }
 
-    @GetMapping("/search")
-    Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
-        return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
-    }
+//    @GetMapping("/search")
+//    Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
+//        return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
+//    }
 
     @GetMapping("/offers")
-    Iterable<FlightDtoView> getOffers(){
+    ListResponseDto<ResponseFlightDto> getOffers(){
         return flightService.getAllOffers();
     }
 

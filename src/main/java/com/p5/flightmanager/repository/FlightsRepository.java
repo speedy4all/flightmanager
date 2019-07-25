@@ -47,3 +47,4 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "where departure.id=:departureId and destination.id=:destinationId and f.departureDate=:departureDate order by f.departureDate desc")
     Iterable<ResponseFlightDto> getByDepartureIdAndDestinationIdAndDepartureDate(UUID departureId, UUID destinationId, Date departureDate);
 }
+/////

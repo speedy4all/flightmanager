@@ -13,9 +13,7 @@ public interface FlightService {
 
     //List<FlightDto> getAll(String search);
     List<FlightDtoView> getAll(String search);
-
     //List<FlightDto> searchBy(FlightSearchDto searchDto);
-
     ListResponseDto<ResponseFlightDto> searchBy(FlightSearchDto searchDto);
 
     FlightDto createFlight(FlightDto flightDto);
@@ -44,5 +42,5 @@ public interface FlightService {
 
     void cancelPassengerReservation(CancelReservationDto cancelReservationDto);
 
-    // Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight);
+    void verifyFlight(Flight flight);
 }

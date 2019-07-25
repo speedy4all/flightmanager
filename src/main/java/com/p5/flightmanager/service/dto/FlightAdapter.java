@@ -39,7 +39,6 @@ public class FlightAdapter {
     public final static FlightDtoView toDtoView(Flight flight) {
 
         FlightDtoView flightDtoView = new FlightDtoView();
-        verifyFlight(flight);
         flightDtoView.setId(flight.getId().toString());
         flightDtoView.setName(flight.getName());
         flightDtoView.setDepartureLocation(flight.getDepartureLocation().getCity());
@@ -102,7 +101,6 @@ public class FlightAdapter {
     public static ListResponseDto<ResponseFlightDto> toListResponse(Iterable<Flight> flights) {
         ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
         flights.forEach(f -> {
-            verifyFlight(f);
             ResponseFlightDto responseFlightDto = new ResponseFlightDto();
             responseFlightDto.setFlightId(f.getId());
             responseFlightDto.setAvailableSeats(f.getPlane().getSeats()-f.getPassengerList().size());
@@ -119,23 +117,5 @@ public class FlightAdapter {
             response.setTotalCount(increment);
         });
         return response;
-    }
-
-    private static final void verifyFlight(Flight flight) {
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
-        if(flight.getPlane() == null) {
-            apiError.getSubErrors().add(new ApiSubError("plane", "not found"));
-        }
-        if(flight.getDestinationLocation() == null) {
-            apiError.getSubErrors().add(new ApiSubError("destination airport", "not found"));
-        }
-        if(flight.getDepartureLocation() == null) {
-            apiError.getSubErrors().add(new ApiSubError("departure airport", "not found"));
-        }
-
-        if(apiError.getSubErrors().size() > 0){
-            throw new FlightValidationException(apiError);
-        }
-
     }
 }

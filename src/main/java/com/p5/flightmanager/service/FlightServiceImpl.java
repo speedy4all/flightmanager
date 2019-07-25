@@ -56,7 +56,7 @@ public class FlightServiceImpl implements FlightService {
         validateFlightDto(flightDto);
 
         Flight flight = FlightAdapter.fromDto(flightDto);
-
+        verifyFlight(FlightAdapter.fromDto(flightDto));
         Optional<Airport> departureOptionalAirport = airportRepository.findById(UUID.fromString(flightDto.getDepartureLocation()));
         Optional<Airport> destinationOptionalAirport = airportRepository.findById(UUID.fromString(flightDto.getDestinationLocation()));
 
@@ -151,8 +151,15 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public void cancelPassengerReservation(CancelReservationDto cancelReservationDto) {
-        String flightId = cancelReservationDto.getFlightId();
-        String identifyNumber = cancelReservationDto.getIdentifyNumber();
+        String flightId, identifyNumber;
+        if(cancelReservationDto.getFlightId() != null && cancelReservationDto.getIdentifyNumber() != null)
+        {
+            flightId = cancelReservationDto.getFlightId();
+            identifyNumber = cancelReservationDto.getIdentifyNumber();
+        }
+        else
+            throw new CancelEmptyFieldException();
+
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if(optionalFlight.isPresent()){
             Optional<Passenger> optionalPassenger = passengerRepository.getByUniqueIdentifier(identifyNumber);
@@ -211,10 +218,9 @@ public class FlightServiceImpl implements FlightService {
     /////
     @Override
     public List<FlightDtoView> getAllOffers(String destinationLocation) {
-
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_MONTH, 7);
-        Date endDate = cal.getTime();
+        Calendar calendarInstance = Calendar.getInstance();
+        calendarInstance.add(Calendar.DAY_OF_MONTH, 3);
+        Date endDate = calendarInstance.getTime();
         Pageable pageable = PageRequest.of(0, 10);
         List<Flight> list = flightsRepository.getAllOffers(destinationLocation, endDate, pageable);
         List<FlightDtoView> offers = FlightAdapter.toListDtoView(list);
@@ -228,10 +234,6 @@ public class FlightServiceImpl implements FlightService {
         if(!optionalFlight.isPresent()) {
             apiError.getSubErrors().add(new ApiSubError("flight", "flight not found"));
         }
-//        Optional<Passenger> passenger = passengerRepository.getByUniqueIdentifier(flightUpdateDto.getUniqueIdentifier());
-//        if(passenger.isPresent()) {
-//            apiError.getSubErrors().add(new ApiSubError("passenger", "passenger already found"));
-//        }
         if(flightUpdateDto.getFlightId() == null)
         {
             apiError.getSubErrors().add(new ApiSubError("id", "id is null"));
@@ -261,6 +263,24 @@ public class FlightServiceImpl implements FlightService {
         return flightsRepository.findByNameAndDAteSimple(searchParamDto.getDepartureDate(), searchParamDto.getLocation());
     }
 
+    @Override
+    public void verifyFlight(Flight flight) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        if(flight.getPlane() == null) {
+            apiError.getSubErrors().add(new ApiSubError("plane", "not found"));
+        }
+        if(flight.getDestinationLocation() == null) {
+            apiError.getSubErrors().add(new ApiSubError("destination airport", "not found"));
+        }
+        if(flight.getDepartureLocation() == null) {
+            apiError.getSubErrors().add(new ApiSubError("departure airport", "not found"));
+        }
+
+        if(apiError.getSubErrors().size() > 0){
+            throw new FlightValidationException(apiError);
+        }
+
+    }
 //    @Override
 //    public Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight) {
 //        return flightsRepository.findByIdAndDate(searchParamDtoFlight.getDepartureDate(), searchParamDtoFlight.getDepartureId(), searchParamDtoFlight.getDestinationId());

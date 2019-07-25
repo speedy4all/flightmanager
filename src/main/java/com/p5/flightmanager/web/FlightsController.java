@@ -87,7 +87,7 @@ public class FlightsController extends RestExceptionHandler {
         flightService.addPassengerToFlight(flightId, passengerId);
     }
 
-    @PutMapping("/{flightId}/add--passenger/{passengerId}")
+    @PutMapping("/{flightId}/add-passenger2/{passengerId}")
     void addPassenger(@PathVariable String flightId, @PathVariable String passengerId){
         flightService.addPassenger(flightId, passengerId);
     }

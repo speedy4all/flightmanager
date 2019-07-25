@@ -157,8 +157,9 @@ public class FlightServiceImpl implements FlightService {
             flightId = cancelReservationDto.getFlightId();
             identifyNumber = cancelReservationDto.getIdentifyNumber();
         }
-        else
+        else {
             throw new CancelEmptyFieldException();
+        }
 
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if(optionalFlight.isPresent()){
@@ -172,10 +173,8 @@ public class FlightServiceImpl implements FlightService {
                 {
                     throw new NoPassengerInListException();
                 }
-            }
-            else
-            {
-                throw new NoPassengerException();
+            } else {
+                throw new NoPassengerException(identifyNumber);
             }
         } else {
             throw new NoFlightException();
@@ -239,7 +238,7 @@ public class FlightServiceImpl implements FlightService {
             apiError.getSubErrors().add(new ApiSubError("id", "id is null"));
         }
         if(apiError.getSubErrors().size() > 0) {
-            throw new NoPassengerException();
+            throw new NoPassengerException("");
         }
     }
 

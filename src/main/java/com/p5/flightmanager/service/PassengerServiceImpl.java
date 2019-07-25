@@ -47,7 +47,7 @@ public class PassengerServiceImpl implements PassengerService {
             return PassengerAdapter.toDto(passenger);
         }
 
-        throw new NoPassengerException();
+        throw new NoPassengerException("");
     }
 
     @Override
@@ -59,7 +59,7 @@ public class PassengerServiceImpl implements PassengerService {
             passengerRepository.save(passenger);
             return PassengerAdapter.toDto(passenger);
         }
-        throw new NoPassengerException();
+        throw new NoPassengerException("");
     }
 
     @Override

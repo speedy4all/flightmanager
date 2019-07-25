@@ -14,6 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.xml.bind.ValidationException;
+import javax.xml.ws.Response;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -75,4 +76,5 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handlePassengerExistError(PassengerExistException ex){
         return buildResponseEntity(ex.getApiError());
     }
+
 }

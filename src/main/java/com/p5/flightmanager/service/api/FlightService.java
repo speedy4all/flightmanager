@@ -17,6 +17,12 @@ import java.util.UUID;
 @Service
 public interface FlightService {
 
+    //lista de flighturi ale unui pasager
+    ListResponseDto<ResponseFlightDto> getMyFlights(String uniqueIdentifier);
+
+    //toate flight-urile disponibile cu toate proprietatile
+    ListResponseDto<ResponseFlightDto> getAllFullFlights();
+
     ListResponseDto<ResponseFlightDto> getAll(String search);
 
     FlightDto createFlight(FlightDto flightDto);
@@ -38,4 +44,5 @@ public interface FlightService {
     FlightDto addPassenger(FlightUpdateDto flightUpdateDto);
 
     Flight getFlightById(UUID flightId);
+
 }

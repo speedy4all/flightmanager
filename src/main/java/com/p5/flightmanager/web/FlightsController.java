@@ -33,6 +33,21 @@ public class FlightsController extends RestExceptionHandler {
     @Autowired
     private FlightService flightService;
 
+    @PutMapping("/cancel-reservation/{flightId}/{identifier}")
+    void cancelReservation(@RequestBody )
+
+    //lista de flighturi ale unui pasager
+    @GetMapping("/{identifier}/my-flights")
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getMyFlights(@PathVariable String uniqueIdentifier){
+        return  ResponseEntity.ok(flightService.getMyFlights(uniqueIdentifier));
+    }
+
+    //lista de flighturi disponibile cu toate proprietatile
+    @GetMapping("/offers")
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAllFullFlights(){
+        return ResponseEntity.ok(flightService.getAllFullFlights());
+    }
+
     @GetMapping
     ResponseEntity<ListResponseDto<ResponseFlightDto>> getAll(FlightSearchDto searchDto) {
 

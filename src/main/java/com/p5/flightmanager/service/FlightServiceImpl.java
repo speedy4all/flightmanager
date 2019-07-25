@@ -22,13 +22,12 @@ import com.p5.flightmanager.service.exceptions.FlightValidationException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
 import com.p5.flightmanager.service.exceptions.PassengerExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -47,6 +46,31 @@ public class FlightServiceImpl implements FlightService {
     @Autowired
     private PassengerService passengerService;
 
+    //lista de flighturi ale unui pasager
+    @Override
+    public ListResponseDto<ResponseFlightDto> getMyFlights(String uniqueIdentifier) {
+        return flightsRepository.findMyFlights(uniqueIdentifier);
+    }
+
+    //toate flight-urile disponibile cu toate proprietatile
+    @Override
+    public ListResponseDto<ResponseFlightDto> getAllFullFlights() {
+
+        Calendar calendar = Calendar.getInstance();
+
+        //ziua adauga la zi inc 7 zile
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+
+        //returneaza un obiect de tip data calendaristica
+        Date endDate = calendar.getTime();
+
+        //primele 10 flighturi
+        Pageable pageable = PageRequest.of(0, 10);
+
+        ListResponseDto<ResponseFlightDto> flights=flightsRepository.findAllFullFlights(endDate ,pageable);
+
+        return flights;
+    }
 
     @Override
     public ListResponseDto<ResponseFlightDto> getAll(String search) {

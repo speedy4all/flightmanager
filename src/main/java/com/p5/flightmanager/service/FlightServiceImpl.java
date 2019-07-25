@@ -42,12 +42,17 @@ public class FlightServiceImpl implements FlightService {
 //
 //        return FlightAdapter.toListDto(flightsRepository.filterByName(search));
 //    }
+//    @Override
+//    public List<FlightDtoView> getAll(String search) {
+//
+//        return FlightAdapter.toListDtoView(flightsRepository.filterByName(search));
+//    }
+
     @Override
-    public List<FlightDtoView> getAll(String search) {
+    public ListResponseDto<ResponseFlightDto> getAll(String search) {
 
-        return FlightAdapter.toListDtoView(flightsRepository.filterByName(search));
+        return FlightAdapter.toListResponse(flightsRepository.filterByName(search));
     }
-
 
     @Override
     public FlightDto createFlight(FlightDto flightDto) {
@@ -201,7 +206,7 @@ public class FlightServiceImpl implements FlightService {
 
     /////
     @Override
-    public List<FlightDtoView> getAllOffers() {
+    public  ListResponseDto<ResponseFlightDto> getAllOffers() {
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 7);
@@ -210,7 +215,7 @@ public class FlightServiceImpl implements FlightService {
 
         Pageable pageable = PageRequest.of(0, 10);
         List<Flight> list = flightsRepository.getAllOffers(endDate, destinationCity, pageable);
-        List<FlightDtoView> offers = FlightAdapter.toListDtoView(list);
+        ListResponseDto<ResponseFlightDto> offers = FlightAdapter.toListResponse(list);
 
         return offers;
     }

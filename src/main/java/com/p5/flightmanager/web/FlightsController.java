@@ -60,12 +60,6 @@ public class FlightsController extends RestExceptionHandler {
         flightService.addPassengerDto(flightUpdateDto);
     }
 
-    //todo
-    @PutMapping("/{uniqueIdentifier}/cancel-reservation/{flightId}")
-    void flightUpdateDel(@PathVariable String uniqueIdentifier, @PathVariable String flightId){
-        flightService.removePassenger(uniqueIdentifier, flightId);
-    }
-
     @GetMapping("/{id}")
     ResponseEntity<FlightDto> getById(@PathVariable String id) {
         return ResponseEntity.ok(flightService.getById(id));
@@ -104,8 +98,13 @@ public class FlightsController extends RestExceptionHandler {
     }
 
     @GetMapping("/offers")
-    Iterable<FlightDtoView> getOffers(){
-        return flightService.getAllOffers();
+    Iterable<FlightDtoView> getOffers(String destinationLocation){
+        return flightService.getAllOffers(destinationLocation);
+    }
+
+    @PutMapping("/{uniqueIdentifier}/cancel-reservation/{flightId}")
+    void flightUpdateDel(@PathVariable String identifyNumber, @PathVariable String flightId){
+        flightService.cancelPassengerRservation(identifyNumber, flightId);
     }
 
 //    @GetMapping("/search1")

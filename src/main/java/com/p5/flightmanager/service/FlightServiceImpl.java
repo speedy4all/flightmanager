@@ -150,16 +150,19 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void removePassenger(String uniqueIdentifier, String flightId) {
+    public void cancelPassengerRservation(String identifyNumber, String flightId) {
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if(optionalFlight.isPresent()){
-            Optional<Passenger> optionalPassenger = passengerRepository.getByUniqueIdentifier(uniqueIdentifier);
+            Optional<Passenger> optionalPassenger = passengerRepository.getByUniqueIdentifier(identifyNumber);
             if(optionalPassenger.isPresent()){
                 if(optionalFlight.get().getPassengerList().contains(optionalPassenger.get())){
                     optionalFlight.get().getPassengerList().remove(optionalPassenger.get());
                     flightsRepository.save(optionalFlight.get());
                 }
             }
+        }
+        else {
+        //
         }
     }
 
@@ -199,13 +202,13 @@ public class FlightServiceImpl implements FlightService {
 
     /////
     @Override
-    public List<FlightDtoView> getAllOffers() {
+    public List<FlightDtoView> getAllOffers(String destinationLocation) {
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 7);
         Date endDate = cal.getTime();
         Pageable pageable = PageRequest.of(0, 10);
-        List<Flight> list = flightsRepository.getAllOffers(endDate, pageable);
+        List<Flight> list = flightsRepository.getAllOffers(destinationLocation, endDate, pageable);
         List<FlightDtoView> offers = FlightAdapter.toListDtoView(list);
 
         return offers;

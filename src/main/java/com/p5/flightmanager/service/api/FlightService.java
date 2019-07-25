@@ -38,11 +38,11 @@ public interface FlightService {
 
     Flight getFlightById(UUID flightId);
 
-    List<FlightDtoView> getAllOffers();
-
-    void removePassenger(String uniqueIdentifier, String flightId);
+    List<FlightDtoView> getAllOffers(String destinationLocation);
 
     ListResponseDto<ResponseFlightDto> getFlightsByUniqueIdentifier(String identifyNumber);
+
+    void cancelPassengerRservation(String identifyNumber, String flightId);
 
     // Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight);
 }

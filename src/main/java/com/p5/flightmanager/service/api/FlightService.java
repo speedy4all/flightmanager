@@ -11,8 +11,7 @@ import java.util.UUID;
 @Service
 public interface FlightService {
 
-    //List<FlightDto> getAll(String search);
-    List<FlightDtoView> getAll(String search);
+    List<FlightDto> getAll(String search);
 
     FlightDto createFlight(FlightDto flightDto);
 
@@ -28,13 +27,9 @@ public interface FlightService {
 
     List<FlightDto> getBySearchParams(Date departureDate, String location, String destination);
 
-    void addPassenger(String flightId, String passengerId);
+    ListResponseDto<ResponseFlightDto> searchBy(FlightSearchDto searchDto);
 
-    void addPassengerDto(FlightUpdateDto flightUpdateDto);
+    FlightDto addPassenger(FlightUpdateDto flightUpdateDto);
 
     Flight getFlightById(UUID flightId);
-
-    List<FlightDtoView> getAllOffers();
-
-    // Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight);
 }

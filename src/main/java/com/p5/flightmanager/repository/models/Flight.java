@@ -43,7 +43,7 @@ public class Flight extends BaseModel implements Serializable {
         this.plane = plane;
     }
 
-    @OneToOne(fetch = FetchType.LAZY, targetEntity = Plane.class, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, targetEntity = Plane.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "flight_plane", foreignKey = @ForeignKey(name = "fk_flight_plane"))
     private Plane plane;
 

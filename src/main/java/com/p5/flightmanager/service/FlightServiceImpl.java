@@ -159,10 +159,17 @@ public class FlightServiceImpl implements FlightService {
                     optionalFlight.get().getPassengerList().remove(optionalPassenger.get());
                     flightsRepository.save(optionalFlight.get());
                 }
+                else
+                {
+                    throw new NoPassengerInListException();
+                }
             }
-        }
-        else {
-            throw new NoPassengerException();
+            else
+            {
+                throw new NoPassengerException();
+            }
+        } else {
+            throw new NoFlightException();
         }
     }
 

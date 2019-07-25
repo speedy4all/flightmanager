@@ -32,8 +32,17 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "where f.departureDate=:departureDate and a.city=:departureLocation")
     Iterable<Flight> findByDateAndName(Date departureDate, String departureLocation);
 
-    @Query("select f from Flight f where f.passengerList.size < 10 and f.departureDate > now() and f.departureDate < :endDate")
-    List<Flight> getAllOffers(Date endDate, Pageable pageable);
+
+
+
+
+    @Query("select f from Flight f where f.passengerList.size < 10 and f.departureDate > now() and f.departureDate < :endDate " +
+            "and f.durationTime BETWEEN 2 AND 4 and f.flightType = com.p5.flightmanager.service.dto.FlightType.LOCAL and f.destinationLocation.city = :destinationCity")
+    List<Flight> getAllOffers(Date endDate, String destinationCity, Pageable pageable);
+
+
+
+
 
     @Query("select new com.p5.flightmanager.service.dto.FlightDtoSimple(flight.name, departureAirport.city, destinationLocation.city) from Flight flight " +
             "join flight.departureLocation departureAirport " +
@@ -56,6 +65,11 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "join f.plane plane " +
             "where departure.id=:departureId and destination.id=:destinationId and f.departureDate=:departureDate order by f.departureDate desc")
     Iterable<ResponseFlightDto> getByDepartureIdAndDestinationIdAndDepartureDate(UUID departureId, UUID destinationId, Date departureDate);
+
+    @Query("select f from Flight f " +
+            "join f.passengerList p " +
+            "where p.identifyNumber = :uniqueIdentifier ")
+    Iterable<Flight> getMyFlights(String uniqueIdentifier);
 
 //    @Query("select new com.p5.flightmanager.service.dto.FlightDtoParamSearch(flight.name, departureAirport.id, destinationAirport.id) from Flight flight " +
 //            "join flight.departureLocation departureAirport " +

@@ -42,5 +42,7 @@ public interface FlightService {
 
     void removePassenger(String uniqueIdentifier, String flightId);
 
+    ListResponseDto<ResponseFlightDto> getMyFlights(String uniqueIdentifier);
+
     // Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight);
 }

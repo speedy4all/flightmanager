@@ -17,6 +17,9 @@ public class ResponseFlightDto implements Serializable {
     private Double flightDuration;
     private Integer availableSeats;
 
+    public ResponseFlightDto() {
+    }
+
     public ResponseFlightDto(UUID flightId, String departureAirportName, String departureAirportCode, String destinationAirportName, String destinationAirportCode, Date departureDate, Date destinationDate, String planeType, Double flightDuration, Integer availableSeats) {
         this.flightId = flightId;
         this.departureAirportName = departureAirportName;

@@ -96,4 +96,26 @@ public class FlightAdapter {
 
         return flight;
     }
+
+    public static ListResponseDto<ResponseFlightDto> toListResponse(Iterable<Flight> flights) {
+        ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
+        flights.forEach(f -> {
+            ResponseFlightDto responseFlightDto = new ResponseFlightDto();
+            responseFlightDto.setFlightId(f.getId());
+            responseFlightDto.setAvailableSeats(f.getPlane().getSeats()-f.getPassengerList().size());
+            responseFlightDto.setDepartureAirportCode(f.getDepartureLocation().getIata());
+            responseFlightDto.setDepartureAirportName(f.getDepartureLocation().getName());
+            responseFlightDto.setDepartureDate(f.getDepartureDate());
+            responseFlightDto.setDestinationAirportCode(f.getDestinationLocation().getIata());
+            responseFlightDto.setDestinationAirportName(f.getDestinationLocation().getName());
+            responseFlightDto.setFlightDuration(f.getDurationTime());
+            responseFlightDto.setPlaneType(f.getFlightType().toString());
+            responseFlightDto.setDestinationDate(f.getDestinationDate());
+            response.getList().add(responseFlightDto);
+            Long increment =  response.getTotalCount()+1;
+            response.setTotalCount(increment);
+        });
+        return response;
+
+    }
 }

@@ -9,6 +9,9 @@ import {
   ADD_PASSENGER,
   ADD_PASSENGER_ERROR,
   ADD_PASSENGER_SUCCESS,
+  REMOVE_PASSENGER,
+  REMOVE_PASSENGER_SUCCESS,
+  REMOVE_PASSENGER_ERROR
 } from "../Actions/products";
 import {
   showSpinner,
@@ -18,6 +21,7 @@ import {
   showNotification
 } from "./../Actions/ui";
 import { apiRequest } from "./../Actions/api";
+import { getOffers } from "../Actions/offers";
 
 export const searchFlightsFlow = ({ dispatch }) => next => action => {
   next(action);
@@ -64,7 +68,10 @@ export const addPassengerFlow = ({ dispatch }) => next => action => {
       apiRequest(
         "PUT",
         `/flight`,
-        JSON.stringify(action.payload),
+        JSON.stringify({
+          flightId: action.payload.flightId,
+          identifier: action.payload.uniqueIdentifier
+        }),
         ADD_PASSENGER_SUCCESS,
         ADD_PASSENGER_ERROR
       )
@@ -73,12 +80,60 @@ export const addPassengerFlow = ({ dispatch }) => next => action => {
   }
 };
 
+export const removePassengerFlow = ({ dispatch }) => next => action => {
+  next(action);
+
+  if (action.type === REMOVE_PASSENGER) {
+    dispatch(
+      apiRequest(
+        "PUT",
+        `/flight/cancel-reservation`,
+        JSON.stringify({
+          flightId: action.payload.flightId,
+          identifier: action.payload.uniqueIdentifier
+        }),
+        REMOVE_PASSENGER_SUCCESS,
+        REMOVE_PASSENGER_ERROR
+      )
+    );
+    dispatch(showSpinner());
+  }
+};
+
+export const processRemovePassengerSuccess = ({
+  dispatch
+}) => next => action => {
+  next(action);
+
+  if (action.type === REMOVE_PASSENGER_SUCCESS) {
+    dispatch(hideSpinner());
+    if(action.payload.message){
+      dispatch(showNotification(`Error: ${action.payload.message}`, "error"));
+    } else {
+      dispatch(showNotification(`Passenger removed from flight !`, "success"));
+    }
+    
+    dispatch(getOffers());
+  }
+};
+
+export const processRemovePassengerError = ({ dispatch }) => next => action => {
+  next(action);
+
+  if (action.type === REMOVE_PASSENGER_ERROR) {
+    dispatch(hideSpinner());
+    dispatch(
+      showNotification("Passenger removed from flight failed !", "error")
+    );
+  }
+};
+
 export const processAddPassengerSuccess = ({ dispatch }) => next => action => {
   next(action);
 
   if (action.type === ADD_PASSENGER_SUCCESS) {
     dispatch(hideSpinner());
-    dispatch(showNotification("Passenger added to flight !", 'success'));
+    dispatch(showNotification("Passenger added to flight !", "success"));
   }
 };
 
@@ -87,7 +142,7 @@ export const processAddPassengerError = ({ dispatch }) => next => action => {
 
   if (action.type === ADD_PASSENGER_ERROR) {
     dispatch(hideSpinner());
-    dispatch(showNotification(action.payload.message, 'error'));
+    dispatch(showNotification(action.payload.message, "error"));
   }
 };
 
@@ -137,4 +192,7 @@ export const productsMdl = [
   addPassengerFlow,
   processAddPassengerSuccess,
   processAddPassengerError,
+  removePassengerFlow,
+  processRemovePassengerSuccess,
+  processRemovePassengerError
 ];

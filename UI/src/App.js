@@ -4,7 +4,8 @@ import Header from "./Header/Header";
 import {
   getProducts,
   searchFlights,
-  addPassenger
+  addPassenger,
+  removePassenger
 } from "./Redux/Actions/products";
 import { getAirports } from "./Redux/Actions/airports";
 import { connect } from "react-redux";
@@ -12,7 +13,9 @@ import ContentContainer from "./Containers/ContentContainer";
 import {
   menuClicked,
   createSearchAction,
-  hideNotification
+  hideNotification,
+  showReservationWindow,
+  hideReservationWindow
 } from "./Redux/Actions/ui";
 import { Layout, Content, Cell, Button } from "react-mdl";
 import NavigationComponent from "./Navigation/NavigationComponent";
@@ -20,7 +23,8 @@ import SimpleSelect from "./SimpleSelect/simple-select";
 import DatePicker from "./DatePicker/date-picker";
 import AddPassenger from "./AddPassenger/add-passenger";
 import Notification from "./SnackBar/notification";
-import { FLIGHTS_ROUTE } from "./Menu/Menu";
+import { FLIGHTS_ROUTE, OFFERS_ROUTE, RESERVATIONS_ROUTE } from "./Menu/Menu";
+import { getReservations } from "./Redux/Actions/reservations";
 
 class App extends Component {
   constructor(props) {
@@ -37,10 +41,15 @@ class App extends Component {
     this.handleCloseNotification = this.handleCloseNotification.bind(this);
     this.showReservationInfo = this.showReservationInfo.bind(this);
     this.onSearchByName = this.onSearchByName.bind(this);
+    this.onComplete = this.onComplete.bind(this);
+  }
+
+  onComplete(data) {
+    this.props._getReservations(data.uniqueIdentifier);
   }
 
   showReservationInfo() {
-
+    this.props._showReservationInfo();
   }
 
   handleCloseNotification() {
@@ -48,7 +57,15 @@ class App extends Component {
   }
 
   onAddPassenger(data) {
-    this.props._onAddPassenger(data);
+    const selectedMenuList = this.props.ui.menu.filter(
+      menuItem => menuItem.selected
+    );
+    const selectedMenu = selectedMenuList[0];
+    if (selectedMenu.route === RESERVATIONS_ROUTE) {
+      this.props._removePassenger(data);
+    } else {
+      this.props._onAddPassenger(data);
+    }
   }
 
   onSearchFieldChange(field, value) {
@@ -119,13 +136,23 @@ class App extends Component {
               loading={this.props.ui.pending}
               selectedMenu={selectedMenu}
               products={this.props.products}
+              offers={this.props.offers}
               reservations={this.props.reservations}
-              showReservationInfo={this.showReservationInfo}
+              handleShowReservationInfo={this.showReservationInfo}
             />
           </Content>
+          <AddPassenger
+            onComplete={this.onComplete}
+            open={this.props.ui.showReservationWindow}
+            name=""
+            identifier=""
+            flightId=""
+            handleClose={this.props._hideReservationInfo}
+            reservations={this.props.reservations}
+          />
           <Notification
             open={this.props.ui.showNotification}
-            message={this.props.message}
+            message={this.props.ui.message}
             handleCloseNotification={this.handleCloseNotification}
             type={this.props.ui.notificationType}
           />
@@ -141,18 +168,23 @@ const mapStateToProps = state => {
     products: state.products,
     id: state.id,
     airports: state.airports,
-    reservations: state.reservations
+    reservations: state.reservations,
+    offers: state.offers
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   _handleSearch: val => dispatch(createSearchAction(val)),
-  _getProducts: (val) => dispatch(getProducts(val)),
+  _getProducts: val => dispatch(getProducts(val)),
   _menuClickHandler: route => dispatch(menuClicked(route)),
   _getAirports: () => dispatch(getAirports()),
   _serachFlights: data => dispatch(searchFlights(data)),
   _onAddPassenger: data => dispatch(addPassenger(data)),
-  _hideNotification: () => dispatch(hideNotification())
+  _hideNotification: () => dispatch(hideNotification()),
+  _showReservationInfo: () => dispatch(showReservationWindow()),
+  _hideReservationInfo: () => dispatch(hideReservationWindow()),
+  _getReservations: identifier => dispatch(getReservations(identifier)),
+  _removePassenger: data => dispatch(removePassenger(data))
 });
 
 export default connect(

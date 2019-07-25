@@ -7,10 +7,9 @@ import {
 import {
   showSpinner,
   hideSpinner,
-  hideDeleteDialog
+  hideReservationWindow,
 } from "../Actions/ui";
 import { apiRequest } from "../Actions/api";
-import { RESERVATIONS_ROUTE } from "../../Menu/Menu";
 
 // this middleware only care about the getProducts action
 export const getReservationsFlow = ({ dispatch }) => next => action => {
@@ -20,7 +19,7 @@ export const getReservationsFlow = ({ dispatch }) => next => action => {
     dispatch(
       apiRequest(
         "GET",
-        `/flight/reservations?passengerIdentifier=${action.payload}`,
+        `/flight/${action.payload}/my-flights`,
         null,
         FETCH_RESERVATIONS_SUCCESS,
         FETCH_RESERVATIONS_ERROR
@@ -35,7 +34,17 @@ export const processReservationsCollection = ({ dispatch }) => next => action =>
   next(action);
 
   if (action.type === FETCH_RESERVATIONS_SUCCESS) {
-    dispatch(updateReservations(action.payload));
+    dispatch(updateReservations(action.payload.list));
+    dispatch(hideReservationWindow());
+    dispatch(hideSpinner());
+  }
+};
+
+export const processReservationsCollectionError = ({ dispatch }) => next => action => {
+  next(action);
+
+  if (action.type === FETCH_RESERVATIONS_ERROR) {
+    dispatch(hideReservationWindow());
     dispatch(hideSpinner());
   }
 };
@@ -43,4 +52,5 @@ export const processReservationsCollection = ({ dispatch }) => next => action =>
 export const reservationsMdl = [
   getReservationsFlow,
   processReservationsCollection,
+  processReservationsCollectionError,
 ];

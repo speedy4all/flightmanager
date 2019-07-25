@@ -5,6 +5,7 @@ import { api } from "./Middleware/api";
 import { uiMdl } from "./Middleware/ui";
 import { airportsMdl } from "./Middleware/airports";
 import { reservationsMdl } from "./Middleware/reservations";
+import { offersMdl } from "./Middleware/offers";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -16,6 +17,7 @@ export const store = createStore(
       ...uiMdl,
       ...airportsMdl,
       ...reservationsMdl,
+      ...offersMdl,
       api
     )
   )

@@ -11,27 +11,35 @@ import {
   hideDialog,
   updateProductQuantity
 } from "./../Actions/ui";
-import { FLIGHTS_ROUTE } from "./../../Menu/Menu";
+import { FLIGHTS_ROUTE, OFFERS_ROUTE } from "./../../Menu/Menu";
 import { getProducts, FETCH_PRODUCTS_SUCCESS } from "../Actions/products";
 import { FETCH_PRODUCTS_ERROR } from "./../Actions/products";
 import { apiRequest } from "../Actions/api";
+import { getOffers } from "../Actions/offers";
 
 export const menuChangedFlow = ({ dispatch, getState }) => next => action => {
   next(action);
 
   if (action.type === MENU_CHANGED) {
     let updateProducts = false;
+    let updateOffers = false;
     const state = getState();
     const newMenu = state.ui.menu.map(item => {
       item.selected = item.route === action.payload;
       if (item.selected && item.route === FLIGHTS_ROUTE) {
         updateProducts = true;
       }
+      if (item.selected && item.route === OFFERS_ROUTE) {
+        updateOffers = true;
+      }
       return item;
     });
 
     if (updateProducts) {
       dispatch(getProducts());
+    }
+    if(updateOffers) {
+      dispatch(getOffers());
     }
 
     dispatch(newMenuActive(newMenu));

@@ -2,6 +2,7 @@ package com.p5.flightmanager.web;
 
 
 import com.p5.flightmanager.service.api.FlightService;
+import com.p5.flightmanager.service.dto.CancelReservationDto;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import com.p5.flightmanager.service.dto.FlightSearchDto;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import java.util.Date;
@@ -37,6 +39,24 @@ public class FlightsController extends RestExceptionHandler {
     ResponseEntity<ListResponseDto<ResponseFlightDto>> getAll(FlightSearchDto searchDto) {
 
         return ResponseEntity.ok(flightService.searchBy(searchDto));
+    }
+
+    @GetMapping("/{identifier}/my-flights")
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAllByIdentifier(@PathVariable String identifier) {
+
+        return ResponseEntity.ok(flightService.getAll("Paris"));
+    }
+
+    @PutMapping("/cancel-reservation")
+    ResponseEntity<CancelReservationDto> cancelReservation(@RequestBody CancelReservationDto cancelReservationDto) {
+
+        return ResponseEntity.ok(flightService.cancelReservation(cancelReservationDto));
+    }
+
+    @GetMapping("/offers")
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAllOffers() {
+
+        return ResponseEntity.ok(flightService.findAll());
     }
 
     @GetMapping("/search")

@@ -10,9 +10,15 @@ import {
   HIDE_DELETE_DIALOG,
   SHOW_DELETE_DIALOG,
   SHOW_NOTIFICATION,
-  HIDE_NOTIFICATION
+  HIDE_NOTIFICATION,
+  SHOW_RESERVATION_WINDOW,
+  HIDE_RESERVATION_WINDOW
 } from "../Actions/ui";
-import { FLIGHTS_ROUTE, OFFERS_ROUTE, RESERVATIONS_ROUTE } from "./../../Menu/Menu";
+import {
+  FLIGHTS_ROUTE,
+  OFFERS_ROUTE,
+  RESERVATIONS_ROUTE
+} from "./../../Menu/Menu";
 
 const initUi = {
   pending: false,
@@ -22,7 +28,9 @@ const initUi = {
   isLoggedIn: true,
   shoppingCart: [],
   showNotification: false,
-  notificationType: 'success',
+  showReservationWindow: false,
+  notificationType: "success",
+  message: '',
   menu: [
     {
       name: "Flights",
@@ -46,10 +54,20 @@ export function uiReducer(state = initUi, action) {
   switch (action.type) {
     case SHOW_SPINNER:
       return { ...state, pending: true };
-    
+    case SHOW_RESERVATION_WINDOW:
+      return { ...state, showReservationWindow: true };
+
+    case HIDE_RESERVATION_WINDOW:
+      return { ...state, showReservationWindow: false };
+
     case SHOW_NOTIFICATION:
-      return { ...state, showNotification: true, notificationType: action.meta };
-    
+      return {
+        ...state,
+        showNotification: true,
+        message: action.payload,
+        notificationType: action.meta
+      };
+
     case HIDE_NOTIFICATION:
       return { ...state, showNotification: false };
 

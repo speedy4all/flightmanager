@@ -8,6 +8,9 @@ export const SEARCH_FLIGHTS = "[flights] Search";
 export const ADD_PASSENGER = "[flights] Add passenger";
 export const ADD_PASSENGER_SUCCESS = "[flights] Add passenger success";
 export const ADD_PASSENGER_ERROR = "[flights] Add passenger error";
+export const REMOVE_PASSENGER = "[flights] remove passenger";
+export const REMOVE_PASSENGER_SUCCESS = "[flights] remove passenger success";
+export const REMOVE_PASSENGER_ERROR = "[flights] remove passenger error";
 
 export const getProducts = (val) => ({
   type: GET_PRODUCTS,
@@ -41,5 +44,15 @@ export const addPassenger = data => ({
 
 export const setPassengerAddError = data => ({
   type: ADD_PASSENGER_ERROR,
+  payload: data
+});
+
+export const removePassenger = data => ({
+  type: REMOVE_PASSENGER,
+  payload: data
+});
+
+export const removePassengerError = data => ({
+  type: REMOVE_PASSENGER_ERROR,
   payload: data
 });

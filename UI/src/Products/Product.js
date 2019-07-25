@@ -12,12 +12,13 @@ import {
   ListItemAction
 } from "react-mdl";
 import AddPassenger from "../AddPassenger/add-passenger";
+import { identifier } from "@babel/types";
 
 class Product extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpen: props.showReservation
     };
 
     this.onComplete = this.onComplete.bind(this);
@@ -53,6 +54,7 @@ class Product extends React.Component {
           identifier=""
           flightId={flightId}
           handleClose={this.handleClose}
+          reservations={this.props.reservations}
         />
         <ListItem twoLine style={{ height: 150 }}>
           <ListItemContent
@@ -114,7 +116,7 @@ class Product extends React.Component {
             size="sm"
             onClick={() => this.setState({ isOpen: true })}
           >
-            Select flight
+            {this.props.reservations ? "Cancel reservation" : "Select flight"}
           </Button>
         </ListItem>
       </List>
@@ -123,7 +125,7 @@ class Product extends React.Component {
 }
 
 Product.propTypes = {
-  id: PropTypes.string.isRequired,
+  flightId: PropTypes.string.isRequired,
   name: PropTypes.string,
   fullFlightDescription: PropTypes.string,
   departureDate: PropTypes.string,

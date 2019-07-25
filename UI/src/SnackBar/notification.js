@@ -101,12 +101,12 @@ export default function Notification(props) {
         <MySnackbarContentWrapper
           onClose={props.handleCloseNotification}
           variant="error"
-          message="Action successful"
+          message={props.message}
         /> : 
         <MySnackbarContentWrapper
         onClose={props.handleCloseNotification}
         variant="success"
-        message="Some error occured"
+        message={props.message}
       />}
       </Snackbar>
     </div>

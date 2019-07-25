@@ -1,6 +1,7 @@
 package com.p5.flightmanager.service.api;
 
 import com.p5.flightmanager.repository.models.Flight;
+import com.p5.flightmanager.service.dto.CancelReservationDto;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import com.p5.flightmanager.service.dto.FlightSearchDto;
@@ -38,4 +39,8 @@ public interface FlightService {
     FlightDto addPassenger(FlightUpdateDto flightUpdateDto);
 
     Flight getFlightById(UUID flightId);
+
+    ListResponseDto<ResponseFlightDto> findAll();
+
+    CancelReservationDto cancelReservation(CancelReservationDto cancelReservationDto);
 }

@@ -7,6 +7,7 @@ import com.p5.flightmanager.repository.models.Passenger;
 import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.api.PassengerService;
+import com.p5.flightmanager.service.dto.CancelReservationDto;
 import com.p5.flightmanager.service.dto.FlightAdapter;
 import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
@@ -20,6 +21,7 @@ import com.p5.flightmanager.service.exceptions.ApiSubError;
 import com.p5.flightmanager.service.exceptions.EmptyFieldException;
 import com.p5.flightmanager.service.exceptions.FlightValidationException;
 import com.p5.flightmanager.service.exceptions.NoFlightException;
+import com.p5.flightmanager.service.exceptions.NoPassengerException;
 import com.p5.flightmanager.service.exceptions.PassengerExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -158,6 +160,31 @@ public class FlightServiceImpl implements FlightService {
         }
         throw new NoFlightException();
 
+    }
+
+    @Override
+    public ListResponseDto<ResponseFlightDto> findAll() {
+        Iterable<Flight> all = flightsRepository.findAll();
+        ListResponseDto<ResponseFlightDto> dtoListResponseDto = FlightAdapter.toResponseListDto(all);
+        return dtoListResponseDto;
+    }
+
+    @Override
+    public CancelReservationDto cancelReservation(CancelReservationDto cancelReservationDto) {
+        Optional<Flight> flightOptional = flightsRepository.findById(UUID.fromString(cancelReservationDto.getFlightId()));
+        if(flightOptional.isPresent()) {
+            Flight flight = flightOptional.get();
+            Optional<Passenger> optionalPassenger = flight.getPassengerList().stream().filter(p -> p.getIdentifyNumber().equals(cancelReservationDto.getIdentifier())).findFirst();
+            if(optionalPassenger.isPresent()) {
+                flight.getPassengerList().remove(optionalPassenger.get());
+                flightsRepository.save(flight);
+                return cancelReservationDto;
+            } else {
+                throw new NoPassengerException();
+            }
+        } else {
+            throw new NoFlightException();
+        }
     }
 
     @Override

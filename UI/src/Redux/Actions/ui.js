@@ -14,6 +14,8 @@ export const SHOW_DELETE_DIALOG = "[ui] show delete dialog";
 export const HIDE_DELETE_DIALOG = "[ui] hide delete dialog";
 export const HIDE_NOTIFICATION = "[ui] hide notification";
 export const SHOW_NOTIFICATION = "[ui] show notification";
+export const SHOW_RESERVATION_WINDOW = "[ui] show reservation window";
+export const HIDE_RESERVATION_WINDOW = "[ui] hide reservation window";
 
 export const showSpinner = () => ({
   type: SHOW_SPINNER
@@ -86,4 +88,12 @@ export const showNotification = (msg, type) => ({
   type: SHOW_NOTIFICATION,
   payload: msg,
   meta: type,
+});
+
+export const showReservationWindow = () => ({
+  type: SHOW_RESERVATION_WINDOW,
+});
+
+export const hideReservationWindow = () => ({
+  type: HIDE_RESERVATION_WINDOW,
 });

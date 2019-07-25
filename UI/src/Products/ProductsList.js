@@ -5,9 +5,11 @@ import { Grid, Cell, Button } from "react-mdl";
 
 const ProductsList = props => {
   const products = props.products.map(product => (
-    <Cell col={11} key={product.id}>
+    <Cell col={11} key={product.flightId}>
       <Product
         {...product}
+        offers={props.offersRoute}
+        reservations={props.reservations}
         editMode={props.editMode}
         onAddPassenger={props.onAddPassenger}
       />
@@ -16,7 +18,7 @@ const ProductsList = props => {
   return (
     <React.Fragment>
       {props.reservations ? (
-        <Button raised colored size="sm" onClick={props.showReservationInfo}>
+        <Button raised colored size="sm" onClick={props.handleShowReservationInfo}>
           Passenger info
         </Button>
       ) : null}
@@ -30,7 +32,7 @@ const ProductsList = props => {
 ProductsList.propTypes = {
   products: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      flightId: PropTypes.string.isRequired,
       name: PropTypes.string,
       fullFlightDescription: PropTypes.string,
       departureDate: PropTypes.string,

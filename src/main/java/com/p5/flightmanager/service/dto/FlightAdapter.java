@@ -72,7 +72,8 @@ public class FlightAdapter {
         flights.forEach(f -> {
             ResponseFlightDto responseFlightDto = new ResponseFlightDto();
             responseFlightDto.setFlightId(f.getId());
-            
+            responseFlightDto.setDepartureDate(f.getDepartureDate());
+            responseFlightDto.setDestinationDate(f.getDestinationDate());
 
             response.getList().add(responseFlightDto);
         });

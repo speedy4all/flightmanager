@@ -1,6 +1,7 @@
 package com.p5.flightmanager.repository;
 
 import com.p5.flightmanager.repository.models.Flight;
+import com.p5.flightmanager.service.dto.FlightDto;
 import com.p5.flightmanager.service.dto.FlightDtoSimple;
 import com.p5.flightmanager.service.dto.ResponseFlightDto;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
     @Query("select f from Flight f where lower(name) like concat('%', lower(?1), '%')")
     Iterable<Flight> filterByName(String search);
 
+
     @Query("select f from Flight f where f.departureDate=:departureDate and f.departureLocation=:location and f.destinationLocation=:destination")
     Iterable<Flight> getBySearchParams(Date departureDate, String location, String destination);
 
@@ -29,14 +31,31 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "where f.departureDate=:departureDate and a.city=:departureLocation")
     Iterable<Flight> findByDateAndName(Date departureDate, String departureLocation);
 
-    @Query("select f from Flight f where f.passengerList.size < 10 and f.departureDate > now() and f.departureDate < :endDate")
-    List<Flight> getAllOffers(Date endDate, Pageable pageable);
+
+
+
+
+    @Query("select f from Flight f where f.passengerList.size < 10 and f.departureDate > now() and f.departureDate < :endDate " +
+            "and f.durationTime BETWEEN 2 AND 4 and f.flightType = com.p5.flightmanager.service.dto.FlightType.LOCAL and f.destinationLocation.city = :destinationCity")
+    List<Flight> getAllOffers(Date endDate, String destinationCity, Pageable pageable);
+
+
+
+
 
     @Query("select new com.p5.flightmanager.service.dto.FlightDtoSimple(flight.name, departureAirport.city, destinationLocation.city) from Flight flight " +
             "join flight.departureLocation departureAirport " +
             "join flight.destinationLocation destinationLocation " +
             "where flight.departureDate=:departureDate and departureAirport.city=:departureLocation")
     Iterable<FlightDtoSimple> findByNameAndDAteSimple(Date departureDate, String departureLocation);
+
+
+    ///
+//    @Query("select f from Flight f " +
+//            "join f.departureLocation departure " +
+//            "join f.destinationLocation destination " +
+//            "where departure.id=:departureId and destination.id=:destinationId and f.departureDate=:departureDate order by f.departureDate desc")
+//    Iterable<Flight> getByDepartureIdAndDestinationIdAndDepartureDate(UUID departureId, UUID destinationId, Date departureDate);
 
     @Query("select distinct new com.p5.flightmanager.service.dto.ResponseFlightDto(f.id, departure.name, departure.iata, destination.name, destination.iata, f.departureDate, f.destinationDate, plane.model, f.durationTime, plane.seats - f.passengerList.size) from Flight f " +
             "join f.departureLocation departure " +
@@ -45,6 +64,9 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "join f.plane plane " +
             "where departure.id=:departureId and destination.id=:destinationId and f.departureDate=:departureDate order by f.departureDate desc")
     Iterable<ResponseFlightDto> getByDepartureIdAndDestinationIdAndDepartureDate(UUID departureId, UUID destinationId, Date departureDate);
+
+    @Query("select f from Flight f join f.passengerList pl where pl.identifyNumber = :identifyNumber")
+    Iterable<Flight> getFlightsByUniqueIdentifier(String identifyNumber);
 
 //    @Query("select new com.p5.flightmanager.service.dto.FlightDtoParamSearch(flight.name, departureAirport.id, destinationAirport.id) from Flight flight " +
 //            "join flight.departureLocation departureAirport " +

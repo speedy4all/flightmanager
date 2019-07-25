@@ -72,12 +72,6 @@ public class Flight extends BaseModel implements Serializable {
             indexes = {@Index(columnList = "passenger_id", name = "ix_flight_passenger")})
     List<Passenger> passengerList = new ArrayList<>();
 
-
-
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = Plane.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "plane_id", foreignKey = @ForeignKey(name = "fk_flight_plane"))
-    Plane plane;
-
     public Flight() {
         //default constructor
     }
@@ -101,13 +95,6 @@ public class Flight extends BaseModel implements Serializable {
         this.destinationDate = source.destinationDate;
     }
 
-    public Plane getPlane() {
-        return plane;
-    }
-
-    public void setPlane(Plane plane) {
-        this.plane = plane;
-    }
 
     public String getName() {
         return name;

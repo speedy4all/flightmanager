@@ -9,9 +9,8 @@ export const ADD_PASSENGER = "[flights] Add passenger";
 export const ADD_PASSENGER_SUCCESS = "[flights] Add passenger success";
 export const ADD_PASSENGER_ERROR = "[flights] Add passenger error";
 
-export const getProducts = (val) => ({
-  type: GET_PRODUCTS,
-  payload: val,
+export const getProducts = () => ({
+  type: GET_PRODUCTS
 });
 
 export const updateProducts = data => ({

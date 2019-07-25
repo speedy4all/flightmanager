@@ -46,7 +46,7 @@ export const getProductsFlow = ({ dispatch }) => next => action => {
     dispatch(
       apiRequest(
         "GET",
-        `/flight/search?name=${action.payload}`,
+        `/flight?search=`,
         null,
         FETCH_PRODUCTS_SUCCESS,
         FETCH_PRODUCTS_ERROR
@@ -96,7 +96,7 @@ export const processProductsCollection = ({ dispatch }) => next => action => {
   next(action);
 
   if (action.type === FETCH_PRODUCTS_SUCCESS) {
-    dispatch(updateProducts(action.payload.list));
+    dispatch(updateProducts(action.payload));
     dispatch(hideSpinner());
   }
 };

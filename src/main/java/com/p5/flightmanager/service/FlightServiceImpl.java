@@ -38,6 +38,7 @@ public class FlightServiceImpl implements FlightService {
        Flight flight = validateByFlightId(flightSearchCancelDto.getFlightId());
        Passenger passenger=validateByPassengerId(flightSearchCancelDto.getIdentifier());
 
+       //iterez lista de pasageri de pe flight
         Optional<Passenger> passenger1 = flight.getPassengerList().stream().filter(p -> p.getIdentifyNumber().equals(flightSearchCancelDto.getIdentifier())).findFirst();
         if(passenger1.isPresent()){
             flight.getPassengerList().remove(passenger1.get());

@@ -102,13 +102,18 @@ public class FlightsController extends RestExceptionHandler {
         return flightService.getAllOffers(destinationLocation);
     }
 
-    @PutMapping("/{identifyNumber}/cancel-reservation/{flightId}")
-    void flightUpdateDel(@PathVariable String identifyNumber, @PathVariable String flightId){
-        flightService.cancelPassengerReservation(identifyNumber, flightId);
+    @PutMapping("/cancel-reservation")
+    void flightDelete(@RequestBody CancelReservationDto cancelReservationDto)
+    {
+        flightService.cancelPassengerReservation(cancelReservationDto);
     }
 
 //    @GetMapping("/search1")
 //    Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(@Valid SearchParamDtoFlight searchParamDtoFlight){
 //        return flightService.getByDepIdAndDestIdAndDepDate(searchParamDtoFlight);
 //    }
+    //  @PutMapping("/{identifyNumber}/cancel-reservation/{flightId}")
+    //    void flightUpdateDel(@PathVariable String identifyNumber, @PathVariable String flightId){
+    //        flightService.cancelPassengerReservation(identifyNumber, flightId);
+    //    }
 }

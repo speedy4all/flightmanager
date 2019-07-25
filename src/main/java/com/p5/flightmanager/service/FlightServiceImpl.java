@@ -150,7 +150,9 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public void cancelPassengerReservation(String identifyNumber, String flightId) {
+    public void cancelPassengerReservation(CancelReservationDto cancelReservationDto) {
+        String flightId = cancelReservationDto.getFlightId();
+        String identifyNumber = cancelReservationDto.getIdentifyNumber();
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightId));
         if(optionalFlight.isPresent()){
             Optional<Passenger> optionalPassenger = passengerRepository.getByUniqueIdentifier(identifyNumber);

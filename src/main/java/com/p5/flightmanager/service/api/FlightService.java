@@ -42,7 +42,7 @@ public interface FlightService {
 
     ListResponseDto<ResponseFlightDto> getFlightsByUniqueIdentifier(String identifyNumber);
 
-    void cancelPassengerReservation(String identifyNumber, String flightId);
+    void cancelPassengerReservation(CancelReservationDto cancelReservationDto);
 
     // Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight);
 }

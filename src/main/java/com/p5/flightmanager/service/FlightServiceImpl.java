@@ -203,11 +203,9 @@ public class FlightServiceImpl implements FlightService {
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 7);
-        Date endDate = cal.getTime(); // get back a Date objec
-        String destinationCity = "Bucuresti";
-
+        Date endDate = cal.getTime();
         Pageable pageable = PageRequest.of(0, 10);
-        List<Flight> list = flightsRepository.getAllOffers(endDate, destinationCity, pageable);
+        List<Flight> list = flightsRepository.getAllOffers(endDate, pageable);
         List<FlightDtoView> offers = FlightAdapter.toListDtoView(list);
 
         return offers;

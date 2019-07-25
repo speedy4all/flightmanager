@@ -43,8 +43,8 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
     Iterable<ResponseFlightDto> getByDepartureIdAndDestinationIdAndDepartureDate(UUID departureId, UUID destinationId, Date departureDate);
 
     @Query("select f from Flight f where f.passengerList.size < 20 and f.departureDate > now() and f.departureDate < :endDate " +
-            "and f.destinationLocation.city = :destinationCity and f.deleted = false")
-    List<Flight> getAllOffers(Date endDate, String destinationCity, Pageable pageable);
+            "and f.deleted = false")
+    List<Flight> getAllOffers(Date endDate, Pageable pageable);
 
 
     @Query("select f from Flight f join f.passengerList pl where pl.identifyNumber = :identifyNumber and f.deleted = false")

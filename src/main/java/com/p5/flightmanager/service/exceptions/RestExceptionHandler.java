@@ -66,6 +66,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "Missing arguments", ex));
     }
 
+    @ExceptionHandler(FlightException.class)
+    protected  ResponseEntity<Object> handleFlightException(FlightException ex){
+        return buildResponseEntity(ex.getApiError());
+    }
+
     @ExceptionHandler(FlightValidationException.class)
     protected ResponseEntity<Object> handleFlightValidateException(FlightValidationException ex){
         return buildResponseEntity(ex.getApiError());

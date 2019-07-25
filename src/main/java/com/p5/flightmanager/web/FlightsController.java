@@ -45,6 +45,10 @@ public class FlightsController extends RestExceptionHandler {
         return ResponseEntity.ok(flightService.searchBy(searchDto));
     }
 
+    @GetMapping("/{uniqueIdentifier}/my-flights")
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getMyFlights(@PathVariable String uniqueIdentifier){
+        return ResponseEntity.ok(flightService.getMyFlights(uniqueIdentifier));
+    }
 
     @GetMapping("/search-by")
     ResponseEntity<List<FlightDto>> getBySearchParams(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date departureDate, @RequestParam String location, @RequestParam String destination) {
@@ -56,7 +60,8 @@ public class FlightsController extends RestExceptionHandler {
         flightService.addPassengerDto(flightUpdateDto);
     }
 
-    @PutMapping("/{uniqueIdentifier}/remove-from/{flightId}")
+    //todo
+    @PutMapping("/{uniqueIdentifier}/cancel-reservation/{flightId}")
     void flightUpdateDel(@PathVariable String uniqueIdentifier, @PathVariable String flightId){
         flightService.removePassenger(uniqueIdentifier, flightId);
     }

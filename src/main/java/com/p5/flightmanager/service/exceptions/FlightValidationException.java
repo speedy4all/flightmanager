@@ -8,6 +8,10 @@ public class FlightValidationException extends RuntimeException {
         this.apiError = apiError;
     }
 
+    public FlightValidationException(String message) {
+        super(message);
+    }
+
     public ApiError getApiError() {
         return apiError;
     }

@@ -164,6 +164,14 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public ListResponseDto<ResponseFlightDto> getMyFlights(String uniqueIdentifier) {
+        Iterable<Flight> flights = flightsRepository.getMyFlights(uniqueIdentifier);
+
+        ListResponseDto<ResponseFlightDto> responseFlightDtoListResponseDto = FlightAdapter.toListResponse(flights);
+        return responseFlightDtoListResponseDto;
+    }
+
+    @Override
     public void addPassengerDto(FlightUpdateDto flightUpdateDto) {
         validateUpdateFlight(flightUpdateDto);
 
@@ -198,10 +206,10 @@ public class FlightServiceImpl implements FlightService {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 7);
         Date endDate = cal.getTime(); // get back a Date objec
-
+        String destinationCity = "Bucuresti";
 
         Pageable pageable = PageRequest.of(0, 10);
-        List<Flight> list = flightsRepository.getAllOffers(endDate, pageable);
+        List<Flight> list = flightsRepository.getAllOffers(endDate, destinationCity, pageable);
         List<FlightDtoView> offers = FlightAdapter.toListDtoView(list);
 
         return offers;

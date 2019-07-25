@@ -31,12 +31,6 @@ public class AirportController {
         return ResponseEntity.ok(airportService.getAll(search));
     }
 
-    @GetMapping("/list")
-    ResponseEntity<List<AirportDtoView>> getAirports(){
-
-        return ResponseEntity.ok(airportService.getAirports());
-    }
-
     @GetMapping("/{id}")
     ResponseEntity<AirportDto> getById(@PathVariable String id){
 

@@ -1,6 +1,5 @@
 package com.p5.flightmanager.web;
 
-
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.dto.*;
 import com.p5.flightmanager.service.exceptions.RestExceptionHandler;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import java.util.Date;
 import java.util.List;
 
@@ -32,9 +32,10 @@ public class FlightsController extends RestExceptionHandler {
         return ResponseEntity.ok(flightService.searchBy(searchDto));
     }
 
-    @GetMapping("/search-by")
-    ResponseEntity<List<FlightDto>> getBySearchParams(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date departureDate, @RequestParam String location, @RequestParam String destination) {
-        return ResponseEntity.ok(flightService.getBySearchParams(departureDate, location, destination));
+    @GetMapping("/search")
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAllByName(@QueryParam("name") String name) {
+
+        return ResponseEntity.ok(flightService.getAll(name));
     }
 
     @GetMapping("/{id}")
@@ -62,8 +63,18 @@ public class FlightsController extends RestExceptionHandler {
         flightService.addPassengerToFlight(flightId, passengerId);
     }
 
-    @GetMapping("/search")
-    Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
-        return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
+    @GetMapping("/offers")
+    Iterable<FlightDtoView> getOffers(){
+        return flightService.getAllOffers();
+    }
+
+    @GetMapping("/{identifyNumber}/my-flights")
+    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAllFlightsForPassenger(@PathVariable String identifyNumber){
+        return ResponseEntity.ok(flightService.getAllFlightsForPassenger(identifyNumber));
+    }
+
+    @PutMapping("/cancel-reservation")
+    void cancelPassengerReservation(@RequestBody CancelReservationDto cancelReservationDto){
+        flightService.cancelReservation(cancelReservationDto);
     }
 }

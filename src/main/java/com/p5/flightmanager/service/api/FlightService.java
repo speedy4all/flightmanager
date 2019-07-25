@@ -6,12 +6,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public interface FlightService {
 
-    List<FlightDto> getAll(String search);
+    ListResponseDto<ResponseFlightDto> getAll(String search);
+
+    ListResponseDto<ResponseFlightDto> getAllFlightsForPassenger(String identifyNumber);
 
     FlightDto createFlight(FlightDto flightDto);
 
@@ -32,4 +35,8 @@ public interface FlightService {
     FlightDto addPassenger(FlightUpdateDto flightUpdateDto);
 
     Flight getFlightById(UUID flightId);
+
+    Iterable<FlightDtoView> getAllOffers();
+
+    void cancelReservation(CancelReservationDto cancelReservationDto);
 }

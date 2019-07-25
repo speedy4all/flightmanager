@@ -2,6 +2,10 @@ package com.p5.flightmanager.service.dto;
 
 import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
+import com.p5.flightmanager.service.exceptions.ApiError;
+import com.p5.flightmanager.service.exceptions.ApiSubError;
+import com.p5.flightmanager.service.exceptions.FlightException;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +36,48 @@ public class FlightAdapter {
         flightDto.setPassengerDtos(PassengerAdapter.toListDto(flight.getPassengerList()));
 
         return flightDto;
+    }
+
+    public static ListResponseDto<ResponseFlightDto> toResponseListDto(Iterable<Flight> flights) {
+
+        ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
+        flights.forEach(f -> {
+            ResponseFlightDto responseFlightDto = new ResponseFlightDto();
+            responseFlightDto.setFlightId(f.getId());
+            responseFlightDto.setAvailableSeats(f.getPlane().getSeats()-f.getPassengerList().size());
+            responseFlightDto.setDepartureAirportCode(f.getDepartureLocation().getIata());
+            responseFlightDto.setDepartureAirportName(f.getDepartureLocation().getName());
+            responseFlightDto.setDestinationAirportCode(f.getDestinationLocation().getIata());
+            responseFlightDto.setDestinationAirportName(f.getDestinationLocation().getName());
+            responseFlightDto.setDepartureDate(f.getDepartureDate());
+            responseFlightDto.setDestinationDate(f.getDestinationDate());
+            responseFlightDto.setFlightDuration(f.getDurationTime());
+            responseFlightDto.setPlaneType(f.getFlightType().toString());
+            response.getList().add(responseFlightDto);
+        });
+        return response;
+    }
+
+    public static ListResponseDto<ResponseFlightDto> toListResponse(Iterable<Flight> flights) {
+        ListResponseDto<ResponseFlightDto> response = new ListResponseDto<>();
+        flights.forEach(f -> {
+            verifyFlight(f);
+            ResponseFlightDto responseFlightDto = new ResponseFlightDto();
+            responseFlightDto.setFlightId(f.getId());
+            responseFlightDto.setAvailableSeats(f.getPlane().getSeats()-f.getPassengerList().size());
+            responseFlightDto.setDepartureAirportCode(f.getDepartureLocation().getIata());
+            responseFlightDto.setDepartureAirportName(f.getDepartureLocation().getName());
+            responseFlightDto.setDepartureDate(f.getDepartureDate());
+            responseFlightDto.setDestinationAirportCode(f.getDestinationLocation().getIata());
+            responseFlightDto.setDestinationAirportName(f.getDestinationLocation().getName());
+            responseFlightDto.setFlightDuration(f.getDurationTime());
+            responseFlightDto.setPlaneType(f.getFlightType().toString());
+            responseFlightDto.setDestinationDate(f.getDestinationDate());
+            response.getList().add(responseFlightDto);
+            Long increment =  response.getTotalCount()+1;
+            response.setTotalCount(increment);
+        });
+        return response;
     }
 
     public final static FlightDtoView toDtoView(Flight flight) {
@@ -81,6 +127,24 @@ public class FlightAdapter {
         FlightAdapter.fromDto(flightDto, flight);
 
         return flight;
+
+    }
+
+    private static final void verifyFlight(Flight flight) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        if(flight.getPlane() == null) {
+            apiError.getSubErrors().add(new ApiSubError("plane", "not found"));
+        }
+        if(flight.getDestinationLocation() == null) {
+            apiError.getSubErrors().add(new ApiSubError("destination airport", "not found"));
+        }
+        if(flight.getDepartureLocation() == null) {
+            apiError.getSubErrors().add(new ApiSubError("departure airport", "not found"));
+        }
+
+        if(apiError.getSubErrors().size() > 0){
+            throw new FlightException(apiError);
+        }
 
     }
 

@@ -1,14 +1,9 @@
 package com.p5.flightmanager.service.exceptions;
 
-public class NoPassengerException extends RuntimeException {
-
+public class CancelReservationException extends RuntimeException {
     private ApiError apiError;
 
-    public NoPassengerException(){
-
-    }
-
-    public NoPassengerException(ApiError apiError) {
+    public CancelReservationException(ApiError apiError) {
         this.apiError = apiError;
     }
 
@@ -18,10 +13,5 @@ public class NoPassengerException extends RuntimeException {
 
     public void setApiError(ApiError apiError) {
         this.apiError = apiError;
-    }
-
-    @Override
-    public String getMessage(){
-        return "No passenger found!";
     }
 }

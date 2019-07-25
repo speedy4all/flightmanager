@@ -1,6 +1,9 @@
+
 package com.p5.flightmanager.service;
 
+import com.p5.flightmanager.repository.AirportRepository;
 import com.p5.flightmanager.repository.PassengerRepository;
+import com.p5.flightmanager.repository.models.Airport;
 import com.p5.flightmanager.repository.models.Flight;
 import com.p5.flightmanager.repository.FlightsRepository;
 import com.p5.flightmanager.repository.models.Passenger;
@@ -8,22 +11,15 @@ import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.api.PassengerService;
 import com.p5.flightmanager.service.dto.*;
-import com.p5.flightmanager.service.exceptions.ApiError;
-import com.p5.flightmanager.service.exceptions.ApiSubError;
-import com.p5.flightmanager.service.exceptions.EmptyFieldException;
-import com.p5.flightmanager.service.exceptions.FlightValidationException;
-import com.p5.flightmanager.service.exceptions.NoFlightException;
-import com.p5.flightmanager.service.exceptions.PassengerExistException;
+import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -35,23 +31,27 @@ public class FlightServiceImpl implements FlightService {
     private PassengerRepository passengerRepository;
 
     @Autowired
-    private AirportService airportService;
-
-    @Autowired
     private PassengerService passengerService;
 
 
     @Override
-    public List<FlightDto> getAll(String search) {
+    public ListResponseDto<ResponseFlightDto> getAll(String search) {
 
-        return FlightAdapter.toListDto(flightsRepository.filterByName(search));
+        return FlightAdapter.toResponseListDto(flightsRepository.filterByName(search));
     }
 
-//    @Override
-//    public List<FlightDtoView> getAll(String search) {
-//
-//        return FlightAdapter.toListDtoView(flightsRepository.filterByName(search));
-//    }
+    @Override
+    public ListResponseDto<ResponseFlightDto> getAllFlightsForPassenger(String identifyNumber) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        if(StringUtils.isEmpty(identifyNumber)){
+            apiError.getSubErrors().add(new ApiSubError("flightId", "Null or empty received!"));
+        }
+        if (apiError.getSubErrors().size() > 0) {
+            throw new NoPassengerException(apiError);
+        }
+        Iterable<Flight> flights = flightsRepository.getAllFlightsForPassenger(identifyNumber);
+        return FlightAdapter.toListResponse(flights);
+    }
 
     @Override
     public FlightDto createFlight(FlightDto flightDto) {
@@ -160,6 +160,49 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
+    public Iterable<FlightDtoView> getAllOffers() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, 7);
+        Date endDate = cal.getTime(); // get back a Date objec
+
+
+        Pageable pageable = PageRequest.of(0, 10);
+        List<Flight> list = flightsRepository.getAllOffers(endDate, pageable);
+        List<FlightDtoView> offers = FlightAdapter.toListDtoView(list);
+
+        return offers;
+    }
+
+    @Override
+    public void cancelReservation(CancelReservationDto cancelReservationDto) {
+        validateReservationCancelation(cancelReservationDto);
+
+        Optional<Flight> optionalFlight = flightsRepository.findById(cancelReservationDto.getFlightId());
+        if(optionalFlight.isPresent()){
+            Flight flight = optionalFlight.get();
+            Passenger passenger = passengerRepository.getByIdentifyNumber(cancelReservationDto.getIdentifyNumber());
+            if(flight.getPassengerList().contains(passenger)){
+                flight.getPassengerList().remove(passenger);
+                flightsRepository.save(flight);
+            }
+        }
+    }
+
+    private void validateReservationCancelation(CancelReservationDto cancelReservationDto){
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        if(cancelReservationDto.getFlightId() == null){
+            apiError.getSubErrors().add(new ApiSubError("flightId", "Null received!"));
+        }
+        if(cancelReservationDto.getIdentifyNumber() == null || cancelReservationDto.getIdentifyNumber().isEmpty()){
+            apiError.getSubErrors().add(new ApiSubError("identifyNumber", "Null or empty received!"));
+        }
+        if (apiError.getSubErrors().size() > 0) {
+            throw new CancelReservationException(apiError);
+        }
+
+    }
+
+    @Override
     public FlightDto addPassenger(FlightUpdateDto flightUpdateDto) {
         validateUpdateFlightDto(flightUpdateDto);
 
@@ -180,8 +223,9 @@ public class FlightServiceImpl implements FlightService {
 
     private void validateForAvailableSeat(Flight flight) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
-
-
+        if(flight.getPassengerList().size() > 0 ){
+            apiError.getSubErrors().add(new ApiSubError("No more seats", "No more seats!"));
+        }
         if (apiError.getSubErrors().size() > 0) {
             throw new FlightValidationException(apiError);
         }
@@ -190,7 +234,6 @@ public class FlightServiceImpl implements FlightService {
     private void validateUpdateFlightDto(FlightUpdateDto flightUpdateDto) {
         //todo implement validation
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
-
         try {
             UUID uuid = UUID.fromString(flightUpdateDto.getFlightId());
             if (uuid == null) {
@@ -203,7 +246,7 @@ public class FlightServiceImpl implements FlightService {
                 throw new FlightValidationException(apiError);
             }
         }
-
-
     }
+
+
 }

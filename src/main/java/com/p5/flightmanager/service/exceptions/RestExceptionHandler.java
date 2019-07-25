@@ -1,5 +1,6 @@
 package com.p5.flightmanager.service.exceptions;
 
+import com.p5.flightmanager.service.dto.CancelReservationDto;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -68,6 +69,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(FlightValidationException.class)
     protected ResponseEntity<Object> handleFlightValidateException(FlightValidationException ex){
+        return buildResponseEntity(ex.getApiError());
+    }
+
+    @ExceptionHandler(CancelReservationException.class)
+    protected ResponseEntity<Object> handleCancelReservationException(CancelReservationException ex){
         return buildResponseEntity(ex.getApiError());
     }
 

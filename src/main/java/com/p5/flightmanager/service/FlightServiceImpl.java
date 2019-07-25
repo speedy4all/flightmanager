@@ -166,9 +166,7 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public ListResponseDto<ResponseFlightDto> getFlightsByUniqueIdentifier(String identifyNumber) {
         Iterable<Flight> flights = flightsRepository.getFlightsByUniqueIdentifier(identifyNumber);
-
-        ListResponseDto<ResponseFlightDto> responseFlightDtoListResponseDto = FlightAdapter.toListResponse(flights);
-        return responseFlightDtoListResponseDto;
+        return FlightAdapter.toListResponse(flights);
     }
 
     @Override

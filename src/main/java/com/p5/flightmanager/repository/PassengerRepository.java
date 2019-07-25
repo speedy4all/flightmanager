@@ -18,5 +18,5 @@ public interface PassengerRepository extends CrudRepository<Passenger, UUID> {
     @Query("select p from Passenger p where p.identifyNumber=:uniqueIdentifier")
     Optional<Passenger> getByUniqueIdentifier(String uniqueIdentifier);
 
-    Passenger getByIdentifyNumber(String indentifyNumber);
+    Passenger getByIdentifyNumber(String identifyNumber);
 }

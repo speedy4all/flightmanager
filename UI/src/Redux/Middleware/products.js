@@ -22,6 +22,7 @@ import {
 } from "./../Actions/ui";
 import { apiRequest } from "./../Actions/api";
 import { getOffers } from "../Actions/offers";
+import { getReservations } from "../Actions/reservations";
 
 export const searchFlightsFlow = ({ dispatch }) => next => action => {
   next(action);
@@ -113,7 +114,7 @@ export const processRemovePassengerSuccess = ({
       dispatch(showNotification(`Passenger removed from flight !`, "success"));
     }
     
-    dispatch(getOffers());
+    dispatch(getReservations(action.payload.identifier));
   }
 };
 

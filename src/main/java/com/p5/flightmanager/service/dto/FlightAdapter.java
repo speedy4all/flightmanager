@@ -112,7 +112,7 @@ public class FlightAdapter {
             responseFlightDto.setDestinationAirportCode(f.getDestinationLocation().getIata());
             responseFlightDto.setDestinationAirportName(f.getDestinationLocation().getName());
             responseFlightDto.setFlightDuration(f.getDurationTime());
-            responseFlightDto.setPlaneType(f.getFlightType().toString());
+            responseFlightDto.setPlaneType(f.getPlane().getModel());
             responseFlightDto.setDestinationDate(f.getDestinationDate());
             response.getList().add(responseFlightDto);
             Long increment =  response.getTotalCount()+1;

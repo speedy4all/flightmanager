@@ -8,12 +8,7 @@ import com.p5.flightmanager.service.api.AirportService;
 import com.p5.flightmanager.service.api.FlightService;
 import com.p5.flightmanager.service.api.PassengerService;
 import com.p5.flightmanager.service.dto.*;
-import com.p5.flightmanager.service.exceptions.ApiError;
-import com.p5.flightmanager.service.exceptions.ApiSubError;
-import com.p5.flightmanager.service.exceptions.EmptyFieldException;
-import com.p5.flightmanager.service.exceptions.FlightValidationException;
-import com.p5.flightmanager.service.exceptions.NoFlightException;
-import com.p5.flightmanager.service.exceptions.PassengerExistException;
+import com.p5.flightmanager.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class FlightServiceImpl implements FlightService {
@@ -41,12 +34,61 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public void cancelReservation(FlightSearchCancelDto flightSearchCancelDto) {
-        flightsRepository.cancelReservation(flightSearchCancelDto.getFlightId(), flightSearchCancelDto.getUniqueIdentifier());
+
+       Flight flight = validateByFlightId(flightSearchCancelDto.getFlightId());
+       Passenger passenger=validateByPassengerId(flightSearchCancelDto.getIdentifier());
+
+        Optional<Passenger> passenger1 = flight.getPassengerList().stream().filter(p -> p.getIdentifyNumber().equals(flightSearchCancelDto.getIdentifier())).findFirst();
+        if(passenger1.isPresent()){
+            flight.getPassengerList().remove(passenger1.get());
+            flightsRepository.save(flight);
+        }
+    }
+
+
+    private Passenger validateByPassengerId(String identifier) {
+        Passenger passenger = passengerRepository.getByIdentifyNumber(identifier);
+        if (passenger != null) {
+            return passenger;
+        }
+        throw new NoPassengerException();
+    }
+
+    private Flight validateByFlightId(String flightId) {
+
+        Optional<Flight> flight = flightsRepository.findById(UUID.fromString(flightId));
+        if(flight.isPresent()) {
+            return flight.get();
+        }
+
+        throw new NoFlightException();
+
+    }
+
+    private void validateFlightDto(FlightSearchCancelDto flightSearchCancelDto) {
+
+        ApiError apiError=new ApiError(HttpStatus.BAD_REQUEST);
+
+        Optional<Flight> searchedByFlightId = flightsRepository.findById(UUID.fromString(flightSearchCancelDto.getFlightId()));
+        if(!searchedByFlightId.isPresent())
+            apiError.getSubErrors().add(new ApiSubError("flight id", "Not found"));
+
+        Passenger searchedByUniqueIdentifier=passengerRepository.getByIdentifyNumber(flightSearchCancelDto.getIdentifier());
+        if(searchedByUniqueIdentifier==null){
+            apiError.getSubErrors().add(new ApiSubError("passenger id", "Not found"));
+        }
+
+        if(apiError.getSubErrors().size()>0)
+            throw new NoFlightException();
     }
 
     //lista de flighturi ale unui pasager
     @Override
     public ListResponseDto<ResponseFlightDto> getMyFlights(String uniqueIdentifier) {
+
+        Optional<Flight> searchedFlight=flightsRepository.findById(UUID.fromString(uniqueIdentifier));
+        if(!searchedFlight.isPresent())
+            throw new NoPassengerException();
         return flightsRepository.findMyFlights(uniqueIdentifier);
     }
 

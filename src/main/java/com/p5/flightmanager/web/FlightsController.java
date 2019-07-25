@@ -29,8 +29,9 @@ public class FlightsController extends RestExceptionHandler {
 
     //anuleaza o rezervare
     @PutMapping("/cancel-reservation/{flightId}/{identifier}")
-    void cancelReservation(@RequestBody FlightSearchCancelDto flightSearchCancelDto){
-        ResponseEntity.ok(flightService.cancelReservation(flightSearchCancelDto));
+    ResponseEntity<FlightSearchCancelDto> cancelReservation(@RequestBody FlightSearchCancelDto flightSearchCancelDto){
+        flightService.cancelReservation(flightSearchCancelDto);
+        return ResponseEntity.ok(flightSearchCancelDto);
     }
 
     //lista de flighturi ale unui pasager

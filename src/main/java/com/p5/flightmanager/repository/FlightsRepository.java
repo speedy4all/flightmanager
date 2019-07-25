@@ -13,13 +13,18 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface FlightsRepository extends CrudRepository<Flight, UUID> {
 
-
-    void cancelReservation(UUID flightId, UUID uniqueIdentifier);
+    //nu este nevoie de acest query pentru ca se face cautare pe lista de pasageri din flightul returnat.
+//    //caut in baza de date flightul cu id ul dat care are in lista de pasageri pasagerul dat
+//    @Query("select flight from Flight" +
+//            "join flight.passengerList list" +
+//            "where flight.id=:flightId and list.identifyNumber=:uniqueIdentifier")
+//    Optional<Flight> cancelReservation(String flightId, String uniqueIdentifier);
 
     @Query("select new com.p5.flightmanager.service.dto.ResponseFlightDto(flight.id, departureAirport.city, departureAirport.iata, " +
             "destinationAirport.city, destinationAirport.iata, flight.departureDate, flight.destinationDate, plane.model, " +
@@ -28,18 +33,18 @@ public interface FlightsRepository extends CrudRepository<Flight, UUID> {
             "join flight.destinationLocation destinationAirport " +
             "join flight.plane plane " +
             "join flight.passengerList list " +
-            "where list.uniqueIdentifier=:uniqueIdentifier")
+            "where list.identifyNumber=:uniqueIdentifier")
     ListResponseDto<ResponseFlightDto> findMyFlights(String uniqueIdentifier);
 
     //toate flighturile care mai au cel putin 5 locuri disponibile, data de plecare este mai mare decat daca curenta si in acelasi timp
     //data de plecare sa fie in cel mult 7 zile(pageable pentru a lua doar primele 10 flighturi)
     @Query("select new com.p5.flightmanager.service.dto.ResponseFlightDto(flight.id, departureAirport.city, departureAirport.iata, " +
             "destinationAirport.city, destinationAirport.iata, flight.departureDate, flight.destinationDate, plane.model, " +
-            "flight.durationTime, plane.seats-flight.passengerList.size) from Flight flight" +
-            "join flight.departureLocation departureAirport" +
-            "join flight.destinationLocation destinationAirport" +
-            "join flight.plane plane" +
-            "where flight.passengerList.size<=5 and flight.departureDate>now() and flight.departureDate<:endDate")
+            "flight.durationTime, plane.seats-flight.passengerList.size) from Flight flight " +
+            "join flight.departureLocation departureAirport " +
+            "join flight.destinationLocation destinationAirport " +
+            "join flight.plane plane " +
+            "where flight.passengerList.size<=10 and flight.departureDate>now() and flight.departureDate<:endDate")
     ListResponseDto<ResponseFlightDto> findAllFullFlights(Date endDate, Pageable pageable);
 
     Iterable<Flight> getAllByNameIsContaining(String name);

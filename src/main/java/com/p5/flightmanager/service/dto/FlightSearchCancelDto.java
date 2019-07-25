@@ -2,36 +2,35 @@ package com.p5.flightmanager.service.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
 public class FlightSearchCancelDto {
 
     @NotBlank
     @NotNull
-    private UUID flightId;
+    private String flightId;
 
     @NotBlank
     @NotNull
-    private UUID uniqueIdentifier;
+    private String identifier;
 
-    public FlightSearchCancelDto(@NotNull UUID flightId, @NotNull UUID uniqueIdentifier) {
+    public FlightSearchCancelDto(@NotNull String flightId, @NotNull String uniqueIdentifier) {
         this.flightId = flightId;
-        this.uniqueIdentifier = uniqueIdentifier;
+        this.identifier = uniqueIdentifier;
     }
 
-    public UUID getFlightId() {
+    public String getFlightId() {
         return flightId;
     }
 
-    public void setFlightId(UUID flightId) {
+    public void setFlightId(String flightId) {
         this.flightId = flightId;
     }
 
-    public UUID getUniqueIdentifier() {
-        return uniqueIdentifier;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setUniqueIdentifier(UUID uniqueIdentifier) {
-        this.uniqueIdentifier = uniqueIdentifier;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 }

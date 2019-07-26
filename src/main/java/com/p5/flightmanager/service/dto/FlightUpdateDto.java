@@ -3,8 +3,8 @@ package com.p5.flightmanager.service.dto;
 public class FlightUpdateDto {
 
     private String flightId;
-    private String uniqueIdentifier;
-    private String passengerName;
+    private String identifier;
+    private String name;
 
     public String getFlightId() {
         return flightId;
@@ -14,19 +14,19 @@ public class FlightUpdateDto {
         this.flightId = flightId;
     }
 
-    public String getUniqueIdentifier() {
-        return uniqueIdentifier;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setUniqueIdentifier(String uniqueIdentifier) {
-        this.uniqueIdentifier = uniqueIdentifier;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
-    public String getPassengerName() {
-        return passengerName;
+    public String getName() {
+        return name;
     }
 
-    public void setPassengerName(String passengerName) {
-        this.passengerName = passengerName;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -176,6 +176,7 @@ public class FlightServiceImpl implements FlightService {
         return responseFlightDtoListResponseDto;
     }
 
+
     @Override
     public void addPassengerDto(FlightUpdateDto flightUpdateDto) {
         validateUpdateFlight(flightUpdateDto);
@@ -183,15 +184,15 @@ public class FlightServiceImpl implements FlightService {
         Flight flight = getFlightById(UUID.fromString(flightUpdateDto.getFlightId()));
 
         //validateAvailableSeat(flight);
-        Passenger passenger = passengerService.getOrCreate(flightUpdateDto.getUniqueIdentifier(), flightUpdateDto.getPassengerName());
-        boolean exists = flight.getPassengerList().stream().map(Passenger::getIdentifyNumber).anyMatch(s -> s.equals(flightUpdateDto.getUniqueIdentifier()));
+        Passenger passenger = passengerService.getOrCreate(flightUpdateDto.getIdentifier(), flightUpdateDto.getName());
+        boolean exists = flight.getPassengerList().stream().map(Passenger::getIdentifyNumber).anyMatch(s -> s.equals(flightUpdateDto.getIdentifier()));
 
         if(!exists) {
             flight.getPassengerList().add(passenger);
             flightsRepository.save(flight);
         } else {
-            //throw new PassengerExistException(flightUpdateDto.getUniqueIdentifier());
-            throw new PassengerExistException(flightUpdateDto.getUniqueIdentifier());
+            //throw new PassengerExistException(flightUpdateDto.getIdentifier());
+            throw new PassengerExistException(flightUpdateDto.getIdentifier());
         }
 }
 
@@ -210,7 +211,7 @@ public class FlightServiceImpl implements FlightService {
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 7);
-        Date endDate = cal.getTime(); // get back a Date objec
+        Date endDate = cal.getTime(); // get back a Date object
         String destinationCity = "Bucuresti";
 
         Pageable pageable = PageRequest.of(0, 10);
@@ -222,11 +223,14 @@ public class FlightServiceImpl implements FlightService {
 
     private void validateUpdateFlight(FlightUpdateDto flightUpdateDto) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+
+
+
         Optional<Flight> optionalFlight = flightsRepository.findById(UUID.fromString(flightUpdateDto.getFlightId()));
         if(!optionalFlight.isPresent()) {
             apiError.getSubErrors().add(new ApiSubError("flight", "flight not found"));
         }
-//        Optional<Passenger> passenger = passengerRepository.getByUniqueIdentifier(flightUpdateDto.getUniqueIdentifier());
+//        Optional<Passenger> passenger = passengerRepository.getByUniqueIdentifier(flightUpdateDto.getIdentifier());
 //        if(passenger.isPresent()) {
 //            apiError.getSubErrors().add(new ApiSubError("passenger", "passenger already found"));
 //        }
@@ -263,4 +267,6 @@ public class FlightServiceImpl implements FlightService {
 //    public Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(SearchParamDtoFlight searchParamDtoFlight) {
 //        return flightsRepository.findByIdAndDate(searchParamDtoFlight.getDepartureDate(), searchParamDtoFlight.getDepartureId(), searchParamDtoFlight.getDestinationId());
 //    }
+
+
 }

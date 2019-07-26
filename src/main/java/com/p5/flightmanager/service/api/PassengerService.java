@@ -20,4 +20,5 @@ public interface PassengerService {
     void deletePassenger(String id);
 
     Passenger getOrCreate(String uniqueIdentifier, String name);
+
 }

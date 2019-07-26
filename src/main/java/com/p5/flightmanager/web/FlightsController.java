@@ -25,18 +25,6 @@ public class FlightsController extends RestExceptionHandler {
     @Autowired
     private FlightService flightService;
 
-//    @GetMapping()//queryparam
-//    ResponseEntity<List<FlightDtoView>> getAll(@RequestParam String search) {
-//
-//        return ResponseEntity.ok(flightService.getAll(search));
-//    }
-
-//    @GetMapping//queryparam
-//    ResponseEntity<ListResponseDto<ResponseFlightDto>> getAll(@QueryParam() String search) {
-//
-//        return ResponseEntity.ok(flightService.getAll(search));
-//    }
-
     @GetMapping
     ResponseEntity<ListResponseDto<ResponseFlightDto>> getAll(FlightSearchDto searchDto) {
 
@@ -59,15 +47,6 @@ public class FlightsController extends RestExceptionHandler {
         return ResponseEntity.ok(flightService.getBySearchParams(departureDate, location, destination));
     }
 
-
-
-//    //todo
-//    @PutMapping("/{uniqueIdentifier}/cancel-reservation/{flightId}")
-//    void flightUpdateDel(@PathVariable String uniqueIdentifier, @PathVariable String flightId){
-//        flightService.removePassenger(uniqueIdentifier, flightId);
-//    }
-
-    //todo
     @PutMapping("/cancel-reservation")
     ResponseEntity<CancelReservationDto> flightUpdateDel(@RequestBody CancelReservationDto cancelReservationDto){
         flightService.removePassenger(cancelReservationDto.getIdentifier(), cancelReservationDto.getFlightId());
@@ -85,16 +64,10 @@ public class FlightsController extends RestExceptionHandler {
     }
 
     @PutMapping()
-    void flightUpdate(@RequestBody  FlightUpdateDto flightUpdateDto){
+    ResponseEntity<FlightUpdateDto> flightUpdate(@RequestBody  FlightUpdateDto flightUpdateDto){
         flightService.addPassengerDto(flightUpdateDto);
+        return ResponseEntity.ok(flightUpdateDto);
     }
-
-//    @PutMapping
-//    ResponseEntity<FlightDto> updateFlight(@RequestBody FlightDto flightDto) {
-//        return ResponseEntity.ok(flightService.updateFlight(flightDto));
-//        //return ResponseEntity.ok("Update flight");
-//
-//    }
 
     @DeleteMapping("/{id}")
     void deleteFlight(@PathVariable String id) {
@@ -111,18 +84,9 @@ public class FlightsController extends RestExceptionHandler {
         flightService.addPassenger(flightId, passengerId);
     }
 
-//    @GetMapping("/search")
-//    Iterable<FlightDtoSimple> getByDepDateAndDestDateAndLocation(@Valid SearchParamDto searchParamDto) {
-//        return flightService.getByDepDateAndDestDateAndLocation(searchParamDto);
-//    }
-
     @GetMapping("/offers")
     ListResponseDto<ResponseFlightDto> getOffers(){
         return flightService.getAllOffers();
     }
 
-//    @GetMapping("/search1")
-//    Iterable<FlightDtoParamSearch> getByDepIdAndDestIdAndDepDate(@Valid SearchParamDtoFlight searchParamDtoFlight){
-//        return flightService.getByDepIdAndDestIdAndDepDate(searchParamDtoFlight);
-//    }
 }

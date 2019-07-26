@@ -12,7 +12,6 @@ import java.util.UUID;
 
 public class FlightAdapter {
 
-
     public final static FlightDto toDto(Flight flight) {
         FlightDto flightDto = new FlightDto();
 
@@ -62,7 +61,6 @@ public class FlightAdapter {
         return flightDtoView;
     }
 
-
     public final static List<FlightDto> toListDto(Iterable<Flight> flightList) {
         List<FlightDto> listDto = new ArrayList<>();
         flightList.forEach(flight -> listDto.add(toDto(flight)));
@@ -70,7 +68,6 @@ public class FlightAdapter {
         return listDto;
     }
 
-    //
     public final static List<FlightDtoView> toListDtoView(Iterable<Flight> flightList) {
         List<FlightDtoView> listDtoView = new ArrayList<>();
         flightList.forEach(flight -> listDtoView.add(toDtoView(flight)));
@@ -138,4 +135,5 @@ public class FlightAdapter {
         }
 
     }
+
 }
